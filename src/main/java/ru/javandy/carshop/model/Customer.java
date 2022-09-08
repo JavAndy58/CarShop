@@ -3,7 +3,7 @@ package ru.javandy.carshop.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,10 +16,7 @@ public class Customer {
     private String name;
     private String phoneNumber;
 
-    @OneToMany
-
-
-
-
-    private Set<Car> carSet;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cars_id")
+    private List<Car> cars;
 }
