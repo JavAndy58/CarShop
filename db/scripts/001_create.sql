@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS details
     id SERIAL PRIMARY KEY,
     name TEXT,
     purchasePrice DOUBLE PRECISION ,
+    amount INT,
     retailPrice DOUBLE PRECISION
 );
 
@@ -27,8 +28,6 @@ CREATE TABLE IF NOT EXISTS orders
     created TIMESTAMP,
     customer_id INT NOT NULL REFERENCES customers(id),
     detail_id INT NOT NULL REFERENCES details(id),
-    sumDetail DOUBLE PRECISION,
     prepayment DOUBLE PRECISION,
-    sumOrder DOUBLE PRECISION,
     delivered BOOLEAN
 )

@@ -14,5 +14,6 @@ public class Detail {
     private int id;
     private String name;
     private double purchasePrice;
+    private int amount;
     private double retailPrice;
 }

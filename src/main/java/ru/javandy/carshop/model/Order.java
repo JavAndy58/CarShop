@@ -24,8 +24,6 @@ public class Order {
     @JoinColumn(name = "detail_id")
     private List<Detail> details;
 
-    private double sumDetail;
     private double prepayment;
-    private double sumOrder;
     private boolean delivered;
 }
