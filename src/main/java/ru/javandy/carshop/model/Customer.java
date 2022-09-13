@@ -1,6 +1,7 @@
 package ru.javandy.carshop.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "customers")
+@NoArgsConstructor
 public class Customer {
 
     @Id

@@ -1,12 +1,14 @@
 package ru.javandy.carshop.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "cars")
+@NoArgsConstructor
 public class Car {
 
     @Id
