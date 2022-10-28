@@ -16,8 +16,7 @@ CREATE TABLE IF NOT EXISTS cars
     id SERIAL PRIMARY KEY,
     name TEXT,
     vin_сode TEXT,
-    customer_id INT NOT NULL REFERENCES customers(id),
-
+    customer_id INT NOT NULL REFERENCES customers(id)
 );
 CREATE TABLE IF NOT EXISTS orders
 (
@@ -27,7 +26,7 @@ CREATE TABLE IF NOT EXISTS orders
     delivered BOOLEAN,
     note TEXT,
     customer_id INT NOT NULL REFERENCES customers(id),
-    car_id REFERENCES cars(id)
+    car_id INT REFERENCES cars(id)
 );
 CREATE TABLE IF NOT EXISTS sets
 (
