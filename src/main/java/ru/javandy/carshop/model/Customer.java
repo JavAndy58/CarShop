@@ -17,8 +17,4 @@ public class Customer {
     private int id;
     private String name;
     private String phoneNumber;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cars_id")
-    private List<Car> cars;
 }

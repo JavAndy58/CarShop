@@ -16,4 +16,8 @@ public class Car {
     private int id;
     private String name;
     private String vinCode;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 }

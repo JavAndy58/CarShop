@@ -17,15 +17,15 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Date created;
+    private double prepayment;
+    private boolean delivered;
+    private String note;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "detail_id")
-    private List<Detail> details;
-
-    private double prepayment;
-    private boolean delivered;
+    @JoinColumn(name = "car_id")
+    private List<Car> details;
 }
