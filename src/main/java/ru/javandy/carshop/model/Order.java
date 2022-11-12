@@ -14,11 +14,20 @@ import java.util.List;
 public class Order {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "created")
     private Date created;
+
+    @Column(name = "prepayment")
     private double prepayment;
+
+    @Column(name = "delivered")
     private boolean delivered;
+
+    @Column(name = "note")
     private String note;
 
     @ManyToOne

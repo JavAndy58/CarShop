@@ -12,9 +12,14 @@ import javax.persistence.*;
 public class Car {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "vin_code")
     private String vinCode;
 
     @OneToOne(cascade = CascadeType.ALL)

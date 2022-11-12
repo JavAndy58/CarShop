@@ -1,10 +1,7 @@
 package ru.javandy.carshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.service.DetailService;
 
@@ -23,6 +20,8 @@ public class DetailController {
         return detailService.findAll();
     }
 
-
-
+    @PostMapping("/details")
+    public Detail createDetail(@RequestBody Detail detail) {
+        return detailService.save(detail);
+    }
 }

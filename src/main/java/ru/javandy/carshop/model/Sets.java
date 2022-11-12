@@ -13,8 +13,11 @@ import java.util.List;
 public class Sets {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "amount")
     private int amount;
 
     @OneToMany(cascade = CascadeType.ALL)
