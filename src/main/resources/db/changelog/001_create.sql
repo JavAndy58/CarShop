@@ -1,35 +1,30 @@
-CREATE TABLE IF NOT EXISTS customers
-(
+CREATE TABLE customers (
     id SERIAL PRIMARY KEY,
-    name TEXT,
+    name VARCHAR (100),
     phone_number TEXT
 );
-CREATE TABLE IF NOT EXISTS details
-(
+CREATE TABLE details (
     id SERIAL PRIMARY KEY,
-    name TEXT,
+    name VARCHAR (100),
     purchase_price DOUBLE PRECISION,
     retail_price DOUBLE PRECISION
 );
-CREATE TABLE IF NOT EXISTS cars
-(
+CREATE TABLE cars (
     id SERIAL PRIMARY KEY,
-    name TEXT,
-    vin_сode TEXT,
+    name VARCHAR (100),
+    vin_сode VARCHAR (20),
     customer_id INT NOT NULL REFERENCES customers(id)
 );
-CREATE TABLE IF NOT EXISTS orders
-(
+CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     created TIMESTAMP,
     prepayment DOUBLE PRECISION,
     delivered BOOLEAN,
-    note TEXT,
+    note VARCHAR (50),
     customer_id INT NOT NULL REFERENCES customers(id),
     car_id INT REFERENCES cars(id)
 );
-CREATE TABLE IF NOT EXISTS sets
-(
+CREATE TABLE sets (
     id SERIAL PRIMARY KEY,
     amount INT,
     order_id INT NOT NULL REFERENCES orders(id),

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.service.DetailService;
+import ru.javandy.carshop.service.DetailServiceImpl;
 
 import java.util.List;
 
