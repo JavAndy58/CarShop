@@ -8,9 +8,10 @@ import ru.javandy.carshop.service.DetailServiceImpl;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
-@RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:3000")
+//@RequestMapping("/api/v1")
 public class DetailController {
 
     @Autowired
@@ -21,7 +22,7 @@ public class DetailController {
         return detailService.findAll();
     }
 
-    @PostMapping("/details")
+    @PostMapping("/detail")
     public Detail createDetail(@RequestBody Detail detail) {
         return detailService.save(detail);
     }
