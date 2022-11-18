@@ -23,6 +23,7 @@ public class DetailServiceImpl implements DetailService {
         return rsl;
     }
 
+    @Override
     public Optional<Detail> findById(int id) {
         return detailRepository.findById(id);
     }
@@ -32,7 +33,14 @@ public class DetailServiceImpl implements DetailService {
         return detailRepository.save(detail);
     }
 
-    public void delete(Detail detail) {
-        detailRepository.delete(detail);
+
+    @Override
+    public void deleteById(int id) {
+        detailRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsById(int id) {
+        return detailRepository.existsById(id);
     }
 }
