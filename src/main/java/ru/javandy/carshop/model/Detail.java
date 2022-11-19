@@ -14,13 +14,15 @@ public class Detail {
     private String name;
     private double purchasePrice;
     private double retailPrice;
+    private boolean bringing;
 
     public Detail() {
     }
 
-    public Detail(String name, double purchasePrice, double retailPrice) {
+    public Detail(String name, double purchasePrice, double retailPrice, boolean bringing) {
         this.name = name;
         this.purchasePrice = purchasePrice;
         this.retailPrice = retailPrice;
+        this.bringing = bringing;
     }
 }

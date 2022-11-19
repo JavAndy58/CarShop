@@ -20,6 +20,7 @@ public class Order {
     private Date created;
     private double prepayment;
     private boolean delivered;
+    private boolean cardPayment;
     private String note;
 
     @ManyToOne

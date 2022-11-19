@@ -1,15 +1,11 @@
 package ru.javandy.carshop.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "customers")
 public class Customer {
 
     @Id
@@ -17,4 +13,12 @@ public class Customer {
     private int id;
     private String name;
     private String phoneNumber;
+
+    public Customer() {
+    }
+
+    public Customer(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 }
