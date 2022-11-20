@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
@@ -23,6 +23,7 @@ public class CustomerServiceImpl implements CustomerService{
         return rsl;
     }
 
+    @Override
     public Optional<Customer> findById(int id) {
         return customerRepository.findById(id);
     }
@@ -32,7 +33,8 @@ public class CustomerServiceImpl implements CustomerService{
         return customerRepository.save(customer);
     }
 
-    public void delete(Customer customer) {
-        customerRepository.delete(customer);
+    @Override
+    public boolean existsById(int id) {
+        return customerRepository.existsById(id);
     }
 }

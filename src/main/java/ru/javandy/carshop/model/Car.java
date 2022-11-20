@@ -1,15 +1,11 @@
 package ru.javandy.carshop.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "cars")
 public class Car {
 
     @Id
@@ -18,7 +14,16 @@ public class Car {
     private String name;
     private String vinCode;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    public Car() {
+    }
+
+    public Car(String name, String vinCode, Customer customer) {
+        this.name = name;
+        this.vinCode = vinCode;
+        this.customer = customer;
+    }
 }
