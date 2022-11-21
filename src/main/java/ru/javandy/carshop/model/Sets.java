@@ -1,16 +1,13 @@
 package ru.javandy.carshop.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "cars")
 public class Sets {
 
     @Id
@@ -25,4 +22,13 @@ public class Sets {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private List<Order> orders;
+
+    public Sets() {
+    }
+
+    public Sets(int amount, List<Detail> details, List<Order> orders) {
+        this.amount = amount;
+        this.details = details;
+        this.orders = orders;
+    }
 }

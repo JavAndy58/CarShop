@@ -16,6 +16,7 @@ public class CarServiceImpl implements CarService {
         this.carRepository = carRepository;
     }
 
+    @Override
     public List<Car> findAll() {
         List<Car> rsl = new ArrayList<>();
         carRepository.findAll().forEach(rsl::add);

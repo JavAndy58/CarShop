@@ -5,6 +5,8 @@ import ru.javandy.carshop.Exeption.CarNotFoundException;
 import ru.javandy.carshop.model.Car;
 import ru.javandy.carshop.service.CarService;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class CarController {
@@ -13,6 +15,11 @@ public class CarController {
 
     public CarController(CarService carService) {
         this.carService = carService;
+    }
+
+    @GetMapping("/cars")
+    public List<Car> getAllCars() {
+        return carService.findAll();
     }
 
     @PostMapping("/car")
