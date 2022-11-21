@@ -17,6 +17,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     private double prepayment;
     private boolean delivered;
