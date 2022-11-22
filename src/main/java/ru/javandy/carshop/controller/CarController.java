@@ -2,8 +2,10 @@ package ru.javandy.carshop.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.javandy.carshop.Exeption.CarNotFoundException;
+import ru.javandy.carshop.Exeption.CustomerNotFoundException;
 import ru.javandy.carshop.model.Car;
 import ru.javandy.carshop.service.CarService;
+import ru.javandy.carshop.service.CustomerService;
 
 import java.util.List;
 
@@ -12,9 +14,11 @@ import java.util.List;
 public class CarController {
 
     private final CarService carService;
+    private final CustomerService customerService;
 
-    public CarController(CarService carService) {
+    public CarController(CarService carService, CustomerService customerService) {
         this.carService = carService;
+        this.customerService = customerService;
     }
 
     @GetMapping("/cars")
@@ -31,6 +35,11 @@ public class CarController {
     Car getCarById(@PathVariable int id) {
         return carService.findById(id)
                 .orElseThrow(() -> new CarNotFoundException(id));
+    }
+    @GetMapping("/car_customer/{id}")
+    public List<Car> getCarByCustomer(@PathVariable int id) {
+        return carService.findByCustomer(customerService.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id)));
     }
 
     @DeleteMapping("/car/{id}")

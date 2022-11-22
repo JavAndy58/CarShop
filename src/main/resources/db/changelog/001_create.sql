@@ -13,7 +13,7 @@ CREATE TABLE details (
 CREATE TABLE cars (
     id SERIAL PRIMARY KEY,
     name VARCHAR (100),
-    vin_сode VARCHAR (20),
+    vin_code VARCHAR (20),
     customer_id INT NOT NULL REFERENCES customers(id)
 );
 CREATE TABLE orders (

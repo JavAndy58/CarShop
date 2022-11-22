@@ -2,6 +2,7 @@ package ru.javandy.carshop.service;
 
 import org.springframework.stereotype.Service;
 import ru.javandy.carshop.model.Car;
+import ru.javandy.carshop.model.Customer;
 import ru.javandy.carshop.repository.CarRepository;
 
 import java.util.ArrayList;
@@ -20,6 +21,13 @@ public class CarServiceImpl implements CarService {
     public List<Car> findAll() {
         List<Car> rsl = new ArrayList<>();
         carRepository.findAll().forEach(rsl::add);
+        return rsl;
+    }
+
+    @Override
+    public List<Car> findByCustomer(Customer customer) {
+        List<Car> rsl = new ArrayList<>();
+        carRepository.findByCustomer(customer).forEach(rsl::add);
         return rsl;
     }
 
