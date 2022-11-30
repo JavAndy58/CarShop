@@ -19,7 +19,7 @@ public class DetailController {
 
     @GetMapping("/details")
     public List<Detail> getAllDetails() {
-        return detailService.findAll();
+         return detailService.findAll();
     }
 
     @PostMapping("/detail")

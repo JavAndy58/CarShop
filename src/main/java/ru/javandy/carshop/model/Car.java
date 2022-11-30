@@ -2,6 +2,7 @@ package ru.javandy.carshop.model;
 
 import lombok.Data;
 import javax.persistence.*;
+import java.util.Optional;
 
 @Data
 @Entity
@@ -18,7 +19,7 @@ public class Car {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    public Car() {
+    public Car(String name, String xxeerty525SA626, Optional<Customer> byId) {
     }
 
     public Car(String name, String vinCode, Customer customer) {
