@@ -42,8 +42,6 @@ public class CarShopApplication {
             carService.save(new Car("Focus 2", "XXEERTY525SA626", customerEvg));
             carService.save(new Car("Logan 1", "TTTYYY525SA626", customerIvan));
             carService.save(new Car("Audi 100", "YUTYRYREYRA626", customerIvan));
-
-
         };
     }
 }

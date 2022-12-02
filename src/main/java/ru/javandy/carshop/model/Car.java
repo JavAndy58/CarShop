@@ -14,8 +14,8 @@ public class Car {
     private String name;
     private String vinCode;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     public Car() {
