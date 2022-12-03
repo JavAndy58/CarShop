@@ -10,8 +10,7 @@ import java.util.List;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -25,11 +24,30 @@ public class Order {
     private boolean cardPayment;
     private String note;
 
+    @OneToMany
+    @JoinColumn(name = "car_id")
+    private List<Car> car;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "detail_id")
+    private List<Detail> detail;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "car_id")
-    private List<Car> details;
+    public Order() {
+    }
+
+    public Order(Date created, double prepayment, boolean delivered,
+                 boolean cardPayment, String note, List<Car> car, List<Detail> detail, Customer customer) {
+        this.created = created;
+        this.prepayment = prepayment;
+        this.delivered = delivered;
+        this.cardPayment = cardPayment;
+        this.note = note;
+        this.car = car;
+        this.detail = detail;
+        this.customer = customer;
+    }
 }
