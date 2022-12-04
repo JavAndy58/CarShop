@@ -8,12 +8,13 @@ import ru.javandy.carshop.model.Car;
 import ru.javandy.carshop.model.Customer;
 import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.model.Order;
-import ru.javandy.carshop.service.CarService;
-import ru.javandy.carshop.service.CustomerService;
-import ru.javandy.carshop.service.DetailService;
-import ru.javandy.carshop.service.OrderService;
+import ru.javandy.carshop.service.*;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 public class CarShopApplication {
@@ -29,11 +30,11 @@ public class CarShopApplication {
         Customer customerEvg = new Customer("Ершое Евгений", "+72273893138");
         Customer customerVlad = new Customer("Макаров Владимир", "+75553893138");
 
-        Detail detailRel = new Detail("Реле", 2, 100, 150, "",false);
-        Detail detailScr = new Detail("Шрус", 1, 1750, 2100, "",false);
-        Detail detailRul = new Detail("Рулевая рейка ", 1, 10000, 12550, "",false);
+        Detail detailRel = new Detail("Реле", 2, 100, 150, "", false);
+        Detail detailScr = new Detail("Шрус", 1, 1750, 2100, "", false);
+        Detail detailRul = new Detail("Рулевая рейка ", 1, 10000, 12550, "", false);
         Detail detailClips = new Detail("Клипса", 10, 15, 50, "", false);
-        Detail detailPl = new Detail("Пыльник шруса", 1, 985, 1270, "",false);
+        Detail detailPl = new Detail("Пыльник шруса", 1, 985, 1270, "", false);
 
         Car carFocus = new Car("Focus 2", "XXEERTY525SA626", customerEvg);
         Car carLogan = new Car("Logan 1", "TTTYYY525SA626", customerIvan);
@@ -56,10 +57,10 @@ public class CarShopApplication {
             carService.save(carLogan);
             carService.save(carAudi);
 
-            orderService.save(new Order(new Date(), 500, false, false, "", carAudi, detailRel, customerIvan));
-
-
-
+            List<Detail> detailOrderOne = Arrays.asList(detailRel, detailRul);
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+            Date dateOrderOne = format.parse("01.12.2022");
+            orderService.save(new Order(dateOrderOne, 500, false, false, "", carFocus, detailOrderOne, customerEvg));
         };
     }
 }

@@ -24,13 +24,13 @@ public class Order {
     private boolean cardPayment;
     private String note;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "car_id")
-    private List<Car> car;
+    private Car car;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "detail_id")
-    private List<Detail> detail;
+    @JoinColumn(name = "order_id")
+    private List<Detail> details;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -40,14 +40,14 @@ public class Order {
     }
 
     public Order(Date created, double prepayment, boolean delivered,
-                 boolean cardPayment, String note, List<Car> car, List<Detail> detail, Customer customer) {
+                 boolean cardPayment, String note, Car car, List<Detail> details, Customer customer) {
         this.created = created;
         this.prepayment = prepayment;
         this.delivered = delivered;
         this.cardPayment = cardPayment;
         this.note = note;
         this.car = car;
-        this.detail = detail;
+        this.details = details;
         this.customer = customer;
     }
 }
