@@ -42,6 +42,11 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public List<Car> saveAll(List<Car> cars) {
+        return (List<Car>) carRepository.saveAll(cars);
+    }
+
+    @Override
     public void deleteById(int id) {
         carRepository.deleteById(id);
     }

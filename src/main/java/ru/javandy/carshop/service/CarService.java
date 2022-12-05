@@ -10,6 +10,7 @@ public interface CarService {
     List<Car> findAll();
     List<Car> findByCustomer(Customer customer);
     Car save(Car car);
+    List<Car> saveAll(List<Car> cars);
     Optional<Car> findById(int id);
     void deleteById(int id);
     boolean existsById(int id);

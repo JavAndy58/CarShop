@@ -33,6 +33,10 @@ public class DetailServiceImpl implements DetailService {
         return detailRepository.save(detail);
     }
 
+    @Override
+    public List<Detail> saveAll(List<Detail> details) {
+        return (List<Detail>)detailRepository.saveAll(details);
+    }
 
     @Override
     public void deleteById(int id) {

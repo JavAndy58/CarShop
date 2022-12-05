@@ -34,6 +34,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List<Customer> saveAll(List<Customer> customers) {
+        return (List<Customer>) customerRepository.saveAll(customers);
+    }
+
+    @Override
     public boolean existsById(int id) {
         return customerRepository.existsById(id);
     }

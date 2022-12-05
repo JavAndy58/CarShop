@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface DetailService {
     List<Detail> findAll();
     Detail save(Detail detail);
+    List<Detail> saveAll(List<Detail> details);
     Optional<Detail> findById(int id);
     boolean existsById(int id);
     void deleteById(int id);

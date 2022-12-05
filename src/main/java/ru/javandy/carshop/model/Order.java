@@ -28,7 +28,8 @@ public class Order {
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @OneToMany(cascade = CascadeType.ALL)
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "order_id")
     private List<Detail> details;
 
@@ -39,8 +40,8 @@ public class Order {
     public Order() {
     }
 
-    public Order(Date created, double prepayment, boolean delivered,
-                 boolean cardPayment, String note, Car car, List<Detail> details, Customer customer) {
+    public Order(Date created, double prepayment, boolean delivered, boolean cardPayment,
+                 String note, Car car, List<Detail> details, Customer customer) {
         this.created = created;
         this.prepayment = prepayment;
         this.delivered = delivered;
