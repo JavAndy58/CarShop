@@ -1,10 +1,8 @@
 package ru.javandy.carshop.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,10 +26,9 @@ public class Order {
     @JoinColumn(name = "car_id")
     private Car car;
 
-//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OneToMany
     @JoinColumn(name = "order_id")
-    private List<Detail> details;
+    private List<Detail> details = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -40,8 +37,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(Date created, double prepayment, boolean delivered, boolean cardPayment,
-                 String note, Car car, List<Detail> details, Customer customer) {
+    public Order(Date created, double prepayment, boolean delivered, boolean cardPayment, String note, Car car, List<Detail> details, Customer customer) {
         this.created = created;
         this.prepayment = prepayment;
         this.delivered = delivered;

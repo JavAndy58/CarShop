@@ -1,7 +1,7 @@
 package ru.javandy.carshop.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.javandy.carshop.Exeption.DetailNotFoundException;
+import ru.javandy.carshop.exeption.DetailNotFoundException;
 import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.service.DetailService;
 

@@ -1,4 +1,4 @@
-package ru.javandy.carshop.Exeption;
+package ru.javandy.carshop.exeption;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,8 +1,8 @@
 package ru.javandy.carshop.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.javandy.carshop.Exeption.CarNotFoundException;
-import ru.javandy.carshop.Exeption.CustomerNotFoundException;
+import ru.javandy.carshop.exeption.CarNotFoundException;
+import ru.javandy.carshop.exeption.CustomerNotFoundException;
 import ru.javandy.carshop.model.Car;
 import ru.javandy.carshop.service.CarService;
 import ru.javandy.carshop.service.CustomerService;

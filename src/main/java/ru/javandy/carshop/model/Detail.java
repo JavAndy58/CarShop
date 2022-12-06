@@ -21,8 +21,7 @@ public class Detail {
     public Detail() {
     }
 
-    public Detail(String name, int amount, double purchasePrice,
-                  double retailPrice, String supplier, boolean bringing) {
+    public Detail(String name, int amount, double purchasePrice, double retailPrice, String supplier, boolean bringing) {
         this.name = name;
         this.amount = amount;
         this.purchasePrice = purchasePrice;

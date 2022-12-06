@@ -1,4 +1,4 @@
-package ru.javandy.carshop.Exeption;
+package ru.javandy.carshop.exeption;
 
 public class CustomerNotFoundException extends RuntimeException {
     public CustomerNotFoundException(int id) {

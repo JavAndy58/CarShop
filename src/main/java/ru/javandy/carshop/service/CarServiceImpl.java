@@ -1,6 +1,7 @@
 package ru.javandy.carshop.service;
 
 import org.springframework.stereotype.Service;
+import ru.javandy.carshop.dto.CarMapper;
 import ru.javandy.carshop.model.Car;
 import ru.javandy.carshop.model.Customer;
 import ru.javandy.carshop.repository.CarRepository;
@@ -12,9 +13,11 @@ import java.util.Optional;
 @Service
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
+    private final CarMapper carMapper;
 
-    public CarServiceImpl(CarRepository carRepository) {
+    public CarServiceImpl(CarRepository carRepository, CarMapper carMapper) {
         this.carRepository = carRepository;
+        this.carMapper = carMapper;
     }
 
     @Override
