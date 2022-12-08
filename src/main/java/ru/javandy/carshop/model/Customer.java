@@ -1,10 +1,12 @@
 package ru.javandy.carshop.model;
 
+import lombok.Builder;
 import lombok.Data;
 import javax.persistence.*;
 
 @Data
 @Entity
+@Builder
 @Table(name = "customers")
 
 public class Customer {
