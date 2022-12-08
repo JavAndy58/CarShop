@@ -1,7 +1,6 @@
 package ru.javandy.carshop.service;
 
 import org.springframework.stereotype.Service;
-import ru.javandy.carshop.dto.CarMapper;
 import ru.javandy.carshop.model.Car;
 import ru.javandy.carshop.model.Customer;
 import ru.javandy.carshop.repository.CarRepository;
