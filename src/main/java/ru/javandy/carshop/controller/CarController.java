@@ -1,12 +1,9 @@
 package ru.javandy.carshop.controller;
 
 import org.springframework.web.bind.annotation.*;
+import ru.javandy.carshop.dto.CarDTO;
 import ru.javandy.carshop.exeption.CarNotFoundException;
-import ru.javandy.carshop.exeption.CustomerNotFoundException;
-import ru.javandy.carshop.model.Car;
 import ru.javandy.carshop.service.CarService;
-import ru.javandy.carshop.service.CustomerService;
-
 import java.util.List;
 
 @RestController
@@ -14,41 +11,37 @@ import java.util.List;
 public class CarController {
 
     private final CarService carService;
-    private final CustomerService customerService;
 
-    public CarController(CarService carService, CustomerService customerService) {
+    public CarController(CarService carService) {
         this.carService = carService;
-        this.customerService = customerService;
     }
 
     @GetMapping("/cars")
-    public List<Car> getAllCars() {
-        return carService.findAll();
+    public List<CarDTO> getAllCars() {
+        return carService.getAllCars();
     }
 
     @PostMapping("/car")
-    public Car createCar(@RequestBody Car car) {
-        return carService.save(car);
+    public CarDTO createCar(CarDTO carDTO) {
+        return carService.saveCar(carDTO);
     }
 
     @GetMapping("/car/{id}")
-    Car getCarById(@PathVariable int id) {
-        return carService.findById(id)
-                .orElseThrow(() -> new CarNotFoundException(id));
+    public CarDTO getCarId(@PathVariable int id) {
+        return carService.findByCarId(id);
     }
-    @GetMapping("/car_customer/{id}")
-    public List<Car> getCarByCustomer(@PathVariable int id) {
-        return carService.findByCustomer(customerService.findById(id)
-                .orElseThrow(() -> new CustomerNotFoundException(id)));
+
+    @PutMapping("/car/{id}")
+    CarDTO updateCar(@RequestBody CarDTO carDTO, @PathVariable int id) {
+        return carService.updateCarId(carDTO, id);
     }
 
     @DeleteMapping("/car/{id}")
     String deleteCar(@PathVariable int id) {
-        if (!carService.existsById(id)) {
+        if (!carService.existsByCarId(id)) {
             throw new CarNotFoundException(id);
         }
-        carService.deleteById(id);
-        return "Car with id " + id + " has been deleted success.";
+        carService.deleteByCarId(id);
+        return "Car with id " + id + " has been delete success.";
     }
-
 }

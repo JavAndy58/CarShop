@@ -1,61 +1,73 @@
 package ru.javandy.carshop.service;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
+import ru.javandy.carshop.dto.CarDTO;
+import ru.javandy.carshop.exeption.CarNotFoundException;
 import ru.javandy.carshop.model.Car;
-import ru.javandy.carshop.model.Customer;
 import ru.javandy.carshop.repository.CarRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
-    private final CarMapper carMapper;
+    private final ModelMapper modelMapper;
 
-    public CarServiceImpl(CarRepository carRepository, CarMapper carMapper) {
+    public CarServiceImpl(CarRepository carRepository, ModelMapper modelMapper) {
         this.carRepository = carRepository;
-        this.carMapper = carMapper;
+        this.modelMapper = modelMapper;
     }
 
-    @Override
-    public List<Car> findAll() {
-        List<Car> rsl = new ArrayList<>();
-        carRepository.findAll().forEach(rsl::add);
-        return rsl;
+    public List<CarDTO> getAllCars() {
+        return carRepository.findAll()
+                .stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public List<Car> findByCustomer(Customer customer) {
-        List<Car> rsl = new ArrayList<>();
-        carRepository.findByCustomer(customer).forEach(rsl::add);
-        return rsl;
+    public CarDTO saveCar(CarDTO carDTO) {
+        Car car = carRepository.save(toEntity(carDTO));
+        return toDTO(car);
     }
 
-    @Override
-    public Optional<Car> findById(int id) {
-        return carRepository.findById(id);
+    public CarDTO findByCarId(int id) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new CarNotFoundException(id));
+        return toDTO(car);
     }
 
-    @Override
-    public Car save(Car car) {
-        return carRepository.save(car);
+    public CarDTO updateCarId(CarDTO newCarDTO, int id) {
+        Car newCar = toEntity(newCarDTO);
+        Car updateCar = carRepository.findById(id)
+                .map(car -> {
+                    car.setName(newCar.getName());
+                    car.setVinCode(newCar.getVinCode());
+                    car.setCustomer(newCar.getCustomer());
+                    return carRepository.save(car);
+                }).orElseThrow(() -> new CarNotFoundException(id));
+        return toDTO(updateCar);
     }
 
-    @Override
-    public List<Car> saveAll(List<Car> cars) {
-        return (List<Car>) carRepository.saveAll(cars);
-    }
-
-    @Override
-    public void deleteById(int id) {
+    public void deleteByCarId(int id) {
         carRepository.deleteById(id);
     }
 
-    @Override
-    public boolean existsById(int id) {
-        return carRepository.existsById(id);
+    public boolean existsByCarId(int id) {
+        return  carRepository.existsById(id);
+    }
+
+    private CarDTO toDTO(Car car) {
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(car, CarDTO.class);
+    }
+    private Car toEntity(CarDTO carDTO) {
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(carDTO, Car.class);
     }
 
 }
