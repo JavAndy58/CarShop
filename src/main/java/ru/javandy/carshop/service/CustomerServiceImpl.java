@@ -38,7 +38,6 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO findByCustomerId(int id) {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException(id));
-
         return toDTO(customer);
     }
 

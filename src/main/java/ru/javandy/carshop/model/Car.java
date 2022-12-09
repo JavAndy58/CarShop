@@ -3,7 +3,6 @@ package ru.javandy.carshop.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "cars")
 public class Car {
 
     @Id
@@ -60,11 +59,11 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", vinCode='" + vinCode + '\'' +
-                ", customer=" + customer +
-                '}';
+        return "Car{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", vinCode='" + vinCode + '\''
+                + ", customer=" + customer
+                + '}';
     }
 }

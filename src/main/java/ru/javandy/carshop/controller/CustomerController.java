@@ -15,38 +15,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-//    @GetMapping("/customers")
-//    public List<CustomerDTO> getAllCustomers() {
-//        return customerService.findAll()
-//                .stream()
-//                .map(customerMapper::toDTO)
-//                .collect(Collectors.toList());
-//    }
-//
-//    @PostMapping("/customer")
-//    public CustomerDTO createCustomer(@RequestBody CustomerDTO customerDTO) {
-//        Customer customer = CustomerMapper.INSTANCE.toCustomer(customerDTO);
-//
-//        return customerMapper.toDTO(customerService.save(customer));
-//    }
-//
-//    @GetMapping("/customer/{id}")
-//    public CustomerDTO getCustomerById(@PathVariable int id) {
-//        Customer customer = customerService.findById(id)
-//                .orElseThrow(() -> new CustomerNotFoundException(id));
-//        return CustomerMapper.INSTANCE.toDTO(customer);
-//    }
-//
-//    @PutMapping("/customer/{id}")
-//    Customer updateCustomer(@RequestBody Customer newCustomer, @PathVariable int id) {
-//        return customerService.findById(id)
-//                .map(customer -> {
-//                    customer.setName(newCustomer.getName());
-//                    customer.setPhoneNumber(newCustomer.getPhoneNumber());
-//                    return customerService.save(customer);
-//                }).orElseThrow(() -> new CustomerNotFoundException(id));
-//    }
-
     @GetMapping("/customers")
     public List<CustomerDTO> getAllCustomers() {
         return customerService.getAllCustomers();

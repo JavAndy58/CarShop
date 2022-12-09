@@ -1,49 +1,76 @@
 package ru.javandy.carshop.service;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
+import ru.javandy.carshop.dto.OrderDTO;
+import ru.javandy.carshop.exeption.OrderNotFoundException;
 import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.OrderRepository;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
+    private final ModelMapper modelMapper;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper) {
         this.orderRepository = orderRepository;
+        this.modelMapper = modelMapper;
     }
 
-    @Override
-    public List<Order> findAll() {
-        List<Order> rsl = new ArrayList<>();
-        orderRepository.findAll().forEach(rsl::add);
-        return rsl;
+    public List<OrderDTO> getAllOrders() {
+        return orderRepository.findAll()
+                .stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public Optional<Order> findById(int id) {
-        return orderRepository.findById(id);
+    public OrderDTO saveOrder(OrderDTO orderDTO) {
+        Order order = orderRepository.save(toEntity(orderDTO));
+        return toDTO(order);
     }
 
-    @Override
-    public Order save(Order order) {
-        return orderRepository.save(order);
+    public OrderDTO findByOrderId(int id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new OrderNotFoundException(id));
+        return toDTO(order);
     }
 
-    public void delete(Order order) {
-        orderRepository.delete(order);
+    public OrderDTO updateOrderId(OrderDTO newOrderDTO, int id) {
+        Order newOrder = toEntity(newOrderDTO);
+        Order updateOrder = orderRepository.findById(id)
+                .map(order -> {
+                    order.setCreated(newOrder.getCreated());
+                    order.setPrepayment(newOrder.getPrepayment());
+                    order.setDelivered(newOrderDTO.isDelivered());
+                    order.setCardPayment(newOrderDTO.isCardPayment());
+                    order.setNote(newOrderDTO.getNote());
+                    order.setCar(newOrder.getCar());
+                    order.setDetails(newOrder.getDetails());
+                    order.setCustomer(newOrder.getCustomer());
+                    return orderRepository.save(order);
+                }).orElseThrow(() -> new OrderNotFoundException(id));
+        return toDTO(updateOrder);
     }
 
-    @Override
-    public boolean existsById(int id) {
+    public boolean existsByOrderId(int id) {
         return orderRepository.existsById(id);
     }
 
-    @Override
-    public void deleteById(int id) {
+    public void deleteByOrderId(int id) {
         orderRepository.deleteById(id);
+    }
+
+    private OrderDTO toDTO(Order order) {
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(order, OrderDTO.class);
+    }
+    private Order toEntity(OrderDTO orderDTO) {
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(orderDTO, Order.class);
     }
 }

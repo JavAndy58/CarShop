@@ -32,14 +32,14 @@ public class DetailController {
         return detailService.findByDetailId(id);
     }
 
-    @PutMapping("/detail/{id}")
+    @PutMapping("/car/{id}")
     DetailDTO updateDetail(@RequestBody DetailDTO detailDTO, @PathVariable int id) {
         return detailService.updateDetailId(detailDTO, id);
     }
 
     @DeleteMapping("/detail/{id}")
     String deleteDetail(@PathVariable int id) {
-        if(!detailService.existsByDetailId(id)) {
+        if (!detailService.existsByDetailId(id)) {
             throw new DetailNotFoundException(id);
         }
         detailService.deleteByDetailId(id);

@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "orders")
 public class Order {
 
     @Id
@@ -121,16 +120,16 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", created=" + created +
-                ", prepayment=" + prepayment +
-                ", delivered=" + delivered +
-                ", cardPayment=" + cardPayment +
-                ", note='" + note + '\'' +
-                ", car=" + car +
-                ", details=" + details +
-                ", customer=" + customer +
-                '}';
+        return "Order{"
+                + "id=" + id
+                + ", created=" + created
+                + ", prepayment=" + prepayment
+                + ", delivered=" + delivered
+                + ", cardPayment=" + cardPayment
+                + ", note='" + note + '\''
+                + ", car=" + car
+                + ", details=" + details
+                + ", customer=" + customer
+                + '}';
     }
 }
