@@ -1,8 +1,17 @@
 package ru.javandy.carshop.model;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@Table(name = "customers")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer {
 
     @Id
@@ -11,44 +20,8 @@ public class Customer {
     private String name;
     private String phoneNumber;
 
-    public Customer() {
-    }
-
     public Customer(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", phoneNumber='" + phoneNumber + '\''
-                + '}';
     }
 }

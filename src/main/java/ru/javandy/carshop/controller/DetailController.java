@@ -27,12 +27,12 @@ public class DetailController {
         return detailService.saveDetail(detailDTO);
     }
 
-    @GetMapping("/car/{id}")
+    @GetMapping("/detail/{id}")
     public DetailDTO getDetailId(@PathVariable int id) {
         return detailService.findByDetailId(id);
     }
 
-    @PutMapping("/car/{id}")
+    @PutMapping("/detail/{id}")
     DetailDTO updateDetail(@RequestBody DetailDTO detailDTO, @PathVariable int id) {
         return detailService.updateDetailId(detailDTO, id);
     }

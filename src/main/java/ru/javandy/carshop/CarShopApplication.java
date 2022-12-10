@@ -22,17 +22,18 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-@Data
 @SpringBootApplication
 public class CarShopApplication {
+
+
+
+    public static void main(String[] args) {
+        SpringApplication.run(CarShopApplication.class, args);
+    }
 
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(CarShopApplication.class, args);
     }
 
     @Bean
@@ -58,7 +59,7 @@ public class CarShopApplication {
         List<Car> cars = Arrays.asList(carFocus, carLogan, carAudi);
 
         List<Detail> detailOrderOne = Arrays.asList(detailRel, detailRul);
-        List<Detail> detailOrderTwo = Collections.singletonList(detailClips);
+        List<Detail> detailOrderTwo = Arrays.asList(detailClips);
         List<Detail> detailOrderThree = Arrays.asList(detailPl, detailScr);
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         Date dateOrderOne = format.parse("01.12.2022");

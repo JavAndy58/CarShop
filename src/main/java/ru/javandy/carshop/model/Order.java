@@ -1,11 +1,19 @@
 package ru.javandy.carshop.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Data
+@Table(name = "orders")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
 
     @Id
@@ -31,9 +39,6 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    public Order() {
-    }
-
     public Order(Date created, double prepayment, boolean delivered, boolean cardPayment,
                  String note, Car car, List<Detail> details, Customer customer) {
         this.created = created;
@@ -44,92 +49,5 @@ public class Order {
         this.car = car;
         this.details = details;
         this.customer = customer;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public double getPrepayment() {
-        return prepayment;
-    }
-
-    public void setPrepayment(double prepayment) {
-        this.prepayment = prepayment;
-    }
-
-    public boolean isDelivered() {
-        return delivered;
-    }
-
-    public void setDelivered(boolean delivered) {
-        this.delivered = delivered;
-    }
-
-    public boolean isCardPayment() {
-        return cardPayment;
-    }
-
-    public void setCardPayment(boolean cardPayment) {
-        this.cardPayment = cardPayment;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public List<Detail> getDetails() {
-        return details;
-    }
-
-    public void setDetails(List<Detail> details) {
-        this.details = details;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{"
-                + "id=" + id
-                + ", created=" + created
-                + ", prepayment=" + prepayment
-                + ", delivered=" + delivered
-                + ", cardPayment=" + cardPayment
-                + ", note='" + note + '\''
-                + ", car=" + car
-                + ", details=" + details
-                + ", customer=" + customer
-                + '}';
     }
 }
