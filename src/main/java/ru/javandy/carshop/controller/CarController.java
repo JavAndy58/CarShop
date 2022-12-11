@@ -22,7 +22,7 @@ public class CarController {
     }
 
     @PostMapping("/car")
-    public CarDTO createCar(CarDTO carDTO) {
+    public CarDTO createCar(@RequestBody CarDTO carDTO) {
         return carService.saveCar(carDTO);
     }
 

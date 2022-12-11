@@ -23,7 +23,7 @@ public class DetailController {
     }
 
     @PostMapping("/detail")
-    public DetailDTO createDetail(DetailDTO detailDTO) {
+    public DetailDTO createDetail(@RequestBody DetailDTO detailDTO) {
         return detailService.saveDetail(detailDTO);
     }
 
