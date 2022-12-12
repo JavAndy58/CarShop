@@ -47,6 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(customer -> {
                     customer.setName(newCustomer.getName());
                     customer.setPhoneNumber(newCustomer.getPhoneNumber());
+                    customer.setCars(newCustomer.getCars());
                     return customerRepository.save(customer);
                 }).orElseThrow(() -> new CustomerNotFoundException(id));
         return toDTO(updateCustomer);

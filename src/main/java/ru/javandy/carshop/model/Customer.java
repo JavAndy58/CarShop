@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,8 +22,13 @@ public class Customer {
     private String name;
     private String phoneNumber;
 
-    public Customer(String name, String phoneNumber) {
+    @OneToMany
+    @JoinColumn(name = "customer_id")
+    private List<Car> cars = new ArrayList<>();
+
+    public Customer(String name, String phoneNumber, List<Car> cars) {
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.cars = cars;
     }
 }

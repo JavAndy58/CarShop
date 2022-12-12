@@ -45,7 +45,6 @@ public class CarServiceImpl implements CarService {
                 .map(car -> {
                     car.setName(newCar.getName());
                     car.setVinCode(newCar.getVinCode());
-                    car.setCustomer(newCar.getCustomer());
                     return carRepository.save(car);
                 }).orElseThrow(() -> new CarNotFoundException(id));
         return toDTO(updateCar);
