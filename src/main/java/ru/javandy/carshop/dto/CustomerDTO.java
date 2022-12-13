@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,8 +15,8 @@ public class CustomerDTO {
     private String name;
     private String phoneNumber;
 
-    @JsonProperty("car")
-    private CarDTO carDTO;
+    @JsonProperty("cars")
+    private List<CarDTO> carsDTO;
 }
 
 

@@ -7,7 +7,7 @@ CREATE TABLE cars (
     id SERIAL PRIMARY KEY,
     name VARCHAR (100),
     vin_code VARCHAR (20),
-    customer_id INT REFERENCES customers(id) ON DELETE SET NULL
+    customer_id INT REFERENCES customers(id)
 );
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,

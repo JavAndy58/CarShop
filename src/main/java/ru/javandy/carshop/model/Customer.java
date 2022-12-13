@@ -22,7 +22,7 @@ public class Customer {
     private String name;
     private String phoneNumber;
 
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     @JoinColumn(name = "customer_id")
     private List<Car> cars = new ArrayList<>();
 

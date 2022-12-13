@@ -17,6 +17,10 @@ public class Car {
     private String name;
     private String vinCode;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="customer_id")
+    private Customer customer;
+
     public Car(String name, String vinCode) {
         this.name = name;
         this.vinCode = vinCode;
