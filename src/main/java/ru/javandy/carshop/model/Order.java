@@ -31,7 +31,7 @@ public class Order {
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")
     private List<Detail> details = new ArrayList<>();
 
@@ -40,14 +40,21 @@ public class Order {
     private Customer customer;
 
     public Order(Date created, double prepayment, boolean delivered, boolean cardPayment,
-                 String note, Car car, List<Detail> details, Customer customer) {
+                 String note, Car car, Customer customer) {
         this.created = created;
         this.prepayment = prepayment;
         this.delivered = delivered;
         this.cardPayment = cardPayment;
         this.note = note;
         this.car = car;
-        this.details = details;
         this.customer = customer;
+    }
+
+    public void addDetail(Detail detail) {
+        details.add(detail);
+    }
+
+    public void removeDetail(Detail detail) {
+        details.remove(detail);
     }
 }

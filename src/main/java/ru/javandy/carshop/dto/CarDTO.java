@@ -1,13 +1,12 @@
 package ru.javandy.carshop.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.List;
-
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarDTO {
@@ -15,6 +14,8 @@ public class CarDTO {
     private String name;
     private String vinCode;
 
+    @JsonBackReference
     @JsonProperty("customer")
     private CustomerDTO customerDTO;
+
 }

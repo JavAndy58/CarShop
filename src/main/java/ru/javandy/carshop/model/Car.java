@@ -1,5 +1,7 @@
 package ru.javandy.carshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,8 +19,9 @@ public class Car {
     private String name;
     private String vinCode;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
     @JoinColumn(name="customer_id")
+    @ManyToOne
     private Customer customer;
 
     public Car(String name, String vinCode) {

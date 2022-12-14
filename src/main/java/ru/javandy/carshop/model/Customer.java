@@ -1,6 +1,8 @@
 package ru.javandy.carshop.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,13 +24,22 @@ public class Customer {
     private String name;
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "customer")
-    @JoinColumn(name = "customer_id")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Car> cars = new ArrayList<>();
 
-    public Customer(String name, String phoneNumber, List<Car> cars) {
+    public Customer(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.cars = cars;
+    }
+
+    public void addCar(Car car) {
+        cars.add(car);
+        car.setCustomer(this);
+    }
+
+    public void removeCar(Car car) {
+        cars.remove(car);
+        car.setCustomer(null);
     }
 }
