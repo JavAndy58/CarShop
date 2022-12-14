@@ -7,19 +7,15 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class CustomerDTO {
     private int id;
     private String name;
     private String phoneNumber;
 
-    @JsonProperty("car")
-    @JsonManagedReference
-    private List<CarDTO> carsDTO;
+//    @JsonProperty("car")
+//    @JsonManagedReference
+    private List<CarDTO> cars;
 
 }
 
