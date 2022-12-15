@@ -3,19 +3,18 @@ package ru.javandy.carshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "customers")
-@AllArgsConstructor
-@NoArgsConstructor
 public class Customer {
 
     @Id
@@ -27,6 +26,9 @@ public class Customer {
     @JsonManagedReference
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Car> cars = new ArrayList<>();
+
+    public Customer() {
+    }
 
     public Customer(String name, String phoneNumber) {
         this.name = name;

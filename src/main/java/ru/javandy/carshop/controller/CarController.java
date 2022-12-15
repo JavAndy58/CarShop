@@ -6,6 +6,7 @@ import ru.javandy.carshop.dto.CarDTO;
 import ru.javandy.carshop.exeption.CarNotFoundException;
 import ru.javandy.carshop.mapper.CarMapper;
 import ru.javandy.carshop.model.Car;
+import ru.javandy.carshop.repository.CarRepository;
 import ru.javandy.carshop.service.CarService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,12 @@ public class CarController {
 
     private final CarService carService;
     private final CarMapper carMapper;
+//    private final CarRepository carRepository;
+
+//    @GetMapping("/cars")
+//    public List<Car> getAll() {
+//        return carRepository.findAll();
+//    }
 
     @GetMapping("/cars")
     public List<CarDTO> getAllCars() {

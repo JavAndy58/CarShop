@@ -7,7 +7,8 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class CustomerDTO {
     private int id;
     private String name;
@@ -17,6 +18,8 @@ public class CustomerDTO {
 //    @JsonManagedReference
     private List<CarDTO> cars;
 
+    public CustomerDTO() {
+    }
 }
 
 
