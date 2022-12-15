@@ -12,6 +12,6 @@ public class CarDTO {
 
 //    @JsonBackReference
 //    @JsonProperty("customer")
-    private CustomerDTO customers;
+    private CustomerDTO customerDTO;
 
 }

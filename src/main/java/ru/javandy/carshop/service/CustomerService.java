@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CustomerService {
-    List<CustomerDTO> getAllCustomers();
-    CustomerDTO saveCustomer(CustomerDTO customerDTO);
-    CustomerDTO findByCustomerId(int id);
-    CustomerDTO updateCustomerId(CustomerDTO customerDTO, int id);
+    List<Customer> getAllCustomers();
+    Customer saveCustomer(Customer customer);
+    Customer findByCustomerId(int id);
+    Customer updateCustomerId(Customer customer, int id);
 }

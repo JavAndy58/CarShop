@@ -20,8 +20,8 @@ public class Car {
     private String vinCode;
 
     @JsonBackReference
-    @JoinColumn(name="customer_id")
     @ManyToOne
+    @JoinColumn(name="customer_id")
     private Customer customer;
 
     public Car(String name, String vinCode) {
