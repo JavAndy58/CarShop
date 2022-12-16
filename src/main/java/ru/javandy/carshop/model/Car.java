@@ -1,14 +1,10 @@
 package ru.javandy.carshop.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "cars")
 public class Car {
 
@@ -19,8 +15,7 @@ public class Car {
     private String vinCode;
 
     @JsonBackReference
-    @JoinColumn(name = "customer_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Customer customer;
 
     public Car() {
@@ -29,5 +24,60 @@ public class Car {
     public Car(String name, String vinCode) {
         this.name = name;
         this.vinCode = vinCode;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVinCode() {
+        return vinCode;
+    }
+
+    public void setVinCode(String vinCode) {
+        this.vinCode = vinCode;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", vinCode='" + vinCode + '\'' +
+                ", customer=" + customer +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return id == car.id && Objects.equals(name, car.name) && Objects.equals(vinCode, car.vinCode) && Objects.equals(customer, car.customer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, vinCode, customer);
     }
 }

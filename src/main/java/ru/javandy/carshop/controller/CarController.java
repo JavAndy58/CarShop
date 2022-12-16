@@ -18,7 +18,7 @@ public class CarController {
 
     private final CarService carService;
     private final CarMapper carMapper;
-//    private final CarRepository carRepository;
+    private final CarRepository carRepository;
 
 //    @GetMapping("/cars")
 //    public List<Car> getAll() {
@@ -44,6 +44,11 @@ public class CarController {
         Car car = carMapper.toEntity(carDTO);
         return carMapper.toDTO(carService.saveCar(car));
     }
+//    @PostMapping("/car")
+//    public Car createCar(@RequestBody Car car) {
+//        return carRepository.save(car);
+//    }
+
 
     @PutMapping("/car/{id}")
     CarDTO updateCar(@RequestBody CarDTO carDTO, @PathVariable int id) {

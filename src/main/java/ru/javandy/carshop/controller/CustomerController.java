@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.javandy.carshop.dto.CustomerDTO;
 import ru.javandy.carshop.mapper.CustomerMapper;
 import ru.javandy.carshop.model.Customer;
+import ru.javandy.carshop.repository.CustomerRepository;
 import ru.javandy.carshop.service.CustomerService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,14 +17,20 @@ public class CustomerController {
 
     private final CustomerService customerService;
     private final CustomerMapper customerMapper;
+    private final CustomerRepository customerRepository;
 
     @GetMapping("/customers")
-    public List<CustomerDTO> getAllCustomers() {
-        return customerService.getAllCustomers()
-                .stream()
-                .map(customerMapper::toDTO)
-                .collect(Collectors.toList());
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll();
     }
+
+//    @GetMapping("/customers")
+//    public List<CustomerDTO> getAllCustomers() {
+//        return customerService.getAllCustomers()
+//                .stream()
+//                .map(customerMapper::toDTO)
+//                .collect(Collectors.toList());
+//    }
 
     @GetMapping("/customer/{id}")
     public CustomerDTO getCustomerId(@PathVariable int id) {

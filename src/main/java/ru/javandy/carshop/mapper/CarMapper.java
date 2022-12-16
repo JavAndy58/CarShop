@@ -9,12 +9,12 @@ import ru.javandy.carshop.model.Car;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = CustomerMapper.class, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+//@Mapper(componentModel = "spring", uses = CustomerMapper.class, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface CarMapper {
 
     CarDTO toDTO(Car car);
     Car toEntity(CarDTO carDTO);
-
 
 //    CarMapper INSTANCE = Mappers.getMapper(CarMapper.class);
 //    Car toEntity(CarDTO carDTO);

@@ -11,39 +11,39 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class DetailController {
 
-    private final DetailService detailService;
-
-    public DetailController(DetailService detailService) {
-        this.detailService = detailService;
-    }
-
-    @GetMapping("/details")
-    public List<DetailDTO> getAllDetails() {
-        return detailService.getAllDetails();
-    }
-
-    @PostMapping("/detail")
-    public DetailDTO createDetail(@RequestBody DetailDTO detailDTO) {
-        return detailService.saveDetail(detailDTO);
-    }
-
-    @GetMapping("/detail/{id}")
-    public DetailDTO getDetailId(@PathVariable int id) {
-        return detailService.findByDetailId(id);
-    }
-
-    @PutMapping("/detail/{id}")
-    DetailDTO updateDetail(@RequestBody DetailDTO detailDTO, @PathVariable int id) {
-        return detailService.updateDetailId(detailDTO, id);
-    }
-
-    @DeleteMapping("/detail/{id}")
-    String deleteDetail(@PathVariable int id) {
-        if (!detailService.existsByDetailId(id)) {
-            throw new DetailNotFoundException(id);
-        }
-        detailService.deleteByDetailId(id);
-        return "Detail with id " + id + " has been delete success.";
-    }
-
+//    private final DetailService detailService;
+//
+//    public DetailController(DetailService detailService) {
+//        this.detailService = detailService;
+//    }
+//
+//    @GetMapping("/details")
+//    public List<DetailDTO> getAllDetails() {
+//        return detailService.getAllDetails();
+//    }
+//
+//    @PostMapping("/detail")
+//    public DetailDTO createDetail(@RequestBody DetailDTO detailDTO) {
+//        return detailService.saveDetail(detailDTO);
+//    }
+//
+//    @GetMapping("/detail/{id}")
+//    public DetailDTO getDetailId(@PathVariable int id) {
+//        return detailService.findByDetailId(id);
+//    }
+//
+//    @PutMapping("/detail/{id}")
+//    DetailDTO updateDetail(@RequestBody DetailDTO detailDTO, @PathVariable int id) {
+//        return detailService.updateDetailId(detailDTO, id);
+//    }
+//
+//    @DeleteMapping("/detail/{id}")
+//    String deleteDetail(@PathVariable int id) {
+//        if (!detailService.existsByDetailId(id)) {
+//            throw new DetailNotFoundException(id);
+//        }
+//        detailService.deleteByDetailId(id);
+//        return "Detail with id " + id + " has been delete success.";
+//    }
+//
 }

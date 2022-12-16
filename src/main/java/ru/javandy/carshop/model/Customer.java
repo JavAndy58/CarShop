@@ -1,19 +1,12 @@
 package ru.javandy.carshop.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-
+import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "customers")
 public class Customer {
 
@@ -24,7 +17,7 @@ public class Customer {
     private String phoneNumber;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Car> cars = new ArrayList<>();
 
     public Customer() {
@@ -36,12 +29,67 @@ public class Customer {
     }
 
     public void addCar(Car car) {
-        cars.add(car);
+        this.cars.add(car);
         car.setCustomer(this);
     }
 
     public void removeCar(Car car) {
-        cars.remove(car);
+        this.cars.remove(car);
         car.setCustomer(null);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id == customer.id && Objects.equals(name, customer.name) && Objects.equals(phoneNumber, customer.phoneNumber) && Objects.equals(cars, customer.cars);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, phoneNumber, cars);
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", cars=" + cars +
+                '}';
     }
 }
