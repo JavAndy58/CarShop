@@ -1,6 +1,5 @@
 package ru.javandy.carshop.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -13,10 +12,6 @@ public class Car {
     private int id;
     private String name;
     private String vinCode;
-
-    @JsonBackReference
-    @ManyToOne()
-    private Customer customer;
 
     public Car() {
     }
@@ -50,12 +45,17 @@ public class Car {
         this.vinCode = vinCode;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return id == car.id && Objects.equals(name, car.name) && Objects.equals(vinCode, car.vinCode);
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, vinCode);
     }
 
     @Override
@@ -64,20 +64,6 @@ public class Car {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", vinCode='" + vinCode + '\'' +
-                ", customer=" + customer +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Car car = (Car) o;
-        return id == car.id && Objects.equals(name, car.name) && Objects.equals(vinCode, car.vinCode) && Objects.equals(customer, car.customer);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, vinCode, customer);
     }
 }

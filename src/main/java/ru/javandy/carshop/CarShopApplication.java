@@ -45,6 +45,8 @@ public class CarShopApplication {
         Customer customerIvan = new Customer("Иван Петров", "+79273893138");
         Customer customerEvg = new Customer("Ершое Евгений", "+72273893138");
         Customer customerVlad = new Customer("Макаров Владимир", "+75553893138");
+
+
         customerIvan.addCar(carFocus);
         customerIvan.addCar(carLogan);
         customerEvg.addCar(carAudi);

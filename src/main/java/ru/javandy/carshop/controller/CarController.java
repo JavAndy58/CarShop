@@ -18,12 +18,6 @@ public class CarController {
 
     private final CarService carService;
     private final CarMapper carMapper;
-    private final CarRepository carRepository;
-
-//    @GetMapping("/cars")
-//    public List<Car> getAll() {
-//        return carRepository.findAll();
-//    }
 
     @GetMapping("/cars")
     public List<CarDTO> getAllCars() {

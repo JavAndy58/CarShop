@@ -10,9 +10,9 @@ public class CarDTO {
     private String name;
     private String vinCode;
 
-    @JsonBackReference
+//    @JsonBackReference
 //    @JsonProperty("customer")
-    private CustomerDTO customer;
+//    private CustomerDTO customer;
 
     public CarDTO() {
     }
@@ -39,13 +39,5 @@ public class CarDTO {
 
     public void setVinCode(String vinCode) {
         this.vinCode = vinCode;
-    }
-
-    public CustomerDTO getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CustomerDTO customer) {
-        this.customer = customer;
     }
 }

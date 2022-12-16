@@ -1,74 +1,57 @@
 package ru.javandy.carshop.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.javandy.carshop.dto.OrderDTO;
+import ru.javandy.carshop.exeption.DetailNotFoundException;
 import ru.javandy.carshop.exeption.OrderNotFoundException;
 import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.OrderRepository;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-//    private final OrderRepository orderRepository;
-//    private final ModelMapper modelMapper;
+    private final OrderRepository orderRepository;
 
-//    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper) {
-//        this.orderRepository = orderRepository;
-//        this.modelMapper = modelMapper;
-//    }
-//
-//    public List<OrderDTO> getAllOrders() {
-//        return orderRepository.findAll()
-//                .stream()
-//                .map(this::toDTO)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public OrderDTO saveOrder(OrderDTO orderDTO) {
-//        Order order = orderRepository.save(toEntity(orderDTO));
-//        return toDTO(order);
-//    }
-//
-//    public OrderDTO findByOrderId(int id) {
-//        Order order = orderRepository.findById(id)
-//                .orElseThrow(() -> new OrderNotFoundException(id));
-//        return toDTO(order);
-//    }
-//
-//    public OrderDTO updateOrderId(OrderDTO newOrderDTO, int id) {
-//        Order newOrder = toEntity(newOrderDTO);
-//        Order updateOrder = orderRepository.findById(id)
-//                .map(order -> {
-//                    order.setCreated(newOrder.getCreated());
-//                    order.setPrepayment(newOrder.getPrepayment());
-//                    order.setDelivered(newOrderDTO.isDelivered());
-//                    order.setCardPayment(newOrderDTO.isCardPayment());
-//                    order.setNote(newOrderDTO.getNote());
-//                    order.setCar(newOrder.getCar());
+
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    public Order saveOrder(Order order) {
+        return orderRepository.save(order);
+    }
+
+    public Order findByOrderId(int id) {
+        return orderRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id));
+    }
+
+    public Order updateOrderId(Order newOrder, int id) {
+        return orderRepository.findById(id)
+                .map(order -> {
+                    order.setCreated(newOrder.getCreated());
+                    order.setPrepayment(newOrder.getPrepayment());
+                    order.setDelivered(newOrder.isDelivered());
+                    order.setCardPayment(newOrder.isCardPayment());
+                    order.setNote(newOrder.getNote());
+                    order.setCar(newOrder.getCar());
+
+
 //                    order.setDetails(newOrder.getDetails());
-//                    order.setCustomer(newOrder.getCustomer());
-//                    return orderRepository.save(order);
-//                }).orElseThrow(() -> new OrderNotFoundException(id));
-//        return toDTO(updateOrder);
-//    }
-//
-//    public boolean existsByOrderId(int id) {
-//        return orderRepository.existsById(id);
-//    }
-//
-//    public void deleteByOrderId(int id) {
-//        orderRepository.deleteById(id);
-//    }
-//
-//    private OrderDTO toDTO(Order order) {
-//        modelMapper.getConfiguration()
-//                .setMatchingStrategy(MatchingStrategies.LOOSE);
-//        return modelMapper.map(order, OrderDTO.class);
-//    }
-//    private Order toEntity(OrderDTO orderDTO) {
-//        modelMapper.getConfiguration()
-//                .setMatchingStrategy(MatchingStrategies.LOOSE);
-//        return modelMapper.map(orderDTO, Order.class);
-//    }
+
+
+
+
+                    order.setCustomer(newOrder.getCustomer());
+                    return orderRepository.save(order);
+                }).orElseThrow(() -> new OrderNotFoundException(id));
+    }
+
+    public boolean existsByOrderId(int id) {
+        return orderRepository.existsById(id);
+    }
+
+    public void deleteByOrderId(int id) {
+        orderRepository.deleteById(id);
+    }
 }

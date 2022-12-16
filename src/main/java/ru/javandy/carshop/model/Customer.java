@@ -16,8 +16,9 @@ public class Customer {
     private String name;
     private String phoneNumber;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "customer_id")
     private List<Car> cars = new ArrayList<>();
 
     public Customer() {
@@ -30,12 +31,10 @@ public class Customer {
 
     public void addCar(Car car) {
         this.cars.add(car);
-        car.setCustomer(this);
     }
 
     public void removeCar(Car car) {
         this.cars.remove(car);
-        car.setCustomer(null);
     }
 
     public int getId() {

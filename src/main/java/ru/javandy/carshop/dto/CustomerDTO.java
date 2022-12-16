@@ -13,7 +13,7 @@ public class CustomerDTO {
     private String phoneNumber;
 
 //    @JsonProperty("car")
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<CarDTO> cars;
 
     public CustomerDTO() {
