@@ -11,8 +11,6 @@ public class CarDTO {
     private String vinCode;
 
 //    @JsonBackReference
-//    @JsonProperty("customer")
-//    private CustomerDTO customer;
 
     public CarDTO() {
     }

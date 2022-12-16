@@ -12,8 +12,8 @@ public class CustomerDTO {
     private String name;
     private String phoneNumber;
 
-//    @JsonProperty("car")
 //    @JsonManagedReference
+    @JsonProperty("car")
     private List<CarDTO> cars;
 
     public CustomerDTO() {

@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         Car car = null;
         if (!newCustomer.getCars().isEmpty()) {
-            car = newCustomer.getCars().get(0);
+            car = newCustomer.getCars().get(newCustomer.getCars().size() - 1);
         }
         Car finalCar = car;
         return customerRepository.findById(id)
