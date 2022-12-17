@@ -38,8 +38,16 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(customer -> {
                     customer.setName(newCustomer.getName());
                     customer.setPhoneNumber(newCustomer.getPhoneNumber());
-                    customer.addCar(finalCar);
+
+                     if (customer.getCars().size() != newCustomer.getCars().size()) {
+                         customer.addCar(finalCar);
+                     }
+
                     return customerRepository.save(customer);
                 }).orElseThrow(() -> new CustomerNotFoundException(id));
+    }
+
+    public Customer findByCars(Car car) {
+        return customerRepository.findByCars(car);
     }
 }

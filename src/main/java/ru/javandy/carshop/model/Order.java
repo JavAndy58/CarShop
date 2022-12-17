@@ -23,7 +23,7 @@ public class Order {
     private boolean cardPayment;
     private String note;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(name = "car_id")
     private Car car;
 
@@ -31,7 +31,7 @@ public class Order {
     @JoinColumn(name = "order_id")
     private List<Detail> details = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
