@@ -15,11 +15,16 @@ import java.util.stream.Collectors;
 
 
 @Service
-@RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
-    private final CustomerRepository customerRepository;
-    private final OrderRepository orderRepository;
+    private final CustomerService customerService;
+    private final OrderService orderService;
+
+    public CarServiceImpl(CarRepository carRepository, CustomerService customerService, OrderService orderService) {
+        this.carRepository = carRepository;
+        this.customerService = customerService;
+        this.orderService = orderService;
+    }
 
     public List<Car> getAllCars() {
         return carRepository.findAll();
@@ -45,26 +50,14 @@ public class CarServiceImpl implements CarService {
     public void deleteByCarId(int id) {
 
         Car carDel = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
-        Customer customerCarDel = customerRepository.findByCars(carDel);
+        Customer customerCarDel = customerService.findByCars(carDel);
         customerCarDel.removeCar(carDel);
-        customerRepository.save(customerCarDel);
+        customerService.saveCustomer(customerCarDel);
+        List<Order> ordersCarDel = orderService.getAllOrderCustomerAndCar(customerCarDel, carDel);
+        ordersCarDel.forEach(customer -> customer.setCar(null));
+        orderService.saveOrders(ordersCarDel);
 
 
-
-
-
-
-
-
-
-
-
-
-//        List<Order> collect = orderRepository.findByCustomerAndCar(customerCarDel, carDel)
-//                .stream()
-//                .map(order -> order.setCar(null))
-//                .collect(Collectors.toList());
-//
 
     }
 

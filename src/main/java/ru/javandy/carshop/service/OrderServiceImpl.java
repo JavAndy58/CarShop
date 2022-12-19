@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.javandy.carshop.exeption.DetailNotFoundException;
 import ru.javandy.carshop.exeption.OrderNotFoundException;
+import ru.javandy.carshop.model.Car;
+import ru.javandy.carshop.model.Customer;
 import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.OrderRepository;
 import java.util.List;
@@ -20,6 +22,10 @@ public class OrderServiceImpl implements OrderService {
 
     public Order saveOrder(Order order) {
         return orderRepository.save(order);
+    }
+
+    public List<Order> saveOrders(List<Order> orders) {
+        return orderRepository.saveAll(orders);
     }
 
     public Order findByOrderId(int id) {
@@ -53,5 +59,9 @@ public class OrderServiceImpl implements OrderService {
 
     public void deleteByOrderId(int id) {
         orderRepository.deleteById(id);
+    }
+
+    public List<Order> getAllOrderCustomerAndCar(Customer customer, Car car) {
+        return orderRepository.findByCustomerAndCar(customer, car);
     }
 }

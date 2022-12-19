@@ -68,8 +68,8 @@ public class CarShopApplication {
         List<Order> orders = Arrays.asList(orderOne, orderTwo, orderThree);
 
         return args -> {
-//            customerRepository.saveAll(customers);
-//            orderRepository.saveAll(orders);
+            customerRepository.saveAll(customers);
+            orderRepository.saveAll(orders);
         };
     }
 }

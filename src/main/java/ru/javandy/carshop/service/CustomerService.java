@@ -12,5 +12,5 @@ public interface CustomerService {
     Customer saveCustomer(Customer customer);
     Customer findByCustomerId(int id);
     Customer updateCustomerId(Customer customer, int id);
-//    Customer findByCars(Car car);
+    Customer findByCars(Car car);
 }
