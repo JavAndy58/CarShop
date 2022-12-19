@@ -7,12 +7,7 @@ import ru.javandy.carshop.model.Car;
 import ru.javandy.carshop.model.Customer;
 import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.CarRepository;
-import ru.javandy.carshop.repository.CustomerRepository;
-import ru.javandy.carshop.repository.OrderRepository;
-
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -48,17 +43,13 @@ public class CarServiceImpl implements CarService {
     }
 
     public void deleteByCarId(int id) {
-
         Car carDel = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
         Customer customerCarDel = customerService.findByCars(carDel);
-        customerCarDel.removeCar(carDel);
-        customerService.saveCustomer(customerCarDel);
-        List<Order> ordersCarDel = orderService.getAllOrderCustomerAndCar(customerCarDel, carDel);
+        List<Order> ordersCarDel = orderService.getAllOrdersCar(customerCarDel, carDel);
         ordersCarDel.forEach(customer -> customer.setCar(null));
         orderService.saveOrders(ordersCarDel);
-
-
-
+        customerCarDel.removeCar(carDel);
+        customerService.saveCustomer(customerCarDel);
     }
 
     public boolean existsByCarId(int id) {

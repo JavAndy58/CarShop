@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteById(id);
     }
 
-    public List<Order> getAllOrderCustomerAndCar(Customer customer, Car car) {
-        return orderRepository.findByCustomerAndCar(customer, car);
+    public List<Order> getAllOrdersCar(Customer customer, Car car) {
+        return orderRepository.findByCar(car);
     }
 }

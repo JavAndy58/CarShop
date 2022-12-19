@@ -57,19 +57,19 @@ public class CarShopApplication {
         Date dateOrderTwo = format.parse("03.12.2022");
         Date dateOrderThree = format.parse("05.12.2022");
 
-        Order orderOne = new Order(dateOrderOne, 500, false, false, "", carFocus, customerEvg);
+        Order orderOne = new Order(dateOrderOne, 500, false, false, "", carAudi, customerEvg);
         orderOne.addDetail(detailRel);
         orderOne.addDetail(detailScr);
         Order orderTwo = new Order(dateOrderTwo, 0, false, true, "оплата по приезду", carLogan, customerIvan);
         orderTwo.addDetail(detailRul);
         orderTwo.addDetail(detailClips);
-        Order orderThree = new Order(dateOrderThree, 100, false, false, " доставка месяц", carAudi, customerIvan);
+        Order orderThree = new Order(dateOrderThree, 100, false, false, " доставка месяц", carFocus, customerIvan);
         orderThree.addDetail(detailPl);
         List<Order> orders = Arrays.asList(orderOne, orderTwo, orderThree);
 
         return args -> {
-            customerRepository.saveAll(customers);
-            orderRepository.saveAll(orders);
+//            customerRepository.saveAll(customers);
+//            orderRepository.saveAll(orders);
         };
     }
 }

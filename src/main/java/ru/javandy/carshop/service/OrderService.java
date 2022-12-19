@@ -13,5 +13,5 @@ public interface OrderService {
     Order updateOrderId(Order order, int id);
     boolean existsByOrderId(int id);
     void deleteByOrderId(int id);
-    List<Order> getAllOrderCustomerAndCar(Customer customer, Car car);
+    List<Order> getAllOrdersCar(Customer customer, Car car);
 }

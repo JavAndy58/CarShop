@@ -13,10 +13,12 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    @Column(name = "phone_number", unique = true)
     private String phoneNumber;
 
 //    @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
     @JoinColumn(name = "customer_id")
     private List<Car> cars = new ArrayList<>();
 
