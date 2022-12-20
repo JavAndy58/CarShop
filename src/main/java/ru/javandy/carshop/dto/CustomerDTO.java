@@ -1,10 +1,5 @@
 package ru.javandy.carshop.dto;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDTO {
@@ -12,8 +7,6 @@ public class CustomerDTO {
     private String name;
     private String phoneNumber;
 
-//    @JsonManagedReference
-//   @JsonProperty("cars")
     private List<CarDTO> cars;
 
     public CustomerDTO() {

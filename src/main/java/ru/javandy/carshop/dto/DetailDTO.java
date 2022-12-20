@@ -1,7 +1,5 @@
 package ru.javandy.carshop.dto;
 
-import lombok.*;
-
 public class DetailDTO {
     private int id;
     private String name;

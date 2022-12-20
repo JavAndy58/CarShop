@@ -1,8 +1,5 @@
 package ru.javandy.carshop.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,15 +11,9 @@ public class OrderDTO {
     private boolean delivered;
     private boolean cardPayment;
     private String note;
-
-    @JsonProperty("car")
-    private CarDTO carDTO;
-
-    @JsonProperty("detail")
-    private List<DetailDTO> detailsDTO = new ArrayList<>();
-
-    @JsonProperty("customer")
-    private CustomerDTO customerDTO;
+    private CarDTO car;
+    private List<DetailDTO> details = new ArrayList<>();
+    private CustomerDTO customer;
 
     public OrderDTO() {
     }
@@ -75,27 +66,27 @@ public class OrderDTO {
         this.note = note;
     }
 
-    public CarDTO getCarDTO() {
-        return carDTO;
+    public CarDTO getCar() {
+        return car;
     }
 
-    public void setCarDTO(CarDTO carDTO) {
-        this.carDTO = carDTO;
+    public void setCar(CarDTO car) {
+        this.car = car;
     }
 
-    public List<DetailDTO> getDetailsDTO() {
-        return detailsDTO;
+    public List<DetailDTO> getDetails() {
+        return details;
     }
 
-    public void setDetailsDTO(List<DetailDTO> detailsDTO) {
-        this.detailsDTO = detailsDTO;
+    public void setDetails(List<DetailDTO> details) {
+        this.details = details;
     }
 
-    public CustomerDTO getCustomerDTO() {
-        return customerDTO;
+    public CustomerDTO getCustomer() {
+        return customer;
     }
 
-    public void setCustomerDTO(CustomerDTO customerDTO) {
-        this.customerDTO = customerDTO;
+    public void setCustomer(CustomerDTO customer) {
+        this.customer = customer;
     }
 }

@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import ru.javandy.carshop.dto.OrderDTO;
 import ru.javandy.carshop.model.Order;
 
-@Mapper(componentModel = "spring", uses = {DetailMapper.class, CarMapper.class},
+@Mapper(componentModel = "spring", uses = {DetailMapper.class},
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface OrderMapper {
     OrderDTO toDTO(Order order);

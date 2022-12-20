@@ -10,6 +10,7 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
 
     @Column(name = "vin_code", unique = true, nullable = false)
