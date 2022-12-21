@@ -15,42 +15,29 @@ import java.util.stream.Collectors;
 public class CarController {
 
     private final CarService carService;
-    private final CarMapper carMapper;
 
-    public CarController(CarService carService, CarMapper carMapper) {
+    public CarController(CarService carService) {
         this.carService = carService;
-        this.carMapper = carMapper;
     }
 
     @GetMapping("/cars")
     public List<CarDTO> getAllCars() {
-        return carService.getAllCars()
-                .stream()
-                .map(carMapper::toDTO)
-                .collect(Collectors.toList());
+        return carService.getAllCars();
     }
 
     @GetMapping("/car/{id}")
     public CarDTO getCarId(@PathVariable int id) {
-        Car car = carService.findByCarId(id);
-        return carMapper.toDTO(car);
+        return carService.findByCarId(id);
     }
 
     @PostMapping("/car")
     public CarDTO createCar(@RequestBody CarDTO carDTO) {
-        Car car = carMapper.toEntity(carDTO);
-        return carMapper.toDTO(carService.saveCar(car));
+        return carService.saveCar(carDTO);
     }
-//    @PostMapping("/car")
-//    public Car createCar(@RequestBody Car car) {
-//        return carRepository.save(car);
-//    }
-
 
     @PutMapping("/car/{id}")
     CarDTO updateCar(@RequestBody CarDTO carDTO, @PathVariable int id) {
-        Car car = carMapper.toEntity(carDTO);
-        return carMapper.toDTO(carService.updateCarId(car, id));
+        return carService.updateCarId(carDTO, id);
     }
 
     @DeleteMapping("/car/{id}")

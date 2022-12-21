@@ -15,7 +15,6 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
 
-
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
@@ -42,11 +41,7 @@ public class OrderServiceImpl implements OrderService {
                     order.setNote(newOrder.getNote());
                     order.setCar(newOrder.getCar());
 
-
 //                    order.setDetails(newOrder.getDetails());
-
-
-
 
                     order.setCustomer(newOrder.getCustomer());
                     return orderRepository.save(order);
