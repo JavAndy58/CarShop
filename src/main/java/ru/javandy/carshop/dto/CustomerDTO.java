@@ -12,6 +12,14 @@ public class CustomerDTO {
     public CustomerDTO() {
     }
 
+    public void addCarDTO(CarDTO carDTO) {
+        this.cars.add(carDTO);
+    }
+
+    public void removeCarDTO(CarDTO carDTO) {
+        this.cars.remove(carDTO);
+    }
+
     public int getId() {
         return id;
     }

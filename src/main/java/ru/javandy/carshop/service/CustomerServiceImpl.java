@@ -2,11 +2,11 @@ package ru.javandy.carshop.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.javandy.carshop.dto.CarDTO;
 import ru.javandy.carshop.dto.CustomerDTO;
 import ru.javandy.carshop.exeption.CustomerNotFoundException;
+import ru.javandy.carshop.mapper.CarMapper;
 import ru.javandy.carshop.mapper.CustomerMapper;
-import ru.javandy.carshop.model.Car;
-import ru.javandy.carshop.model.Customer;
 import ru.javandy.carshop.repository.CustomerRepository;
 
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+    private final CarMapper carMapper;
 
 
     public List<CustomerDTO> getAllCustomers() {
@@ -36,25 +37,25 @@ public class CustomerServiceImpl implements CustomerService {
 
     public CustomerDTO updateCustomerId(CustomerDTO newCustomerDTO, int id) {
 
-        Car car = null;
-        if (!newCustomer.getCars().isEmpty()) {
-            car = newCustomer.getCars().get(newCustomer.getCars().size() - 1);
+        CarDTO carDTO = null;
+        if (!newCustomerDTO.getCars().isEmpty()) {
+            carDTO = newCustomerDTO.getCars().get(newCustomerDTO.getCars().size() - 1);
         }
-        Car finalCar = car;
+        CarDTO finalCarDTO = carDTO;
         return customerRepository.findById(id)
                 .map(customer -> {
-                    customer.setName(newCustomer.getName());
-                    customer.setPhoneNumber(newCustomer.getPhoneNumber());
+                    customer.setName(newCustomerDTO.getName());
+                    customer.setPhoneNumber(newCustomerDTO.getPhoneNumber());
 
-                     if (customer.getCars().size() != newCustomer.getCars().size()) {
-                         customer.addCar(finalCar);
+                     if (customer.getCars().size() != newCustomerDTO.getCars().size()) {
+                         customer.addCar(carMapper.toEntity(finalCarDTO));
                      }
 
-                    return customerRepository.save(customer);
+                    return customerMapper.toDTO(customerRepository.save(customer));
                 }).orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
-    public Customer findByCars(Car car) {
-        return customerRepository.findByCars(car);
+    public CustomerDTO findByCars(CarDTO carDTO) {
+        return customerMapper.toDTO(customerRepository.findByCars(carMapper.toEntity(carDTO)));
     }
 }

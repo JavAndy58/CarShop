@@ -2,6 +2,8 @@ package ru.javandy.carshop.service;
 
 import org.springframework.stereotype.Service;
 import ru.javandy.carshop.dto.CarDTO;
+import ru.javandy.carshop.dto.CustomerDTO;
+import ru.javandy.carshop.dto.OrderDTO;
 import ru.javandy.carshop.exeption.CarNotFoundException;
 import ru.javandy.carshop.mapper.CarMapper;
 import ru.javandy.carshop.model.Car;
@@ -52,12 +54,17 @@ public class CarServiceImpl implements CarService {
 
     public void deleteByCarId(int id) {
         Car carDel = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
-        Customer customerCarDel = customerService.findByCars(carDel);
-        List<Order> ordersCarDel = orderService.getAllOrdersCar(customerCarDel, carDel);
-        ordersCarDel.forEach(customer -> customer.setCar(null));
-        orderService.saveOrders(ordersCarDel);
-        customerCarDel.removeCar(carDel);
-        customerService.saveCustomer(customerCarDel);
+        CarDTO carDelDTO = carMapper.toDTO(carDel);
+        CustomerDTO customerCarDelDTO = customerService.findByCars(carDelDTO);
+
+        List<OrderDTO> ordersCarDelDTO = orderService.getAllOrdersCar(customerCarDelDTO, carDelDTO);
+
+        ordersCarDelDTO.forEach(customer -> customer.setCar(null));
+        orderService.saveOrders(ordersCarDelDTO);
+
+        customerCarDelDTO.removeCarDTO(carDelDTO);
+
+        customerService.saveCustomer(customerCarDelDTO);
     }
 
     public boolean existsByCarId(int id) {

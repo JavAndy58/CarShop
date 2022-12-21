@@ -17,33 +17,25 @@ import java.util.stream.Collectors;
 public class DetailController {
 
     private final DetailService detailService;
-    private final DetailMapper detailMapper;
 
     @GetMapping("/details")
     public List<DetailDTO> getAllDetails() {
-        return detailService.getAllDetails()
-                .stream()
-                .map(detailMapper::toDTO)
-                .collect(Collectors.toList());
-
+        return detailService.getAllDetails();
     }
 
     @PostMapping("/detail")
     public DetailDTO createDetail(@RequestBody DetailDTO detailDTO) {
-        Detail detail = detailMapper.toEntity(detailDTO);
-        return detailMapper.toDTO(detailService.saveDetail(detail));
+        return detailService.saveDetail(detailDTO);
     }
 
     @GetMapping("/detail/{id}")
     public DetailDTO getDetailId(@PathVariable int id) {
-        Detail detail = detailService.findByDetailId(id);
-        return detailMapper.toDTO(detail);
+        return detailService.findByDetailId(id);
     }
 
     @PutMapping("/detail/{id}")
     DetailDTO updateDetail(@RequestBody DetailDTO detailDTO, @PathVariable int id) {
-        Detail detail = detailMapper.toEntity(detailDTO);
-        return detailMapper.toDTO(detailService.updateDetailId(detail, id));
+        return detailService.updateDetailId(detailDTO, id);
     }
 
     @DeleteMapping("/detail/{id}")

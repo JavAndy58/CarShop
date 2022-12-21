@@ -2,40 +2,47 @@ package ru.javandy.carshop.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.javandy.carshop.dto.DetailDTO;
 import ru.javandy.carshop.exeption.DetailNotFoundException;
+import ru.javandy.carshop.mapper.DetailMapper;
 import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.repository.DetailRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 @RequiredArgsConstructor
 public class DetailServiceImpl implements DetailService {
     private final DetailRepository detailRepository;
+    private final DetailMapper detailMapper;
 
-    public List<Detail> getAllDetails() {
-        return detailRepository.findAll();
+    public List<DetailDTO> getAllDetails() {
+        return detailRepository.findAll()
+                .stream()
+                .map(detailMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Detail saveDetail(Detail detail) {
-        return detailRepository.save(detail);
+    public DetailDTO saveDetail(DetailDTO detailDTO) {
+        return detailMapper.toDTO(detailRepository.save(detailMapper.toEntity(detailDTO)));
     }
 
-    public Detail findByDetailId(int id) {
-        return detailRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id));
+    public DetailDTO findByDetailId(int id) {
+        return detailMapper.toDTO(detailRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
     }
 
-    public Detail updateDetailId(Detail newDetail, int id) {
+    public DetailDTO updateDetailId(DetailDTO newDetailDTO, int id) {
 
-        return detailRepository.findById(id)
+        return detailMapper.toDTO(detailRepository.findById(id)
                 .map(detail -> {
-                    detail.setName(newDetail.getName());
-                    detail.setAmount(newDetail.getAmount());
-                    detail.setRetailPrice(newDetail.getRetailPrice());
-                    detail.setSupplier(newDetail.getSupplier());
-                    detail.setBringing(newDetail.isBringing());
+                    detail.setName(newDetailDTO.getName());
+                    detail.setAmount(newDetailDTO.getAmount());
+                    detail.setRetailPrice(newDetailDTO.getRetailPrice());
+                    detail.setSupplier(newDetailDTO.getSupplier());
+                    detail.setBringing(newDetailDTO.isBringing());
                     return detailRepository.save(detail);
-                }).orElseThrow(() -> new DetailNotFoundException(id));
+                }).orElseThrow(() -> new DetailNotFoundException(id)));
 
     }
 

@@ -1,17 +1,17 @@
 package ru.javandy.carshop.service;
 
+import ru.javandy.carshop.dto.CustomerDTO;
+import ru.javandy.carshop.dto.OrderDTO;
 import ru.javandy.carshop.model.Car;
-import ru.javandy.carshop.model.Customer;
-import ru.javandy.carshop.model.Order;
 import java.util.List;
 
 public interface OrderService {
-    List<Order> getAllOrders();
-    Order saveOrder(Order order);
-    List<Order> saveOrders(List<Order> orders);
-    Order findByOrderId(int id);
-    Order updateOrderId(Order order, int id);
+    List<OrderDTO> getAllOrders();
+    OrderDTO saveOrder(OrderDTO orderDTO);
+    List<OrderDTO> saveOrders(List<OrderDTO> ordersDTO);
+    OrderDTO findByOrderId(int id);
+    OrderDTO updateOrderId(OrderDTO orderDTO, int id);
     boolean existsByOrderId(int id);
     void deleteByOrderId(int id);
-    List<Order> getAllOrdersCar(Customer customer, Car car);
+    List<OrderDTO> getAllOrdersCar(CustomerDTO customerDTO, Car car);
 }
