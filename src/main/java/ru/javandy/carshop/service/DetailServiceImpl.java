@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.javandy.carshop.dto.DetailDTO;
 import ru.javandy.carshop.exeption.DetailNotFoundException;
 import ru.javandy.carshop.mapper.DetailMapper;
-import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.repository.DetailRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,7 +42,6 @@ public class DetailServiceImpl implements DetailService {
                     detail.setBringing(newDetailDTO.isBringing());
                     return detailRepository.save(detail);
                 }).orElseThrow(() -> new DetailNotFoundException(id)));
-
     }
 
     public boolean existsByDetailId(int id) {

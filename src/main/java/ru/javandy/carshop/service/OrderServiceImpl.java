@@ -2,12 +2,12 @@ package ru.javandy.carshop.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.javandy.carshop.dto.CarDTO;
 import ru.javandy.carshop.dto.OrderDTO;
 import ru.javandy.carshop.exeption.DetailNotFoundException;
 import ru.javandy.carshop.exeption.OrderNotFoundException;
+import ru.javandy.carshop.mapper.CarMapper;
 import ru.javandy.carshop.mapper.OrderMapper;
-import ru.javandy.carshop.model.Car;
-import ru.javandy.carshop.model.Customer;
 import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.OrderRepository;
 import java.util.List;
@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    private final CarMapper carMapper;
 
     public List<OrderDTO> getAllOrders() {
         return orderRepository.findAll()
@@ -31,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public List<OrderDTO> saveOrders(List<OrderDTO> ordersDTO) {
-        return orderMapper.toDTO(orderRepository.saveAll(orderMapper.toEntity(ordersDTO)));
+        return orderMapper.toDTOList(orderRepository.saveAll(orderMapper.toEntityList(ordersDTO)));
     }
 
     public OrderDTO findByOrderId(int id) {
@@ -39,18 +40,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public OrderDTO updateOrderId(OrderDTO newOrderDTO, int id) {
+        Order newOrder = orderMapper.toEntity(newOrderDTO);
         return orderMapper.toDTO(orderRepository.findById(id)
                 .map(order -> {
-                    order.setCreated(newOrderDTO.getCreated());
-                    order.setPrepayment(newOrderDTO.getPrepayment());
-                    order.setDelivered(newOrderDTO.isDelivered());
-                    order.setCardPayment(newOrderDTO.isCardPayment());
-                    order.setNote(newOrderDTO.getNote());
-                    order.setCar(newOrderDTO.getCar());
+                    order.setCreated(newOrder.getCreated());
+                    order.setPrepayment(newOrder.getPrepayment());
+                    order.setDelivered(newOrder.isDelivered());
+                    order.setCardPayment(newOrder.isCardPayment());
+                    order.setNote(newOrder.getNote());
+                    order.setCar(newOrder.getCar());
 
 //                    order.setDetails(newOrder.getDetails());
 
-                    order.setCustomer(newOrderDTO.getCustomer());
+                    order.setCustomer(newOrder.getCustomer());
                     return orderRepository.save(order);
                 }).orElseThrow(() -> new OrderNotFoundException(id)));
     }
@@ -63,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteById(id);
     }
 
-    public List<Order> getAllOrdersCar(Customer customer, Car car) {
-        return orderRepository.findByCar(car);
+    public List<OrderDTO> getAllOrdersCar(CarDTO carDTO) {
+        return orderMapper.toDTOList(orderRepository.findByCar(carMapper.toEntity(carDTO)));
     }
 }

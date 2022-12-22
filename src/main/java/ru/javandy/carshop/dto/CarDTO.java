@@ -1,5 +1,8 @@
 package ru.javandy.carshop.dto;
 
+import lombok.Data;
+
+@Data
 public class CarDTO {
     private int id;
     private String name;
@@ -8,27 +11,7 @@ public class CarDTO {
     public CarDTO() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public CarDTO(String name) {
         this.name = name;
-    }
-
-    public String getVinCode() {
-        return vinCode;
-    }
-
-    public void setVinCode(String vinCode) {
-        this.vinCode = vinCode;
     }
 }

@@ -52,10 +52,10 @@ public class CarShopApplication {
         customerEvg.addCar(carAudi);
         List<Customer> customers = Arrays.asList(customerIvan, customerEvg, customerVlad);
 
-        Date dateOrderOne = new Date();
+//        Date dateOrderOne = new Date();
         SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM.yyyy");
-//        Date dateOrderOne = formatDate.parse("01.12.2022");
-        formatDate.format(dateOrderOne);
+        Date dateOrderOne = formatDate.parse("01.12.2022");
+//        formatDate.format(dateOrderOne);
         Date dateOrderTwo = formatDate.parse("03.12.2022");
         Date dateOrderThree = formatDate.parse("05.12.2022");
 
@@ -70,8 +70,8 @@ public class CarShopApplication {
         List<Order> orders = Arrays.asList(orderOne, orderTwo, orderThree);
 
         return args -> {
-            customerRepository.saveAll(customers);
-            orderRepository.saveAll(orders);
+//            customerRepository.saveAll(customers);
+//            orderRepository.saveAll(orders);
         };
     }
 }
