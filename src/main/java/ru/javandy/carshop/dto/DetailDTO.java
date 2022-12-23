@@ -11,6 +11,7 @@ public class DetailDTO {
     private double retailPrice;
     private String supplier;
     private boolean bringing;
+    private double sumMoney;
 
     public DetailDTO() {
     }

@@ -18,7 +18,6 @@ public class OrderDTO {
     private List<DetailDTO> details = new ArrayList<>();
     private CustomerDTO customer;
 
-    private double sumMoneyDetail;
     private double totalOrder;
     private double payOrder;
 

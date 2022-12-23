@@ -3,6 +3,7 @@ package ru.javandy.carshop.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.javandy.carshop.dto.CarDTO;
+import ru.javandy.carshop.dto.DetailDTO;
 import ru.javandy.carshop.dto.OrderDTO;
 import ru.javandy.carshop.exeption.DetailNotFoundException;
 import ru.javandy.carshop.exeption.OrderNotFoundException;
@@ -24,6 +25,12 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll()
                 .stream()
                 .map(orderMapper::toDTO)
+//                .flatMap(orderDTO -> orderDTO.getDetails().stream()
+//                       .map(detailDTO -> {detailDTO.setSumMoney(detailDTO.getAmount() * detailDTO.getRetailPrice());
+//                       return detailDTO});
+//                       )
+//                .map(orderDTO -> orderDTO.getDetails().stream().map(detailDTO -> detailDTO.setSumMoney(detailDTO.getAmount() * detailDTO.getRetailPrice())))
+
                 .collect(Collectors.toList());
     }
 
