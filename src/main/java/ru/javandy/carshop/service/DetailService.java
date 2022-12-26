@@ -10,4 +10,5 @@ public interface DetailService {
     DetailDTO updateDetailId(DetailDTO detailDTO, int id);
     boolean existsByDetailId(int id);
     void deleteByDetailId(int id);
+    DetailDTO accountSumMoney (DetailDTO detailDTO);
 }

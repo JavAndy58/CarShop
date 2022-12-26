@@ -20,17 +20,14 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
     private final CarMapper carMapper;
+    private DetailService detailService;
 
     public List<OrderDTO> getAllOrders() {
         return orderRepository.findAll()
                 .stream()
                 .map(orderMapper::toDTO)
-//                .flatMap(orderDTO -> orderDTO.getDetails().stream()
-//                       .map(detailDTO -> {detailDTO.setSumMoney(detailDTO.getAmount() * detailDTO.getRetailPrice());
-//                       return detailDTO});
-//                       )
-//                .map(orderDTO -> orderDTO.getDetails().stream().map(detailDTO -> detailDTO.setSumMoney(detailDTO.getAmount() * detailDTO.getRetailPrice())))
-
+                .flatMap(orderDTO -> orderDTO.getDetails().stream())
+                .map(detailDTO -> detailService.accountSumMoney(detailDTO))
                 .collect(Collectors.toList());
     }
 
