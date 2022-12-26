@@ -52,8 +52,7 @@ public class DetailServiceImpl implements DetailService {
         detailRepository.deleteById(id);
     }
 
-    public DetailDTO accountSumMoney (DetailDTO detailDTO) {
+    public void accountSumMoney(DetailDTO detailDTO) {
         detailDTO.setSumMoney(detailDTO.getAmount() * detailDTO.getRetailPrice());
-        return detailDTO;
     }
 }

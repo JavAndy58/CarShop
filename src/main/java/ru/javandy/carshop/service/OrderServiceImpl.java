@@ -20,15 +20,19 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
     private final CarMapper carMapper;
-    private DetailService detailService;
+    private final DetailService detailService;
 
     public List<OrderDTO> getAllOrders() {
-        return orderRepository.findAll()
-                .stream()
-                .map(orderMapper::toDTO)
-                .flatMap(orderDTO -> orderDTO.getDetails().stream())
-                .map(detailDTO -> detailService.accountSumMoney(detailDTO))
-                .collect(Collectors.toList());
+        List<OrderDTO> orderDTOS = orderMapper.toDTOList(orderRepository.findAll());
+        for (OrderDTO orderDTO:orderDTOS) {
+            double countSumDetails = 0;
+            for (DetailDTO detailDTO:orderDTO.getDetails()) {
+                detailService.accountSumMoney(detailDTO);
+                countSumDetails += detailDTO.getSumMoney();
+            }
+            accountTotalOrderAndPayOrderDTO(orderDTO, countSumDetails);
+        }
+        return orderDTOS;
     }
 
     public OrderDTO saveOrder(OrderDTO orderDTO) {
@@ -71,5 +75,11 @@ public class OrderServiceImpl implements OrderService {
 
     public List<OrderDTO> getAllOrdersCar(CarDTO carDTO) {
         return orderMapper.toDTOList(orderRepository.findByCar(carMapper.toEntity(carDTO)));
+    }
+
+    private void accountTotalOrderAndPayOrderDTO(OrderDTO orderDTO, double countSumDetails) {
+        orderDTO.setTotalOrder(countSumDetails);
+        orderDTO.setPayOrder(orderDTO.getTotalOrder() - orderDTO.getPrepayment());
+
     }
 }
