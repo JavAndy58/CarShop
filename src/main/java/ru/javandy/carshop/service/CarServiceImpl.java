@@ -9,7 +9,6 @@ import ru.javandy.carshop.exeption.CarNotFoundException;
 import ru.javandy.carshop.mapper.CarMapper;
 import ru.javandy.carshop.mapper.OrderMapper;
 import ru.javandy.carshop.model.Car;
-import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.CarRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +49,7 @@ public class CarServiceImpl implements CarService {
     public void deleteByCarId(int id) {
         Car carDel = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
         CarDTO carDTODel = carMapper.toDTO(carDel);
-        CustomerDTO customerCarDTODel = customerService.findByCars(carDTODel);
+        CustomerDTO customerCarDTODel = customerService.findByCar(carDTODel);
         List<OrderDTO> ordersCarDTODel = orderService.getAllOrdersCar(carDTODel);
         ordersCarDTODel.forEach(customer -> customer.setCar(null));
         orderService.saveOrders(ordersCarDTODel);

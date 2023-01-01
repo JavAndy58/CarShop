@@ -1,9 +1,8 @@
 package ru.javandy.carshop.service;
 
 import ru.javandy.carshop.dto.CarDTO;
-import ru.javandy.carshop.dto.CustomerDTO;
+import ru.javandy.carshop.dto.DetailDTO;
 import ru.javandy.carshop.dto.OrderDTO;
-import ru.javandy.carshop.model.Car;
 import java.util.List;
 
 public interface OrderService {
@@ -15,4 +14,5 @@ public interface OrderService {
     boolean existsByOrderId(int id);
     void deleteByOrderId(int id);
     List<OrderDTO> getAllOrdersCar(CarDTO carDTO);
+    OrderDTO findByDetail(DetailDTO detailDTO);
 }

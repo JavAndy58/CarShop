@@ -3,6 +3,7 @@ package ru.javandy.carshop.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.javandy.carshop.dto.DetailDTO;
+import ru.javandy.carshop.dto.OrderDTO;
 import ru.javandy.carshop.exeption.DetailNotFoundException;
 import ru.javandy.carshop.mapper.DetailMapper;
 import ru.javandy.carshop.repository.DetailRepository;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 public class DetailServiceImpl implements DetailService {
     private final DetailRepository detailRepository;
     private final DetailMapper detailMapper;
+    private final OrderService orderService;
 
     public List<DetailDTO> getAllDetails() {
         return detailRepository.findAll()
@@ -49,10 +51,9 @@ public class DetailServiceImpl implements DetailService {
     }
 
     public void deleteByDetailId(int id) {
-        detailRepository.deleteById(id);
-    }
-
-    public void accountSumMoney(DetailDTO detailDTO) {
-        detailDTO.setSumMoney(detailDTO.getAmount() * detailDTO.getRetailPrice());
+        DetailDTO detailDTODel = detailMapper.toDTO(detailRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
+        OrderDTO orderDTODetailDel = orderService.findByDetail(detailDTODel);
+        orderDTODetailDel.removeDetailDTO(detailDTODel);
+        orderService.saveOrder(orderDTODetailDel);
     }
 }

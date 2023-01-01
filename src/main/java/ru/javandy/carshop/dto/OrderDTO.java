@@ -23,4 +23,12 @@ public class OrderDTO {
 
     public OrderDTO() {
     }
+
+    public void addDetailDTO(DetailDTO detailDTO) {
+        this.details.add(detailDTO);
+    }
+
+    public void removeDetailDTO(DetailDTO detailDTO) {
+        this.details.remove(detailDTO);
+    }
 }

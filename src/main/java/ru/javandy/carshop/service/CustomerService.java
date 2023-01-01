@@ -9,5 +9,5 @@ public interface CustomerService {
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
     CustomerDTO findByCustomerId(int id);
     CustomerDTO updateCustomerId(CustomerDTO customerDTO, int id);
-    CustomerDTO findByCars(CarDTO carDTO);
+    CustomerDTO findByCar(CarDTO carDTO);
 }

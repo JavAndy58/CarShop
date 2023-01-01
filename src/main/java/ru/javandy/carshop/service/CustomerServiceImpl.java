@@ -36,7 +36,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public CustomerDTO updateCustomerId(CustomerDTO newCustomerDTO, int id) {
-
         CarDTO carDTO = null;
         if (!newCustomerDTO.getCars().isEmpty()) {
             carDTO = newCustomerDTO.getCars().get(newCustomerDTO.getCars().size() - 1);
@@ -46,16 +45,14 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(customer -> {
                     customer.setName(newCustomerDTO.getName());
                     customer.setPhoneNumber(newCustomerDTO.getPhoneNumber());
-
                      if (customer.getCars().size() != newCustomerDTO.getCars().size()) {
                          customer.addCar(carMapper.toEntity(finalCarDTO));
                      }
-
                     return customerMapper.toDTO(customerRepository.save(customer));
                 }).orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
-    public CustomerDTO findByCars(CarDTO carDTO) {
+    public CustomerDTO findByCar(CarDTO carDTO) {
         return customerMapper.toDTO(customerRepository.findByCars(carMapper.toEntity(carDTO)));
     }
 }
