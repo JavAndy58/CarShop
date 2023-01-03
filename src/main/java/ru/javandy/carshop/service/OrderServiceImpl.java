@@ -13,6 +13,8 @@ import ru.javandy.carshop.mapper.OrderMapper;
 import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.OrderRepository;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,6 +39,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public OrderDTO saveOrder(OrderDTO orderDTO) {
+        orderDTO.setCreated(new Date());
         return orderMapper.toDTO(orderRepository.save(orderMapper.toEntity(orderDTO)));
     }
 
