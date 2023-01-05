@@ -7,7 +7,6 @@ import ru.javandy.carshop.dto.CustomerDTO;
 import ru.javandy.carshop.dto.OrderDTO;
 import ru.javandy.carshop.exeption.CarNotFoundException;
 import ru.javandy.carshop.mapper.CarMapper;
-import ru.javandy.carshop.mapper.OrderMapper;
 import ru.javandy.carshop.model.Car;
 import ru.javandy.carshop.repository.CarRepository;
 import java.util.List;
@@ -20,7 +19,6 @@ public class CarServiceImpl implements CarService {
     private final CustomerService customerService;
     private final OrderService orderService;
     private final CarMapper carMapper;
-    private final OrderMapper orderMapper;
 
     public List<CarDTO> getAllCars() {
         return carRepository.findAll()
