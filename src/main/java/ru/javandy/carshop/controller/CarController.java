@@ -3,12 +3,8 @@ package ru.javandy.carshop.controller;
 import org.springframework.web.bind.annotation.*;
 import ru.javandy.carshop.dto.CarDTO;
 import ru.javandy.carshop.exeption.CarNotFoundException;
-import ru.javandy.carshop.mapper.CarMapper;
-import ru.javandy.carshop.model.Car;
-//import ru.javandy.carshop.repository.CarRepository;
 import ru.javandy.carshop.service.CarService;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")

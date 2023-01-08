@@ -14,4 +14,9 @@ public class CarDTO {
     public CarDTO(String name) {
         this.name = name;
     }
+
+    public CarDTO(String name, String vinCode) {
+        this.name = name;
+        this.vinCode = vinCode;
+    }
 }
