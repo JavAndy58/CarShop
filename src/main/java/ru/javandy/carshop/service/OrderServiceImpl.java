@@ -14,6 +14,8 @@ import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.OrderRepository;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
             }
             accountTotalOrderAndPayOrderDTO(orderDTO, countSumDetails);
         }
+        orderDTOS.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
         return orderDTOS;
     }
 

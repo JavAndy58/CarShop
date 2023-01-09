@@ -38,7 +38,7 @@ class CarControllerTest {
         Mockito.when(service.getAllCars()).thenReturn(Arrays.asList(carDTO1, carDTO2));
 
         mockMvc.perform(
-                get("/home"))
+                get("/"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(carDTO1, carDTO2))));
 

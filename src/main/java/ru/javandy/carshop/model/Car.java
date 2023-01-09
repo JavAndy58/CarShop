@@ -12,7 +12,7 @@ public class Car {
     private int id;
     private String name;
 
-    @Column(name = "vin_code", unique = true, nullable = false)
+    @Column(name = "vin_code", nullable = false)
     private String vinCode;
 
     public Car() {
