@@ -1,19 +1,16 @@
 package ru.javandy.carshop.dto;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class CarDTO {
     private int id;
     private String name;
     private String vinCode;
-
-    public CarDTO() {
-    }
-
-    public CarDTO(String name) {
-        this.name = name;
-    }
 
     public CarDTO(String name, String vinCode) {
         this.name = name;
