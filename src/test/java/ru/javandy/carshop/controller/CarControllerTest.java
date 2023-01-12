@@ -38,19 +38,6 @@ class CarControllerTest {
 
     private static final String BASE_URL = "/car";
 
-//    @Test
-//    void getAllCars_whenGetNoCars_thenNoCars() throws Exception {
-//
-//        when(mockCarService.getAllCars()).thenReturn(new ArrayList<>());
-//
-//        mockMvc
-//                .perform(get(BASE_URL + "s"))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(header().string("Content-Type", "application/json"))
-//                .andExpect(content().string("[]"));
-//    }
-
     @Test
     void getAllCars_whenGetCars_thenStatus200() throws Exception {
 //        List<CarDTO> carDTOList =
@@ -135,8 +122,8 @@ class CarControllerTest {
                 .andExpect(content().json(savedJson, true));
     }
 
-//    @Test
-//    void updateCar_whenUpdate_thenStatus201andUpdateReturns() throws Exception {
+    @Test
+    void updateCar_whenUpdate_thenStatus201andUpdateReturns() throws Exception {
 //        int id = 1;
 //        CarDTO carDTO = new CarDTO(1, "Focus 2", "XXEERTY525SA626");
 //        Mockito.when(mockCarService.saveCar(Mockito.any())).thenReturn(carDTO);
@@ -149,23 +136,29 @@ class CarControllerTest {
 //                .andExpect(jsonPath("$.id").value("1"))
 //                .andExpect(jsonPath("$.name").value("Logan"))
 //                .andExpect(jsonPath("$.vinCode").value("XXEETRGRG"));
-//    }
+
+        int id = 1;
+        CarDTO updateCarDTO = new CarDTO("Logan1", "XTY52A626");
+        String updateAsJson = objectMapper.writeValueAsString(updateCarDTO);
+
+        mockMvc.perform(put(BASE_URL + "/" + id).content(updateAsJson).contentType(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 
     @Test
-    void deleteCar_whenDeleteCar_thenStatus200() throws Exception {
-//        CarDTO carDTO = new CarDTO(1, "Focus 2", "XXEERTY525SA626");
-//        Mockito.when(mockCarService.saveCar(Mockito.any())).thenReturn(carDTO);
-//        Mockito.when(mockCarService.findByCarId(Mockito.any())).thenReturn(carDTO);
-//
-//        mockMvc
-//                .perform(delete("/car/1"))
-//                .andExpect(status().isOk());
+    public void deleteCar_whenDeleteCar_thenStatus200() throws Exception {
+        CarDTO carDTO = new CarDTO(1, "Focus 2", "XXEERTY525SA626");
+//        Mockito.when(mockCarService.saveCar(carDTO)).thenReturn(carDTO);
+        Mockito.when(mockCarService.findByCarId(Mockito.any())).thenReturn(carDTO);
+
+        mockMvc.perform(delete(BASE_URL + "/" + 1))
+                .andExpect(status().isOk());
+
 //        int id = 1;
 //
 //        mockMvc.perform(delete(BASE_URL + "/" + id))
 //                .andDo(print())
 //                .andExpect(status().isNoContent());
-//
-
     }
 }
