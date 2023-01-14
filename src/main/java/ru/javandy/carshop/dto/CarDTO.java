@@ -4,9 +4,9 @@ import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @EqualsAndHashCode
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class CarDTO {
     private int id;
     private String name;

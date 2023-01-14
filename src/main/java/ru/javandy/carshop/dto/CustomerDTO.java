@@ -1,18 +1,23 @@
 package ru.javandy.carshop.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
+@AllArgsConstructor
 public class CustomerDTO {
     private int id;
     private String name;
     private String phoneNumber;
-
     private List<CarDTO> cars;
 
-    public CustomerDTO() {
+    public CustomerDTO(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
 
     public void addCarDTO(CarDTO carDTO) {
