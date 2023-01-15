@@ -7,9 +7,6 @@ import ru.javandy.carshop.dto.OrderDTO;
 import ru.javandy.carshop.exeption.DetailNotFoundException;
 import ru.javandy.carshop.mapper.DetailMapper;
 import ru.javandy.carshop.repository.DetailRepository;
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Service
 @RequiredArgsConstructor
@@ -17,13 +14,6 @@ public class DetailServiceImpl implements DetailService {
     private final DetailRepository detailRepository;
     private final DetailMapper detailMapper;
     private final OrderService orderService;
-
-    public List<DetailDTO> getAllDetails() {
-        return detailRepository.findAll()
-                .stream()
-                .map(detailMapper::toDTO)
-                .collect(Collectors.toList());
-    }
 
     public DetailDTO saveDetail(DetailDTO detailDTO) {
         return detailMapper.toDTO(detailRepository.save(detailMapper.toEntity(detailDTO)));

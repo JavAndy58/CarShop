@@ -1,12 +1,16 @@
 package ru.javandy.carshop.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
+@AllArgsConstructor
 public class OrderDTO {
     private int id;
     private Date created;
@@ -17,11 +21,20 @@ public class OrderDTO {
     private CarDTO car;
     private List<DetailDTO> details = new ArrayList<>();
     private CustomerDTO customer;
-
     private double totalOrder;
     private double payOrder;
 
-    public OrderDTO() {
+    public OrderDTO(Date created, double prepayment, boolean delivered, boolean cardPayment, String note,
+                    CarDTO car, CustomerDTO customer, double totalOrder, double payOrder) {
+        this.created = created;
+        this.prepayment = prepayment;
+        this.delivered = delivered;
+        this.cardPayment = cardPayment;
+        this.note = note;
+        this.car = car;
+        this.customer = customer;
+        this.totalOrder = totalOrder;
+        this.payOrder = payOrder;
     }
 
     public void addDetailDTO(DetailDTO detailDTO) {

@@ -56,11 +56,10 @@ class CarControllerTest {
     @Test
     void getCarId_whenGetExistingCar_thenStatus200andCarReturned() throws Exception {
         int id = 2;
-        CarDTO expectedCarDTO = new CarDTO(2, "Focus 2", "XXEERTY525SA626");
+        CarDTO expectedCarDTO = new CarDTO(id, "Focus 2", "XXEERTY525SA626");
         String expectedJson = objectMapper.writeValueAsString(expectedCarDTO);
 
-        Mockito.doReturn(expectedCarDTO)
-                .when(mockCarService).findByCarId(id);
+        Mockito.doReturn(expectedCarDTO).when(mockCarService).findByCarId(id);
 
         mockMvc.perform(get(BASE_URL + "/" + id))
                 .andDo(print())
@@ -82,9 +81,9 @@ class CarControllerTest {
     }
 
     @Test
-    void updateCar_whenUpdate_thenStatus201andUpdateReturns() throws Exception {
+    void updateCar_whenUpdate_thenStatus200andUpdateReturns() throws Exception {
         int id = 1;
-        CarDTO updateCarDTO = new CarDTO("Logan1", "XTY52A626");
+        CarDTO updateCarDTO = new CarDTO(id, "Logan1", "XTY52A626");
         String updateAsJson = objectMapper.writeValueAsString(updateCarDTO);
 
         mockMvc.perform(put(BASE_URL + "/" + id).content(updateAsJson).contentType(APPLICATION_JSON))
@@ -93,7 +92,7 @@ class CarControllerTest {
     }
 
     @Test
-    void deleteCar_whenDeleteCar_thenStatus200() throws Exception {
+    void deleteCar_whenDeleteCar_thenStatus404() throws Exception {
         int id = 1;
 
         mockMvc.perform(delete(BASE_URL + "/" + id))

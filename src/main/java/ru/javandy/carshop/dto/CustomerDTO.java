@@ -2,6 +2,7 @@ package ru.javandy.carshop.dto;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -13,7 +14,7 @@ public class CustomerDTO {
     private int id;
     private String name;
     private String phoneNumber;
-    private List<CarDTO> cars;
+    private List<CarDTO> cars = new ArrayList<>();
 
     public CustomerDTO(String name, String phoneNumber) {
         this.name = name;

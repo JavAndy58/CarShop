@@ -1,6 +1,7 @@
 package ru.javandy.carshop.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.javandy.carshop.dto.DetailDTO;
 import ru.javandy.carshop.exeption.DetailNotFoundException;
@@ -18,33 +19,28 @@ public class DetailController {
 
     private final DetailService detailService;
 
-    @GetMapping("/details")
-    public List<DetailDTO> getAllDetails() {
-        return detailService.getAllDetails();
-    }
-
     @PostMapping("/detail")
+    @ResponseStatus(HttpStatus.CREATED)
     public DetailDTO createDetail(@RequestBody DetailDTO detailDTO) {
         return detailService.saveDetail(detailDTO);
     }
 
     @GetMapping("/detail/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public DetailDTO getDetailId(@PathVariable int id) {
         return detailService.findByDetailId(id);
     }
 
     @PutMapping("/detail/{id}")
+    @ResponseStatus(HttpStatus.OK)
     DetailDTO updateDetail(@RequestBody DetailDTO detailDTO, @PathVariable int id) {
         return detailService.updateDetailId(detailDTO, id);
     }
 
     @DeleteMapping("/detail/{id}")
-    String deleteDetail(@PathVariable int id) {
-        if (!detailService.existsByDetailId(id)) {
-            throw new DetailNotFoundException(id);
-        }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteDetail(@PathVariable int id) {
         detailService.deleteByDetailId(id);
-        return "Detail with id " + id + " has been delete success.";
     }
 
 }

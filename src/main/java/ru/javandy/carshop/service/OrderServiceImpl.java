@@ -81,14 +81,6 @@ public class OrderServiceImpl implements OrderService {
                 }).orElseThrow(() -> new OrderNotFoundException(id)));
     }
 
-    public boolean existsByOrderId(int id) {
-        return orderRepository.existsById(id);
-    }
-
-    public void deleteByOrderId(int id) {
-        orderRepository.deleteById(id);
-    }
-
     public List<OrderDTO> getAllOrdersCar(CarDTO carDTO) {
         return orderMapper.toDTOList(orderRepository.findByCar(carMapper.toEntity(carDTO)));
     }
