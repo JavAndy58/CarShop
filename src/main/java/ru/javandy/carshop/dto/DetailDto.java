@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @AllArgsConstructor
-public class DetailDTO {
+public class DetailDto {
     private int id;
     private String name;
     private int amount;
@@ -17,7 +17,7 @@ public class DetailDTO {
     private boolean bringing;
     private double sumMoney;
 
-    public DetailDTO(String name, int amount, double purchasePrice, double retailPrice, String supplier,
+    public DetailDto(String name, int amount, double purchasePrice, double retailPrice, String supplier,
                      boolean bringing, double sumMoney) {
         this.name = name;
         this.amount = amount;

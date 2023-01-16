@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.javandy.carshop.dto.CarDTO;
+import ru.javandy.carshop.dto.CarDto;
 import ru.javandy.carshop.service.CarService;
 
 import java.util.ArrayList;
@@ -38,15 +38,15 @@ class CarControllerTest {
     @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
     @Test
     void getAllCars_whenGetCars_thenStatus200() throws Exception {
-        CarDTO carDTO1 = new CarDTO(1, "Focus 2", "XXEERTY525SA626");
-        CarDTO carDTO2 = new CarDTO(2, "Logan 1", "TTTYYY525SA626");
-        List<CarDTO> carDTOList = new ArrayList<>();
-        carDTOList.add(carDTO1);
-        carDTOList.add(carDTO2);
+        CarDto carDto1 = new CarDto(1, "Focus 2", "XXEERTY525SA626");
+        CarDto carDto2 = new CarDto(2, "Logan 1", "TTTYYY525SA626");
+        List<CarDto> carDtoList = new ArrayList<>();
+        carDtoList.add(carDto1);
+        carDtoList.add(carDto2);
 
-        String expectedJson = objectMapper.writeValueAsString(carDTOList);
+        String expectedJson = objectMapper.writeValueAsString(carDtoList);
 
-        Mockito.doReturn(carDTOList)
+        Mockito.doReturn(carDtoList)
                         .when(mockCarService).getAllCars();
 
         mockMvc.perform(get(BASE_URL + "s"))
@@ -58,10 +58,10 @@ class CarControllerTest {
     @Test
     void getCarId_whenGetExistingCar_thenStatus200andCarReturned() throws Exception {
         int id = 2;
-        CarDTO expectedCarDTO = new CarDTO(id, "Focus 2", "XXEERTY525SA626");
-        String expectedJson = objectMapper.writeValueAsString(expectedCarDTO);
+        CarDto expectedCarDto = new CarDto(id, "Focus 2", "XXEERTY525SA626");
+        String expectedJson = objectMapper.writeValueAsString(expectedCarDto);
 
-        Mockito.doReturn(expectedCarDTO).when(mockCarService).findByCarId(id);
+        Mockito.doReturn(expectedCarDto).when(mockCarService).findByCarId(id);
 
         mockMvc.perform(get(BASE_URL + "/" + id))
                 .andDo(print())
@@ -71,7 +71,7 @@ class CarControllerTest {
 
     @Test
     void createCar_whenAddCar_thenStatus200andCarReturned() throws Exception {
-        CarDTO savedDTO = new CarDTO(1, "Focus 2", "XXEERTY525SA626");
+        CarDto savedDTO = new CarDto(1, "Focus 2", "XXEERTY525SA626");
         String savedJson = objectMapper.writeValueAsString(savedDTO);
 
         Mockito.when(mockCarService.saveCar(savedDTO)).thenReturn(savedDTO);
@@ -85,8 +85,8 @@ class CarControllerTest {
     @Test
     void updateCar_whenUpdate_thenStatus200andUpdateReturns() throws Exception {
         int id = 1;
-        CarDTO updateCarDTO = new CarDTO(id, "Logan1", "XTY52A626");
-        String updateAsJson = objectMapper.writeValueAsString(updateCarDTO);
+        CarDto updateCarDto = new CarDto(id, "Logan1", "XTY52A626");
+        String updateAsJson = objectMapper.writeValueAsString(updateCarDto);
 
         mockMvc.perform(put(BASE_URL + "/" + id).content(updateAsJson).contentType(APPLICATION_JSON))
                 .andDo(print())

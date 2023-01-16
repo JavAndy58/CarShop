@@ -10,22 +10,22 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @AllArgsConstructor
-public class CustomerDTO {
+public class CustomerDto {
     private int id;
     private String name;
     private String phoneNumber;
-    private List<CarDTO> cars = new ArrayList<>();
+    private List<CarDto> cars = new ArrayList<>();
 
-    public CustomerDTO(String name, String phoneNumber) {
+    public CustomerDto(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
-    public void addCarDTO(CarDTO carDTO) {
+    public void addCarDTO(CarDto carDTO) {
         this.cars.add(carDTO);
     }
 
-    public void removeCarDTO(CarDTO carDTO) {
+    public void removeCarDTO(CarDto carDTO) {
         this.cars.remove(carDTO);
     }
 }

@@ -1,13 +1,14 @@
 package ru.javandy.carshop.service;
 
-import ru.javandy.carshop.dto.CarDTO;
+import ru.javandy.carshop.dto.CarDto;
+
 import java.util.List;
 
 public interface CarService {
-    List<CarDTO> getAllCars();
-    CarDTO saveCar(CarDTO carDto);
-    CarDTO findByCarId(int id);
-    CarDTO updateCarId(CarDTO carDto, int id);
+    List<CarDto> getAllCars();
+    CarDto saveCar(CarDto carDto);
+    CarDto findByCarId(int id);
+    CarDto updateCarId(CarDto carDto, int id);
     void deleteByCarId(int id);
     boolean existsByCarId(int id);
 }

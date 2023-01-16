@@ -3,7 +3,7 @@ package ru.javandy.carshop.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.javandy.carshop.dto.CustomerDTO;
+import ru.javandy.carshop.dto.CustomerDto;
 import ru.javandy.carshop.service.CustomerService;
 import java.util.List;
 
@@ -16,25 +16,25 @@ public class CustomerController {
 
     @GetMapping("/customers")
     @ResponseStatus(HttpStatus.OK)
-    public List<CustomerDTO> getAllCustomers() {
+    public List<CustomerDto> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
     @PostMapping("/customer")
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerDTO createCustomer(@RequestBody CustomerDTO customerDTO) {
+    public CustomerDto createCustomer(@RequestBody CustomerDto customerDTO) {
         return customerService.saveCustomer(customerDTO);
     }
 
     @GetMapping("/customer/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CustomerDTO getCustomerId(@PathVariable int id) {
+    public CustomerDto getCustomerId(@PathVariable int id) {
         return customerService.findByCustomerId(id);
     }
 
     @PutMapping("/customer/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CustomerDTO updateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable int id) {
+    public CustomerDto updateCustomer(@RequestBody CustomerDto customerDTO, @PathVariable int id) {
         return customerService.updateCustomerId(customerDTO, id);
     }
 }

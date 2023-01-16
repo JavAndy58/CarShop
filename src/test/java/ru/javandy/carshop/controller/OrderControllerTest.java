@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.javandy.carshop.dto.CarDTO;
-import ru.javandy.carshop.dto.CustomerDTO;
-import ru.javandy.carshop.dto.OrderDTO;
-import ru.javandy.carshop.dto.DetailDTO;
+import ru.javandy.carshop.dto.CarDto;
+import ru.javandy.carshop.dto.CustomerDto;
+import ru.javandy.carshop.dto.OrderDto;
+import ru.javandy.carshop.dto.DetailDto;
 import ru.javandy.carshop.service.OrderService;
 
 import java.util.ArrayList;
@@ -40,24 +40,24 @@ class OrderControllerTest {
 
     @Test
     void getAllOrders_whenGetOrders_thenStatus200() throws Exception {
-        CarDTO carDTO = new CarDTO(1, "Focus 2", "XXEERTY525SA626");
-        CustomerDTO customerDTO1 = new CustomerDTO("User1", "+79998885252");
-        CustomerDTO customerDTO2 = new CustomerDTO("User2", "+79955885252");
-        customerDTO1.addCarDTO(carDTO);
-        DetailDTO detailDTO1 = new DetailDTO(1, "Реле поворота", 1, 100.0, 145.0, " ", false, 0);
-        DetailDTO detailDTO2 = new DetailDTO(2, "Фара 2107", 1, 10000.0, 14005.0, " ", false, 0);
-        DetailDTO detailDTO3 = new DetailDTO(3, "Клипса двери", 10, 30.0, 45.0, " ", false, 0);
-        OrderDTO orderDTO1 = new OrderDTO(new Date(), 0, false, false, " ", carDTO, customerDTO1, 0, 0);
-        orderDTO1.addDetailDTO(detailDTO1);
-        orderDTO1.addDetailDTO(detailDTO2);
-        OrderDTO orderDTO2 = new OrderDTO(new Date(), 150, false, false, " ", carDTO, customerDTO2, 0, 0);
-        orderDTO2.addDetailDTO(detailDTO3);
-        List<OrderDTO> orderDTOList = new ArrayList<>();
-        orderDTOList.add(orderDTO1);
-        orderDTOList.add(orderDTO2);
-        String expectedJson = objectMapper.writeValueAsString(orderDTOList);
+        CarDto carDTO = new CarDto(1, "Focus 2", "XXEERTY525SA626");
+        CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");
+        CustomerDto customerDto2 = new CustomerDto("User2", "+79955885252");
+        customerDto1.addCarDTO(carDTO);
+        DetailDto detailDto1 = new DetailDto(1, "Реле поворота", 1, 100.0, 145.0, " ", false, 0);
+        DetailDto detailDto2 = new DetailDto(2, "Фара 2107", 1, 10000.0, 14005.0, " ", false, 0);
+        DetailDto detailDto3 = new DetailDto(3, "Клипса двери", 10, 30.0, 45.0, " ", false, 0);
+        OrderDto orderDto1 = new OrderDto(new Date(), 0, false, false, " ", carDTO, customerDto1, 0, 0);
+        orderDto1.addDetailDto(detailDto1);
+        orderDto1.addDetailDto(detailDto2);
+        OrderDto orderDto2 = new OrderDto(new Date(), 150, false, false, " ", carDTO, customerDto2, 0, 0);
+        orderDto2.addDetailDto(detailDto3);
+        List<OrderDto> orderDtoList = new ArrayList<>();
+        orderDtoList.add(orderDto1);
+        orderDtoList.add(orderDto2);
+        String expectedJson = objectMapper.writeValueAsString(orderDtoList);
 
-        Mockito.doReturn(orderDTOList).when(mockOrderService).getAllOrders();
+        Mockito.doReturn(orderDtoList).when(mockOrderService).getAllOrders();
 
         mockMvc.perform(get(BASE_URL + "s"))
                 .andDo(print())
@@ -67,17 +67,17 @@ class OrderControllerTest {
 
     @Test
     void createOrder_whenAddOrder_thenStatus200andOrderReturned() throws Exception {
-        CarDTO carDTO = new CarDTO(1, "Focus 2", "XXEERTY525SA626");
-        CustomerDTO customerDTO1 = new CustomerDTO("User1", "+79998885252");
-        customerDTO1.addCarDTO(carDTO);
-        DetailDTO detailDTO1 = new DetailDTO(1, "Реле поворота", 1, 100.0, 145.0, " ", false, 0);
-        DetailDTO detailDTO2 = new DetailDTO(2, "Фара 2107", 1, 10000.0, 14005.0, " ", false, 0);
-        OrderDTO savedOrderDTO = new OrderDTO(new Date(), 0, false, false, " ", carDTO, customerDTO1, 0, 0);
-        savedOrderDTO.addDetailDTO(detailDTO1);
-        savedOrderDTO.addDetailDTO(detailDTO2);
-        String savedJson = objectMapper.writeValueAsString(savedOrderDTO);
+        CarDto carDTO = new CarDto(1, "Focus 2", "XXEERTY525SA626");
+        CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");
+        customerDto1.addCarDTO(carDTO);
+        DetailDto detailDto1 = new DetailDto(1, "Реле поворота", 1, 100.0, 145.0, " ", false, 0);
+        DetailDto detailDto2 = new DetailDto(2, "Фара 2107", 1, 10000.0, 14005.0, " ", false, 0);
+        OrderDto savedOrderDto = new OrderDto(new Date(), 0, false, false, " ", carDTO, customerDto1, 0, 0);
+        savedOrderDto.addDetailDto(detailDto1);
+        savedOrderDto.addDetailDto(detailDto2);
+        String savedJson = objectMapper.writeValueAsString(savedOrderDto);
 
-        Mockito.when(mockOrderService.saveOrder(savedOrderDTO)).thenReturn(savedOrderDTO);
+        Mockito.when(mockOrderService.saveOrder(savedOrderDto)).thenReturn(savedOrderDto);
 
         mockMvc.perform(post(BASE_URL).content(savedJson).contentType(APPLICATION_JSON))
                 .andDo(print())
@@ -88,17 +88,17 @@ class OrderControllerTest {
     @Test
     void getOrderId_whenGetExistingOrder_thenStatus200andOrderReturned() throws Exception {
         int id = 1;
-        CarDTO carDTO = new CarDTO(1, "Focus 2", "XXEERTY525SA626");
-        CustomerDTO customerDTO1 = new CustomerDTO("User1", "+79998885252");
-        customerDTO1.addCarDTO(carDTO);
-        DetailDTO detailDTO1 = new DetailDTO(1, "Реле поворота", 1, 100.0, 145.0, " ", false, 0);
-        DetailDTO detailDTO2 = new DetailDTO(2, "Фара 2107", 1, 10000.0, 14005.0, " ", false, 0);
-        OrderDTO expectedOrderDTO = new OrderDTO(new Date(), 0, false, false, " ", carDTO, customerDTO1, 0, 0);
-        expectedOrderDTO.addDetailDTO(detailDTO1);
-        expectedOrderDTO.addDetailDTO(detailDTO2);
-        String expectedJson = objectMapper.writeValueAsString(expectedOrderDTO);
+        CarDto carDTO = new CarDto(1, "Focus 2", "XXEERTY525SA626");
+        CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");
+        customerDto1.addCarDTO(carDTO);
+        DetailDto detailDto1 = new DetailDto(1, "Реле поворота", 1, 100.0, 145.0, " ", false, 0);
+        DetailDto detailDto2 = new DetailDto(2, "Фара 2107", 1, 10000.0, 14005.0, " ", false, 0);
+        OrderDto expectedOrderDto = new OrderDto(new Date(), 0, false, false, " ", carDTO, customerDto1, 0, 0);
+        expectedOrderDto.addDetailDto(detailDto1);
+        expectedOrderDto.addDetailDto(detailDto2);
+        String expectedJson = objectMapper.writeValueAsString(expectedOrderDto);
 
-        Mockito.doReturn(expectedOrderDTO).when(mockOrderService).findByOrderId(id);
+        Mockito.doReturn(expectedOrderDto).when(mockOrderService).findByOrderId(id);
 
         mockMvc.perform(get(BASE_URL + "/" + id))
                 .andDo(print())
@@ -109,15 +109,15 @@ class OrderControllerTest {
     @Test
     void updateOrder_whenUpdate_thenStatus200andReturns() throws Exception {
         int id = 1;
-        CarDTO carDTO = new CarDTO(1, "Focus 2", "XXEERTY525SA626");
-        CustomerDTO customerDTO1 = new CustomerDTO("User1", "+79998885252");
-        customerDTO1.addCarDTO(carDTO);
-        DetailDTO detailDTO1 = new DetailDTO(1, "Реле поворота", 1, 100.0, 145.0, " ", false, 0);
-        DetailDTO detailDTO2 = new DetailDTO(2, "Фара 2107", 1, 10000.0, 14005.0, " ", false, 0);
-        OrderDTO updateOrderDTO = new OrderDTO(new Date(), 0, false, false, " ", carDTO, customerDTO1, 0, 0);
-        updateOrderDTO.addDetailDTO(detailDTO1);
-        updateOrderDTO.addDetailDTO(detailDTO2);
-        String updateAsJson = objectMapper.writeValueAsString(updateOrderDTO);
+        CarDto carDTO = new CarDto(1, "Focus 2", "XXEERTY525SA626");
+        CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");
+        customerDto1.addCarDTO(carDTO);
+        DetailDto detailDto1 = new DetailDto(1, "Реле поворота", 1, 100.0, 145.0, " ", false, 0);
+        DetailDto detailDto2 = new DetailDto(2, "Фара 2107", 1, 10000.0, 14005.0, " ", false, 0);
+        OrderDto updateOrderDto = new OrderDto(new Date(), 0, false, false, " ", carDTO, customerDto1, 0, 0);
+        updateOrderDto.addDetailDto(detailDto1);
+        updateOrderDto.addDetailDto(detailDto2);
+        String updateAsJson = objectMapper.writeValueAsString(updateOrderDto);
 
         mockMvc.perform(put(BASE_URL + "/" + id).content(updateAsJson).contentType(APPLICATION_JSON))
                 .andDo(print())

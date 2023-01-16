@@ -2,8 +2,8 @@ package ru.javandy.carshop.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.javandy.carshop.dto.DetailDTO;
-import ru.javandy.carshop.dto.OrderDTO;
+import ru.javandy.carshop.dto.DetailDto;
+import ru.javandy.carshop.dto.OrderDto;
 import ru.javandy.carshop.exeption.DetailNotFoundException;
 import ru.javandy.carshop.mapper.DetailMapper;
 import ru.javandy.carshop.repository.DetailRepository;
@@ -15,23 +15,23 @@ public class DetailServiceImpl implements DetailService {
     private final DetailMapper detailMapper;
     private final OrderService orderService;
 
-    public DetailDTO saveDetail(DetailDTO detailDTO) {
+    public DetailDto saveDetail(DetailDto detailDTO) {
         return detailMapper.toDTO(detailRepository.save(detailMapper.toEntity(detailDTO)));
     }
 
-    public DetailDTO findByDetailId(int id) {
+    public DetailDto findByDetailId(int id) {
         return detailMapper.toDTO(detailRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
     }
 
-    public DetailDTO updateDetailId(DetailDTO newDetailDTO, int id) {
+    public DetailDto updateDetailId(DetailDto newDetailDto, int id) {
 
         return detailMapper.toDTO(detailRepository.findById(id)
                 .map(detail -> {
-                    detail.setName(newDetailDTO.getName());
-                    detail.setAmount(newDetailDTO.getAmount());
-                    detail.setRetailPrice(newDetailDTO.getRetailPrice());
-                    detail.setSupplier(newDetailDTO.getSupplier());
-                    detail.setBringing(newDetailDTO.isBringing());
+                    detail.setName(newDetailDto.getName());
+                    detail.setAmount(newDetailDto.getAmount());
+                    detail.setRetailPrice(newDetailDto.getRetailPrice());
+                    detail.setSupplier(newDetailDto.getSupplier());
+                    detail.setBringing(newDetailDto.isBringing());
                     return detailRepository.save(detail);
                 }).orElseThrow(() -> new DetailNotFoundException(id)));
     }
@@ -41,9 +41,9 @@ public class DetailServiceImpl implements DetailService {
     }
 
     public void deleteByDetailId(int id) {
-        DetailDTO detailDTODel = detailMapper.toDTO(detailRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
-        OrderDTO orderDTODetailDel = orderService.findByDetail(detailDTODel);
-        orderDTODetailDel.removeDetailDTO(detailDTODel);
-        orderService.saveOrder(orderDTODetailDel);
+        DetailDto detailDtoDel = detailMapper.toDTO(detailRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
+        OrderDto orderDtoDetailDel = orderService.findByDetail(detailDtoDel);
+        orderDtoDetailDel.removeDetailDto(detailDtoDel);
+        orderService.saveOrder(orderDtoDetailDel);
     }
 }

@@ -1,16 +1,17 @@
 package ru.javandy.carshop.service;
 
-import ru.javandy.carshop.dto.CarDTO;
-import ru.javandy.carshop.dto.DetailDTO;
-import ru.javandy.carshop.dto.OrderDTO;
+import ru.javandy.carshop.dto.CarDto;
+import ru.javandy.carshop.dto.DetailDto;
+import ru.javandy.carshop.dto.OrderDto;
+
 import java.util.List;
 
 public interface OrderService {
-    List<OrderDTO> getAllOrders();
-    OrderDTO saveOrder(OrderDTO orderDTO);
-    List<OrderDTO> saveOrders(List<OrderDTO> ordersDTO);
-    OrderDTO findByOrderId(int id);
-    OrderDTO updateOrderId(OrderDTO orderDTO, int id);
-    List<OrderDTO> getAllOrdersCar(CarDTO carDTO);
-    OrderDTO findByDetail(DetailDTO detailDTO);
+    List<OrderDto> getAllOrders();
+    OrderDto saveOrder(OrderDto orderDTO);
+    List<OrderDto> saveOrders(List<OrderDto> ordersDTO);
+    OrderDto findByOrderId(int id);
+    OrderDto updateOrderId(OrderDto orderDTO, int id);
+    List<OrderDto> getAllOrdersCar(CarDto carDTO);
+    OrderDto findByDetail(DetailDto detailDTO);
 }

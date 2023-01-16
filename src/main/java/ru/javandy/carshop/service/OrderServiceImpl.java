@@ -2,9 +2,9 @@ package ru.javandy.carshop.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.javandy.carshop.dto.CarDTO;
-import ru.javandy.carshop.dto.DetailDTO;
-import ru.javandy.carshop.dto.OrderDTO;
+import ru.javandy.carshop.dto.CarDto;
+import ru.javandy.carshop.dto.DetailDto;
+import ru.javandy.carshop.dto.OrderDto;
 import ru.javandy.carshop.exeption.DetailNotFoundException;
 import ru.javandy.carshop.exeption.OrderNotFoundException;
 import ru.javandy.carshop.mapper.CarMapper;
@@ -14,56 +14,55 @@ import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.OrderRepository;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-    private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper;
-    private final CarMapper carMapper;
-    private final DetailMapper detailMapper;
+  private final OrderRepository orderRepository;
+  private final OrderMapper orderMapper;
+  private final CarMapper carMapper;
 
-    public List<OrderDTO> getAllOrders() {
-        List<OrderDTO> orderDTOS = orderMapper.toDTOList(orderRepository.findAll());
-        for (OrderDTO orderDTO:orderDTOS) {
+  private final DetailMapper detailMapper;
+
+    public List<OrderDto> getAllOrders() {
+        List<OrderDto> orderDtos = orderMapper.toDtoList(orderRepository.findAll());
+        for (OrderDto orderDto: orderDtos) {
             double countSumDetails = 0;
-            for (DetailDTO detailDTO:orderDTO.getDetails()) {
-                detailDTO.setSumMoney(detailDTO.getAmount() * detailDTO.getRetailPrice());
-                countSumDetails += detailDTO.getSumMoney();
+            for (DetailDto detailDto:orderDto.getDetails()) {
+                detailDto.setSumMoney(detailDto.getAmount() * detailDto.getRetailPrice());
+                countSumDetails += detailDto.getSumMoney();
             }
-            accountTotalOrderAndPayOrderDTO(orderDTO, countSumDetails);
+            accountTotalOrderAndPayOrderDto(orderDto, countSumDetails);
         }
-        orderDTOS.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
-        return orderDTOS;
+        orderDtos.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
+        return orderDtos;
     }
 
-    public OrderDTO saveOrder(OrderDTO orderDTO) {
-        orderDTO.setCreated(new Date());
-        return orderMapper.toDTO(orderRepository.save(orderMapper.toEntity(orderDTO)));
+    public OrderDto saveOrder(OrderDto orderDto) {
+        orderDto.setCreated(new Date());
+        return orderMapper.toDto(orderRepository.save(orderMapper.toEntity(orderDto)));
     }
 
-    public List<OrderDTO> saveOrders(List<OrderDTO> ordersDTO) {
-        return orderMapper.toDTOList(orderRepository.saveAll(orderMapper.toEntityList(ordersDTO)));
+    public List<OrderDto> saveOrders(List<OrderDto> ordersDto) {
+        return orderMapper.toDtoList(orderRepository.saveAll(orderMapper.toEntityList(ordersDto)));
     }
 
-    public OrderDTO findByOrderId(int id) {
-        return orderMapper.toDTO(orderRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
+    public OrderDto findByOrderId(int id) {
+        return orderMapper.toDto(orderRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
     }
 
-    public OrderDTO updateOrderId(OrderDTO newOrderDTO, int id) {
-        DetailDTO detailDTO = null;
-        if (!newOrderDTO.getDetails().isEmpty()) {
-            detailDTO = newOrderDTO.getDetails().get(newOrderDTO.getDetails().size() - 1);
+    public OrderDto updateOrderId(OrderDto newOrderDto, int id) {
+        DetailDto detailDto = null;
+        if (!newOrderDto.getDetails().isEmpty()) {
+            detailDto = newOrderDto.getDetails().get(newOrderDto.getDetails().size() - 1);
         }
-        DetailDTO finalDetailDTO = detailDTO;
-        Detail finalDetail = detailMapper.toEntity(finalDetailDTO);
-        Order newOrder = orderMapper.toEntity(newOrderDTO);
+        DetailDto finalDetailDto = detailDto;
+        Detail finalDetail = detailMapper.toEntity(finalDetailDto);
+        Order newOrder = orderMapper.toEntity(newOrderDto);
 
-        return orderMapper.toDTO(orderRepository.findById(id)
+        return orderMapper.toDto(orderRepository.findById(id)
                 .map(order -> {
                     order.setCreated(newOrder.getCreated());
                     order.setPrepayment(newOrder.getPrepayment());
@@ -72,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
                     order.setNote(newOrder.getNote());
                     order.setCar(newOrder.getCar());
 
-                    if (order.getDetails().size() != orderMapper.toEntity(newOrderDTO).getDetails().size()) {
+                    if (order.getDetails().size() != orderMapper.toEntity(newOrderDto).getDetails().size()) {
                         order.addDetail(finalDetail);
                     }
 
@@ -81,16 +80,16 @@ public class OrderServiceImpl implements OrderService {
                 }).orElseThrow(() -> new OrderNotFoundException(id)));
     }
 
-    public List<OrderDTO> getAllOrdersCar(CarDTO carDTO) {
-        return orderMapper.toDTOList(orderRepository.findByCar(carMapper.toEntity(carDTO)));
+    public List<OrderDto> getAllOrdersCar(CarDto carDto) {
+        return orderMapper.toDtoList(orderRepository.findByCar(carMapper.toEntity(carDto)));
     }
 
-    public OrderDTO findByDetail(DetailDTO detailDTO) {
-        return orderMapper.toDTO(orderRepository.findByDetails(detailMapper.toEntity(detailDTO)));
+    public OrderDto findByDetail(DetailDto detailDto) {
+        return orderMapper.toDto(orderRepository.findByDetails(detailMapper.toEntity(detailDto)));
     }
 
-    private void accountTotalOrderAndPayOrderDTO(OrderDTO orderDTO, double countSumDetails) {
-        orderDTO.setTotalOrder(countSumDetails);
-        orderDTO.setPayOrder(orderDTO.getTotalOrder() - orderDTO.getPrepayment());
+    private void accountTotalOrderAndPayOrderDto(OrderDto orderDto, double countSumDetails) {
+        orderDto.setTotalOrder(countSumDetails);
+        orderDto.setPayOrder(orderDto.getTotalOrder() - orderDto.getPrepayment());
     }
 }

@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.javandy.carshop.dto.CarDTO;
-import ru.javandy.carshop.dto.CustomerDTO;
+import ru.javandy.carshop.dto.CarDto;
+import ru.javandy.carshop.dto.CustomerDto;
 import ru.javandy.carshop.service.CustomerService;
 
 import java.util.ArrayList;
@@ -37,18 +37,18 @@ class CustomerControllerTest {
 
     @Test
     void getAllCustomers_whenGetCustomers_thenStatus200() throws Exception {
-        CarDTO carDTO1 = new CarDTO(1, "Focus 2", "XXEERTY525SA626");
-        CarDTO carDTO2 = new CarDTO(2, "Logan 1", "TTTYYY525SA626");
-        CustomerDTO customerDTO1 = new CustomerDTO("User1", "+79998885252");
-        customerDTO1.addCarDTO(carDTO1);
-        customerDTO1.addCarDTO(carDTO2);
-        CustomerDTO customerDTO2 = new CustomerDTO("User2", "+79997776363");
-        List<CustomerDTO> customerDTOList = new ArrayList<>();
-        customerDTOList.add(customerDTO1);
-        customerDTOList.add(customerDTO2);
-        String expectedJson = objectMapper.writeValueAsString(customerDTOList);
+        CarDto carDto1 = new CarDto(1, "Focus 2", "XXEERTY525SA626");
+        CarDto carDto2 = new CarDto(2, "Logan 1", "TTTYYY525SA626");
+        CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");
+        customerDto1.addCarDTO(carDto1);
+        customerDto1.addCarDTO(carDto2);
+        CustomerDto customerDto2 = new CustomerDto("User2", "+79997776363");
+        List<CustomerDto> customerDtoList = new ArrayList<>();
+        customerDtoList.add(customerDto1);
+        customerDtoList.add(customerDto2);
+        String expectedJson = objectMapper.writeValueAsString(customerDtoList);
 
-        Mockito.doReturn(customerDTOList).when(mockCustomerService).getAllCustomers();
+        Mockito.doReturn(customerDtoList).when(mockCustomerService).getAllCustomers();
 
         mockMvc.perform(get(BASE_URL + "s"))
                 .andDo(print())
@@ -58,10 +58,10 @@ class CustomerControllerTest {
 
     @Test
     void createCustomer_whenAddCustomer_thenStatus200andCustomerReturned() throws Exception {
-        CustomerDTO savedCustomerDTO = new CustomerDTO("User", "+79998885252");
-        String savedJson = objectMapper.writeValueAsString(savedCustomerDTO);
+        CustomerDto savedCustomerDto = new CustomerDto("User", "+79998885252");
+        String savedJson = objectMapper.writeValueAsString(savedCustomerDto);
 
-        Mockito.when(mockCustomerService.saveCustomer(savedCustomerDTO)).thenReturn(savedCustomerDTO);
+        Mockito.when(mockCustomerService.saveCustomer(savedCustomerDto)).thenReturn(savedCustomerDto);
 
         mockMvc.perform(post(BASE_URL).content(savedJson).contentType(APPLICATION_JSON))
                 .andDo(print())
@@ -72,10 +72,10 @@ class CustomerControllerTest {
     @Test
     void getCustomerId_whenGetExistingCustomer_thenStatus200andCustomerReturned() throws Exception {
         int id = 1;
-        CustomerDTO expectedCustomerDTO = new CustomerDTO("User", "+79998885252");
-        String expectedJson = objectMapper.writeValueAsString(expectedCustomerDTO);
+        CustomerDto expectedCustomerDto = new CustomerDto("User", "+79998885252");
+        String expectedJson = objectMapper.writeValueAsString(expectedCustomerDto);
 
-        Mockito.doReturn(expectedCustomerDTO).when(mockCustomerService).findByCustomerId(id);
+        Mockito.doReturn(expectedCustomerDto).when(mockCustomerService).findByCustomerId(id);
 
         mockMvc.perform(get(BASE_URL + "/" + id))
                 .andDo(print())
@@ -86,8 +86,8 @@ class CustomerControllerTest {
     @Test
     void updateCustomer_whenUpdate_thenStatus200andReturns() throws Exception {
         int id = 1;
-        CustomerDTO updateCustomerDTO = new CustomerDTO("User", "+79998885252");
-        String updateAsJson = objectMapper.writeValueAsString(updateCustomerDTO);
+        CustomerDto updateCustomerDto = new CustomerDto("User", "+79998885252");
+        String updateAsJson = objectMapper.writeValueAsString(updateCustomerDto);
 
         mockMvc.perform(put(BASE_URL + "/" + id).content(updateAsJson).contentType(APPLICATION_JSON))
                 .andDo(print())

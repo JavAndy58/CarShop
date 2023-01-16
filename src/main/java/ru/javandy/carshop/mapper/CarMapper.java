@@ -2,11 +2,11 @@ package ru.javandy.carshop.mapper;
 
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import ru.javandy.carshop.dto.CarDTO;
+import ru.javandy.carshop.dto.CarDto;
 import ru.javandy.carshop.model.Car;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface CarMapper {
-    CarDTO toDTO(Car car);
-    Car toEntity(CarDTO carDTO);
+    CarDto toDto(Car car);
+    Car toEntity(CarDto carDto);
 }

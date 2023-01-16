@@ -11,21 +11,21 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @AllArgsConstructor
-public class OrderDTO {
+public class OrderDto {
     private int id;
     private Date created;
     private double prepayment;
     private boolean delivered;
     private boolean cardPayment;
     private String note;
-    private CarDTO car;
-    private List<DetailDTO> details = new ArrayList<>();
-    private CustomerDTO customer;
+    private CarDto car;
+    private List<DetailDto> details = new ArrayList<>();
+    private CustomerDto customer;
     private double totalOrder;
     private double payOrder;
 
-    public OrderDTO(Date created, double prepayment, boolean delivered, boolean cardPayment, String note,
-                    CarDTO car, CustomerDTO customer, double totalOrder, double payOrder) {
+    public OrderDto(Date created, double prepayment, boolean delivered, boolean cardPayment, String note,
+                    CarDto car, CustomerDto customer, double totalOrder, double payOrder) {
         this.created = created;
         this.prepayment = prepayment;
         this.delivered = delivered;
@@ -37,11 +37,11 @@ public class OrderDTO {
         this.payOrder = payOrder;
     }
 
-    public void addDetailDTO(DetailDTO detailDTO) {
+    public void addDetailDto(DetailDto detailDTO) {
         this.details.add(detailDTO);
     }
 
-    public void removeDetailDTO(DetailDTO detailDTO) {
+    public void removeDetailDto(DetailDto detailDTO) {
         this.details.remove(detailDTO);
     }
 }

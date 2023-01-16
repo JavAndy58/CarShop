@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.javandy.carshop.dto.DetailDTO;
+import ru.javandy.carshop.dto.DetailDto;
 import ru.javandy.carshop.service.DetailService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -33,7 +33,7 @@ class DetailControllerTest {
 
     @Test
     void createDetail_whenAddDetail_thenStatus200andDetailReturned() throws Exception {
-        DetailDTO savedDTO = new DetailDTO(1, "Реле поворота", 1, 100.0, 145.0, " ", false, 100.0);
+        DetailDto savedDTO = new DetailDto(1, "Реле поворота", 1, 100.0, 145.0, " ", false, 100.0);
         String savedJson = objectMapper.writeValueAsString(savedDTO);
 
         Mockito.when(mockDetailService.saveDetail(savedDTO)).thenReturn(savedDTO);
@@ -47,10 +47,10 @@ class DetailControllerTest {
     @Test
     void getDetailId_whenGetExistingDetail_thenStatus200andDetailReturned() throws Exception {
         int id = 1;
-        DetailDTO expectedDetailDTO = new DetailDTO(id, "Реле поворота", 1, 100.0, 145.0, " ", false, 100.0);
-        String expectedJson = objectMapper.writeValueAsString(expectedDetailDTO);
+        DetailDto expectedDetailDto = new DetailDto(id, "Реле поворота", 1, 100.0, 145.0, " ", false, 100.0);
+        String expectedJson = objectMapper.writeValueAsString(expectedDetailDto);
 
-        Mockito.doReturn(expectedDetailDTO).when(mockDetailService).findByDetailId(id);
+        Mockito.doReturn(expectedDetailDto).when(mockDetailService).findByDetailId(id);
 
         mockMvc.perform(get(BASE_URL + "/" + id))
                 .andDo(print())
@@ -61,8 +61,8 @@ class DetailControllerTest {
     @Test
     void updateDetail_whenUpdate_thenStatus200andUpdateReturns() throws Exception {
         int id = 1;
-        DetailDTO updateDetailDTO = new DetailDTO(id, "Реле поворота", 1, 100.0, 145.0, " ", false, 100.0);
-        String updateASJson = objectMapper.writeValueAsString(updateDetailDTO);
+        DetailDto updateDetailDto = new DetailDto(id, "Реле поворота", 1, 100.0, 145.0, " ", false, 100.0);
+        String updateASJson = objectMapper.writeValueAsString(updateDetailDto);
 
         mockMvc.perform(put(BASE_URL + "/" + id).content(updateASJson).contentType(APPLICATION_JSON))
                 .andDo(print())

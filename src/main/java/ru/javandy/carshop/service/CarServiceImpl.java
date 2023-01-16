@@ -2,9 +2,9 @@ package ru.javandy.carshop.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.javandy.carshop.dto.CarDTO;
-import ru.javandy.carshop.dto.CustomerDTO;
-import ru.javandy.carshop.dto.OrderDTO;
+import ru.javandy.carshop.dto.CarDto;
+import ru.javandy.carshop.dto.CustomerDto;
+import ru.javandy.carshop.dto.OrderDto;
 import ru.javandy.carshop.exeption.CarNotFoundException;
 import ru.javandy.carshop.mapper.CarMapper;
 import ru.javandy.carshop.model.Car;
@@ -20,38 +20,38 @@ public class CarServiceImpl implements CarService {
     private final OrderService orderService;
     private final CarMapper carMapper;
 
-    public List<CarDTO> getAllCars() {
+    public List<CarDto> getAllCars() {
         return carRepository.findAll()
                 .stream()
                 .map(carMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    public CarDTO saveCar(CarDTO carDTO) {
+    public CarDto saveCar(CarDto carDTO) {
         return carMapper.toDTO(carRepository.save(carMapper.toEntity(carDTO)));
     }
 
-    public CarDTO findByCarId(int id) {
+    public CarDto findByCarId(int id) {
         return carMapper.toDTO(carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id)));
     }
 
-    public CarDTO updateCarId(CarDTO newCarDTO, int id) {
+    public CarDto updateCarId(CarDto newCarDto, int id) {
         return carMapper.toDTO(carRepository.findById(id)
                 .map(car -> {
-                    car.setName(newCarDTO.getName());
-                    car.setVinCode(newCarDTO.getVinCode());
+                    car.setName(newCarDto.getName());
+                    car.setVinCode(newCarDto.getVinCode());
                     return carRepository.save(car);
                 }).orElseThrow(() -> new CarNotFoundException(id)));
     }
 
     public void deleteByCarId(int id) {
         Car carDel = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
-        CarDTO carDTODel = carMapper.toDTO(carDel);
-        CustomerDTO customerCarDTODel = customerService.findByCar(carDTODel);
-        List<OrderDTO> ordersCarDTODel = orderService.getAllOrdersCar(carDTODel);
+        CarDto carDtoDel = carMapper.toDTO(carDel);
+        CustomerDto customerCarDTODel = customerService.findByCar(carDtoDel);
+        List<OrderDto> ordersCarDTODel = orderService.getAllOrdersCar(carDtoDel);
         ordersCarDTODel.forEach(customer -> customer.setCar(null));
         orderService.saveOrders(ordersCarDTODel);
-        customerCarDTODel.removeCarDTO(carDTODel);
+        customerCarDTODel.removeCarDTO(carDtoDel);
         customerService.saveCustomer(customerCarDTODel);
     }
 
