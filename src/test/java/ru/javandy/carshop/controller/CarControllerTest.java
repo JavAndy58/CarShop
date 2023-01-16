@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SuppressWarnings("checkstyle:Indentation")
 @WebMvcTest(controllers = CarController.class)
 class CarControllerTest {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -34,6 +35,7 @@ class CarControllerTest {
 
     private static final String BASE_URL = "/car";
 
+    @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
     @Test
     void getAllCars_whenGetCars_thenStatus200() throws Exception {
         CarDTO carDTO1 = new CarDTO(1, "Focus 2", "XXEERTY525SA626");
