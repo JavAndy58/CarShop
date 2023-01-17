@@ -23,24 +23,24 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CustomerDto> getAllCustomers() {
         return customerRepository.findAll()
                 .stream()
-                .map(customerMapper::toDTO)
+                .map(customerMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public CustomerDto saveCustomer(CustomerDto customerDTO) {
-        return customerMapper.toDTO(customerRepository.save(customerMapper.toEntity(customerDTO)));
+    public CustomerDto saveCustomer(CustomerDto customerDto) {
+        return customerMapper.toDto(customerRepository.save(customerMapper.toEntity(customerDto)));
     }
 
     public CustomerDto findByCustomerId(int id) {
-        return customerMapper.toDTO(customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id)));
+        return customerMapper.toDto(customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id)));
     }
 
     public CustomerDto updateCustomerId(CustomerDto newCustomerDto, int id) {
-        CarDto carDTO = null;
+        CarDto carDto = null;
         if (!newCustomerDto.getCars().isEmpty()) {
-            carDTO = newCustomerDto.getCars().get(newCustomerDto.getCars().size() - 1);
+            carDto = newCustomerDto.getCars().get(newCustomerDto.getCars().size() - 1);
         }
-        CarDto finalCarDto = carDTO;
+        CarDto finalCarDto = carDto;
         return customerRepository.findById(id)
                 .map(customer -> {
                     customer.setName(newCustomerDto.getName());
@@ -48,11 +48,11 @@ public class CustomerServiceImpl implements CustomerService {
                      if (customer.getCars().size() != newCustomerDto.getCars().size()) {
                          customer.addCar(carMapper.toEntity(finalCarDto));
                      }
-                    return customerMapper.toDTO(customerRepository.save(customer));
+                    return customerMapper.toDto(customerRepository.save(customer));
                 }).orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
-    public CustomerDto findByCar(CarDto carDTO) {
-        return customerMapper.toDTO(customerRepository.findByCars(carMapper.toEntity(carDTO)));
+    public CustomerDto findByCar(CarDto carDto) {
+        return customerMapper.toDto(customerRepository.findByCars(carMapper.toEntity(carDto)));
     }
 }

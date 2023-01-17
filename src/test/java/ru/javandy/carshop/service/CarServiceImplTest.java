@@ -1,10 +1,20 @@
 package ru.javandy.carshop.service;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import ru.javandy.carshop.dto.CarDto;
+import ru.javandy.carshop.mapper.CarMapper;
+import ru.javandy.carshop.model.Car;
 import ru.javandy.carshop.repository.CarRepository;
+import ru.javandy.carshop.service.CarServiceImpl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = CarServiceImpl.class)
 class CarServiceImplTest {
@@ -12,46 +22,58 @@ class CarServiceImplTest {
     @Autowired
     private CarService carService;
 
+    @Autowired
+    private CarMapper carMapper;
+
+    @MockBean
+    private CustomerService customerService;
+
+    @MockBean
+    private OrderService orderService;
+
     @MockBean
     private CarRepository carRepository;
 
+    @MockBean
+    private CarMapper carMapperr;
+
     @Test
-    void getAllCars_whenGetCars_thenStatus200() throws Exception {
+    void getAllCarsWhenGetCarsThenStatus200() throws Exception {
+        CarDto carDto1 = new CarDto(1, "Focus 2", "XXEERTY525SA626");
+        CarDto carDto2 = new CarDto(2, "Logan 1", "TTTYYY525SA626");
+        List<CarDto> carDtoList = new ArrayList<>();
+        carDtoList.add(carDto1);
+        carDtoList.add(carDto2);
 
+        Car car1 = carMapper.toEntity(carDto1);
+        Car car2 = carMapper.toEntity(carDto2);
+        List<Car> carList = new ArrayList<>();
+        carList.add(car1);
+        carList.add(car2);
 
+        Mockito.doReturn(carList).when(carRepository).findAll();
+        List<CarDto> actual = carService.getAllCars();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        assertThat(actual).size().isEqualTo(2);
+        assertThat(actual).isEqualTo(carDtoList);
 
 
     }
 
     @Test
-    void saveCar_whenAddCar_thenStatus200andCarReturned() throws Exception {
+    void saveCarWhenAddCarThenStatus200andCarReturned() throws Exception {
     }
 
     @Test
-    void findByCarId_whenGetExistingCar_thenStatus200andCarReturned() throws Exception  {
+    void findByCarIdWhenGetExistingCarThenStatus200andCarReturned() throws Exception  {
     }
 
     @Test
-    void updateCarId_whenUpdate_thenStatus200andUpdateReturns() throws Exception {
+    void updateCarIdWhenUpdateThenStatus200andUpdateReturns() throws Exception {
     }
 
     @Test
-    void deleteByCarId_whenDeleteCar_thenStatus404() throws Exception {
+    void deleteByCarIdWhenDeleteCarThenStatus404() throws Exception {
     }
 
     @Test

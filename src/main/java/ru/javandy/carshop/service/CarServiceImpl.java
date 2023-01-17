@@ -23,20 +23,20 @@ public class CarServiceImpl implements CarService {
     public List<CarDto> getAllCars() {
         return carRepository.findAll()
                 .stream()
-                .map(carMapper::toDTO)
+                .map(carMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public CarDto saveCar(CarDto carDTO) {
-        return carMapper.toDTO(carRepository.save(carMapper.toEntity(carDTO)));
+    public CarDto saveCar(CarDto carDto) {
+        return carMapper.toDto(carRepository.save(carMapper.toEntity(carDto)));
     }
 
     public CarDto findByCarId(int id) {
-        return carMapper.toDTO(carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id)));
+        return carMapper.toDto(carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id)));
     }
 
     public CarDto updateCarId(CarDto newCarDto, int id) {
-        return carMapper.toDTO(carRepository.findById(id)
+        return carMapper.toDto(carRepository.findById(id)
                 .map(car -> {
                     car.setName(newCarDto.getName());
                     car.setVinCode(newCarDto.getVinCode());
@@ -46,13 +46,13 @@ public class CarServiceImpl implements CarService {
 
     public void deleteByCarId(int id) {
         Car carDel = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
-        CarDto carDtoDel = carMapper.toDTO(carDel);
-        CustomerDto customerCarDTODel = customerService.findByCar(carDtoDel);
-        List<OrderDto> ordersCarDTODel = orderService.getAllOrdersCar(carDtoDel);
-        ordersCarDTODel.forEach(customer -> customer.setCar(null));
-        orderService.saveOrders(ordersCarDTODel);
-        customerCarDTODel.removeCarDTO(carDtoDel);
-        customerService.saveCustomer(customerCarDTODel);
+        CarDto carDtoDel = carMapper.toDto(carDel);
+        CustomerDto customerCarDtoDel = customerService.findByCar(carDtoDel);
+        List<OrderDto> ordersCarDtoDel = orderService.getAllOrdersCar(carDtoDel);
+        ordersCarDtoDel.forEach(customer -> customer.setCar(null));
+        orderService.saveOrders(ordersCarDtoDel);
+        customerCarDtoDel.removeCarDto(carDtoDel);
+        customerService.saveCustomer(customerCarDtoDel);
     }
 
     public boolean existsByCarId(int id) {

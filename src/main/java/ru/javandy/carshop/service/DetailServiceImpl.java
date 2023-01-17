@@ -15,17 +15,17 @@ public class DetailServiceImpl implements DetailService {
     private final DetailMapper detailMapper;
     private final OrderService orderService;
 
-    public DetailDto saveDetail(DetailDto detailDTO) {
-        return detailMapper.toDTO(detailRepository.save(detailMapper.toEntity(detailDTO)));
+    public DetailDto saveDetail(DetailDto detailDto) {
+        return detailMapper.toDto(detailRepository.save(detailMapper.toEntity(detailDto)));
     }
 
     public DetailDto findByDetailId(int id) {
-        return detailMapper.toDTO(detailRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
+        return detailMapper.toDto(detailRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
     }
 
     public DetailDto updateDetailId(DetailDto newDetailDto, int id) {
 
-        return detailMapper.toDTO(detailRepository.findById(id)
+        return detailMapper.toDto(detailRepository.findById(id)
                 .map(detail -> {
                     detail.setName(newDetailDto.getName());
                     detail.setAmount(newDetailDto.getAmount());
@@ -41,7 +41,7 @@ public class DetailServiceImpl implements DetailService {
     }
 
     public void deleteByDetailId(int id) {
-        DetailDto detailDtoDel = detailMapper.toDTO(detailRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
+        DetailDto detailDtoDel = detailMapper.toDto(detailRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
         OrderDto orderDtoDetailDel = orderService.findByDetail(detailDtoDel);
         orderDtoDetailDel.removeDetailDto(detailDtoDel);
         orderService.saveOrder(orderDtoDetailDel);

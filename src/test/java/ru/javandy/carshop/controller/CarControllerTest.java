@@ -37,7 +37,7 @@ class CarControllerTest {
 
     @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
     @Test
-    void getAllCars_whenGetCars_thenStatus200() throws Exception {
+    void getAllCarsWhenGetCarsThenStatus200() throws Exception {
         CarDto carDto1 = new CarDto(1, "Focus 2", "XXEERTY525SA626");
         CarDto carDto2 = new CarDto(2, "Logan 1", "TTTYYY525SA626");
         List<CarDto> carDtoList = new ArrayList<>();
@@ -56,7 +56,7 @@ class CarControllerTest {
     }
 
     @Test
-    void getCarId_whenGetExistingCar_thenStatus200andCarReturned() throws Exception {
+    void getCarIdWhenGetExistingCarThenStatus200andCarReturned() throws Exception {
         int id = 2;
         CarDto expectedCarDto = new CarDto(id, "Focus 2", "XXEERTY525SA626");
         String expectedJson = objectMapper.writeValueAsString(expectedCarDto);
@@ -70,7 +70,7 @@ class CarControllerTest {
     }
 
     @Test
-    void createCar_whenAddCar_thenStatus200andCarReturned() throws Exception {
+    void createCarWhenAddCarThenStatus200andCarReturned() throws Exception {
         CarDto savedDTO = new CarDto(1, "Focus 2", "XXEERTY525SA626");
         String savedJson = objectMapper.writeValueAsString(savedDTO);
 
@@ -83,7 +83,7 @@ class CarControllerTest {
     }
 
     @Test
-    void updateCar_whenUpdate_thenStatus200andUpdateReturns() throws Exception {
+    void updateCarWhenUpdateThenStatus200andUpdateReturns() throws Exception {
         int id = 1;
         CarDto updateCarDto = new CarDto(id, "Logan1", "XTY52A626");
         String updateAsJson = objectMapper.writeValueAsString(updateCarDto);
@@ -94,7 +94,7 @@ class CarControllerTest {
     }
 
     @Test
-    void deleteCar_whenDeleteCar_thenStatus404() throws Exception {
+    void deleteCarWhenDeleteCarThenStatus404() throws Exception {
         int id = 1;
 
         mockMvc.perform(delete(BASE_URL + "/" + id))

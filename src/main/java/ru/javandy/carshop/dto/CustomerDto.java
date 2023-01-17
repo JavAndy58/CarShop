@@ -25,7 +25,7 @@ public class CustomerDto {
         this.cars.add(carDTO);
     }
 
-    public void removeCarDTO(CarDto carDTO) {
+    public void removeCarDto(CarDto carDTO) {
         this.cars.remove(carDTO);
     }
 }
