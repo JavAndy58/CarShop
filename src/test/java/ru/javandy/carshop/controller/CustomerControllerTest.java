@@ -36,12 +36,10 @@ class CustomerControllerTest {
     private static final String BASE_URL = "/customer";
 
     @Test
-    void getAllCustomers_whenGetCustomers_thenStatus200() throws Exception {
+    void getAllCustomersWhenGetCustomersThenStatus200() throws Exception {
         CarDto carDto1 = new CarDto(1, "Focus 2", "XXEERTY525SA626");
-        CarDto carDto2 = new CarDto(2, "Logan 1", "TTTYYY525SA626");
         CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");
         customerDto1.addCarDTO(carDto1);
-        customerDto1.addCarDTO(carDto2);
         CustomerDto customerDto2 = new CustomerDto("User2", "+79997776363");
         List<CustomerDto> customerDtoList = new ArrayList<>();
         customerDtoList.add(customerDto1);
@@ -57,7 +55,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void createCustomer_whenAddCustomer_thenStatus200andCustomerReturned() throws Exception {
+    void createCustomerWhenAddCustomerThenStatus200andCustomerReturned() throws Exception {
         CustomerDto savedCustomerDto = new CustomerDto("User", "+79998885252");
         String savedJson = objectMapper.writeValueAsString(savedCustomerDto);
 
@@ -70,7 +68,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void getCustomerId_whenGetExistingCustomer_thenStatus200andCustomerReturned() throws Exception {
+    void getCustomerIdWhenGetExistingCustomerThenStatus200andCustomerReturned() throws Exception {
         int id = 1;
         CustomerDto expectedCustomerDto = new CustomerDto("User", "+79998885252");
         String expectedJson = objectMapper.writeValueAsString(expectedCustomerDto);
@@ -84,7 +82,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void updateCustomer_whenUpdate_thenStatus200andReturns() throws Exception {
+    void updateCustomerWhenUpdateThenStatus200andReturns() throws Exception {
         int id = 1;
         CustomerDto updateCustomerDto = new CustomerDto("User", "+79998885252");
         String updateAsJson = objectMapper.writeValueAsString(updateCustomerDto);

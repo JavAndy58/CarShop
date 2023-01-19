@@ -10,5 +10,4 @@ public interface CarService {
     CarDto findByCarId(int id);
     CarDto updateCarId(CarDto carDto, int id);
     void deleteByCarId(int id);
-    boolean existsByCarId(int id);
 }
