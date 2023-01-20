@@ -76,7 +76,7 @@ class CustomerServiceImplTest {
 
     @Test
     void findByCustomerId() {
-        int id = 1;
+        int testId = 1;
         Car car1 = new Car(1, "Focus 2", "XXEERTY525SA626");
         Customer customer1 = new Customer(1, "User1", "+79998885252", Collections.singletonList(car1));
         CarDto carDto1 = new CarDto(1, "Focus 2", "XXEERTY525SA626");
@@ -84,42 +84,51 @@ class CustomerServiceImplTest {
         customerDto1.addCarDTO(carDto1);
         Optional<Customer> optionalCustomer = Optional.of(customer1);
 
-        when(customerRepository.findById(id)).thenReturn(optionalCustomer);
+        when(customerRepository.findById(testId)).thenReturn(optionalCustomer);
         when(customerMapper.toDto(customer1)).thenReturn(customerDto1);
 
-        customerService.findByCustomerId(id);
-        verify(customerRepository, times(1)).findById(id);
+        customerService.findByCustomerId(testId);
+        verify(customerRepository, times(1)).findById(testId);
         verify(customerMapper, times(1)).toDto(customer1);
     }
 
     @Test
     void updateCustomerId() {
-        int id = 1;
-        Car car1 = new Car(id, "Focus 2", "XXEERTY525SA626");
-        Customer customer1 = new Customer(id, "User1", "+79998885252", Collections.singletonList(car1));
-        Customer customer2 = new Customer(id, "User2", "+79997776363", null);
+        int testId = 1;
+        Car car1 = new Car(testId, "Focus 2", "XXEERTY525SA626");
+        Customer existing = new Customer(testId, null, null, Collections.singletonList(car1));
 
-        CarDto carDto1 = new CarDto(1, "Focus 2", "XXEERTY525SA626");
-        CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");
-        customerDto1.addCarDTO(carDto1);
+        Customer updateCustomer = new Customer(testId, "User1", "+79998885252", Collections.singletonList(car1));
+        CarDto updateCarDto = new CarDto(testId, "Focus 2", "XXEERTY525SA626");
+        CustomerDto updateCustomerDto = new CustomerDto(testId, "User1", "+79998885252", Collections.singletonList(updateCarDto));
 
-        when(customerRepository.findById(id)).thenReturn(Optional.of(customer1));
-        when(customerMapper.toDto(customer1)).thenReturn(customerDto1);
-        when(customerRepository.save(customer1)).thenReturn(customer2);
+        CarDto testCarDto = new CarDto(1, "Focus 2", "XXEERTY525SA626");
+        CustomerDto testCustomerDto = new CustomerDto("User1", "+79998885252");
+        testCustomerDto.addCarDTO(testCarDto);
 
-        customerService.updateCustomerId(customerDto1, id);
-        verify(customerRepository, times(1)).findById(id);
-        verify(customerRepository, times(1)).save(customer1);
+        when(customerRepository.findById(testId)).thenReturn(Optional.of(existing));
+        when(customerMapper.toDto(updateCustomer)).thenReturn(updateCustomerDto);
+        when(customerRepository.save(updateCustomer)).thenReturn(updateCustomer);
 
-
-
-
-
-
-
+        customerService.updateCustomerId(testCustomerDto, testId);
+        verify(customerRepository, times(1)).findById(testId);
+        verify(customerRepository, times(1)).save(updateCustomer);
     }
 
     @Test
     void findByCar() {
+        int testId = 1;
+        Car testCar = new Car(testId, "Focus 2", "XXEERTY525SA626");
+        Customer testCustomer = new Customer(testId, "User1", "+79998885252", Collections.singletonList(testCar));
+        CarDto testCarDto = new CarDto(testId, "Focus 2", "XXEERTY525SA626");
+        CustomerDto testCustomerDto = new CustomerDto("User1", "+79998885252");
+        testCustomerDto.addCarDTO(testCarDto);
+
+        when(customerRepository.findByCars(testCar)).thenReturn(testCustomer);
+        when(carMapper.toEntity(testCarDto)).thenReturn(testCar);
+        when(customerMapper.toDto(testCustomer)).thenReturn(testCustomerDto);
+
+        customerService.findByCar(testCarDto);
+        verify(customerRepository, times(1)).findByCars(testCar);
     }
 }

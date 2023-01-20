@@ -32,7 +32,7 @@ class DetailControllerTest {
     private static final String BASE_URL = "/detail";
 
     @Test
-    void createDetail_whenAddDetail_thenStatus200andDetailReturned() throws Exception {
+    void createDetailWhenAddDetailThenStatus200andDetailReturned() throws Exception {
         DetailDto savedDTO = new DetailDto(1, "Реле поворота", 1, 100.0, 145.0, " ", false, 100.0);
         String savedJson = objectMapper.writeValueAsString(savedDTO);
 
@@ -45,7 +45,7 @@ class DetailControllerTest {
     }
 
     @Test
-    void getDetailId_whenGetExistingDetail_thenStatus200andDetailReturned() throws Exception {
+    void getDetailIdWhenGetExistingDetailThenStatus200andDetailReturned() throws Exception {
         int id = 1;
         DetailDto expectedDetailDto = new DetailDto(id, "Реле поворота", 1, 100.0, 145.0, " ", false, 100.0);
         String expectedJson = objectMapper.writeValueAsString(expectedDetailDto);
@@ -59,7 +59,7 @@ class DetailControllerTest {
     }
 
     @Test
-    void updateDetail_whenUpdate_thenStatus200andUpdateReturns() throws Exception {
+    void updateDetailWhenUpdateThenStatus200andUpdateReturns() throws Exception {
         int id = 1;
         DetailDto updateDetailDto = new DetailDto(id, "Реле поворота", 1, 100.0, 145.0, " ", false, 100.0);
         String updateASJson = objectMapper.writeValueAsString(updateDetailDto);
@@ -70,7 +70,7 @@ class DetailControllerTest {
     }
 
     @Test
-    void deleteDetail_whenDeledeDetail_thenStatus404() throws Exception {
+    void deleteDetailWhenDeledeDetailThenStatus404() throws Exception {
         int id = 1;
 
         mockMvc.perform(delete(BASE_URL + "/" + id))

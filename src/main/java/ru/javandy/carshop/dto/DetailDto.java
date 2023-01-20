@@ -17,8 +17,18 @@ public class DetailDto {
     private boolean bringing;
     private double sumMoney;
 
-    public DetailDto(String name, int amount, double purchasePrice, double retailPrice, String supplier,
-                     boolean bringing, double sumMoney) {
+    public DetailDto(String name, int amount, double purchasePrice,
+                     double retailPrice, String supplier, boolean bringing) {
+        this.name = name;
+        this.amount = amount;
+        this.purchasePrice = purchasePrice;
+        this.retailPrice = retailPrice;
+        this.supplier = supplier;
+        this.bringing = bringing;
+    }
+
+    public DetailDto(String name, int amount, double purchasePrice, double retailPrice,
+                     String supplier, boolean bringing, double sumMoney) {
         this.name = name;
         this.amount = amount;
         this.purchasePrice = purchasePrice;

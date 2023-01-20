@@ -19,4 +19,14 @@ public class Detail {
     private double retailPrice;
     private String supplier;
     private boolean bringing;
+
+    public Detail(String name, int amount, double purchasePrice,
+                  double retailPrice, String supplier, boolean bringing) {
+        this.name = name;
+        this.amount = amount;
+        this.purchasePrice = purchasePrice;
+        this.retailPrice = retailPrice;
+        this.supplier = supplier;
+        this.bringing = bringing;
+    }
 }
