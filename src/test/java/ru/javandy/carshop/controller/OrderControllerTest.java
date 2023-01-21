@@ -39,7 +39,7 @@ class OrderControllerTest {
     private static final String BASE_URL = "/order";
 
     @Test
-    void getAllOrders_whenGetOrders_thenStatus200() throws Exception {
+    void getAllOrdersWhenGetOrdersThenStatus200() throws Exception {
         CarDto carDTO = new CarDto(1, "Focus 2", "XXEERTY525SA626");
         CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");
         CustomerDto customerDto2 = new CustomerDto("User2", "+79955885252");
@@ -66,7 +66,7 @@ class OrderControllerTest {
     }
 
     @Test
-    void createOrder_whenAddOrder_thenStatus200andOrderReturned() throws Exception {
+    void createOrderWhenAddOrderThenStatus200andOrderReturned() throws Exception {
         CarDto carDTO = new CarDto(1, "Focus 2", "XXEERTY525SA626");
         CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");
         customerDto1.addCarDTO(carDTO);
@@ -86,7 +86,7 @@ class OrderControllerTest {
     }
 
     @Test
-    void getOrderId_whenGetExistingOrder_thenStatus200andOrderReturned() throws Exception {
+    void getOrderIdWhenGetExistingOrderThenStatus200andOrderReturned() throws Exception {
         int id = 1;
         CarDto carDTO = new CarDto(1, "Focus 2", "XXEERTY525SA626");
         CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");
@@ -107,7 +107,7 @@ class OrderControllerTest {
     }
 
     @Test
-    void updateOrder_whenUpdate_thenStatus200andReturns() throws Exception {
+    void updateOrderWhenUpdateThenStatus200andReturns() throws Exception {
         int id = 1;
         CarDto carDTO = new CarDto(1, "Focus 2", "XXEERTY525SA626");
         CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");

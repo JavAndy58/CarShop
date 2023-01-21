@@ -18,7 +18,7 @@ public class Car {
     private int id;
     private String name;
 
-    @Column(name = "vin_code", nullable = false)
+    @Column(name = "vin_code")
     private String vinCode;
 
     public Car(String name, String vinCode) {

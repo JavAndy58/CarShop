@@ -23,7 +23,6 @@ public class OrderServiceImpl implements OrderService {
   private final OrderRepository orderRepository;
   private final OrderMapper orderMapper;
   private final CarMapper carMapper;
-
   private final DetailMapper detailMapper;
 
     public List<OrderDto> getAllOrders() {

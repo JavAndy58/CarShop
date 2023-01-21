@@ -1,22 +1,25 @@
 package ru.javandy.carshop.service;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import ru.javandy.carshop.dto.CarDto;
+import ru.javandy.carshop.dto.CustomerDto;
 import ru.javandy.carshop.dto.DetailDto;
+import ru.javandy.carshop.dto.OrderDto;
 import ru.javandy.carshop.mapper.DetailMapper;
 import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.repository.DetailRepository;
 
+import java.util.Date;
 import java.util.Optional;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = {DetailServiceImpl.class, DetailMapper.class})
+@SpringBootTest(classes = {DetailServiceImpl.class, DetailMapper.class, OrderService.class})
 class DetailServiceImplTest {
 
     @Autowired
@@ -80,14 +83,21 @@ class DetailServiceImplTest {
     @Test
     void deleteByDetailId() {
         int testId = 1;
+        CarDto carDTO = new CarDto(1, "Focus 2", "XXEERTY525SA626");
+        CustomerDto customerDto1 = new CustomerDto("User1", "+79998885252");
+        customerDto1.addCarDTO(carDTO);
         DetailDto testDetailDto = new DetailDto("Реле поворота", 1, 100.0, 145.0, " ", false);
         Detail testDetail = new Detail(testId, "Реле поворота", 1, 100.0, 145.0, " ", false);
+        OrderDto orderDto1 = new OrderDto(new Date(), 0, false, false, " ", carDTO, customerDto1, 0, 0);
+        orderDto1.addDetailDto(testDetailDto);
 
         when(detailMapper.toDto(testDetail)).thenReturn(testDetailDto);
         when(detailRepository.findById(testId)).thenReturn(Optional.of(testDetail));
-        when(orderService.findByDetail(testDetailDto)).thenReturn()
+        when(orderService.findByDetail(testDetailDto)).thenReturn(orderDto1);
 
-
-
+        detailService.deleteByDetailId(testId);
+        verify(detailRepository, times(1)).findById(testId);
+        verify(orderService, times(1)).findByDetail(testDetailDto);
+        verify(orderService, times(1)).saveOrder(orderDto1);
     }
 }
