@@ -14,4 +14,5 @@ public interface OrderService {
     OrderDto updateOrderId(OrderDto orderDTO, int id);
     List<OrderDto> getAllOrdersCar(CarDto carDTO);
     OrderDto findByDetail(DetailDto detailDTO);
+    void printOrderId(int id);
 }

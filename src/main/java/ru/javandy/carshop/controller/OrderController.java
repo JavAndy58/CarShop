@@ -33,6 +33,12 @@ public class OrderController {
         return orderService.findByOrderId(id);
     }
 
+    @GetMapping("/order/{id}/print")
+    @ResponseStatus(HttpStatus.OK)
+    public void printOrderId(@PathVariable int id) {
+        orderService.printOrderId(id);
+    }
+
     @PutMapping("/order/{id}")
     @ResponseStatus(HttpStatus.OK)
     public OrderDto updateOrder(@RequestBody OrderDto orderDTO, @PathVariable int id) {

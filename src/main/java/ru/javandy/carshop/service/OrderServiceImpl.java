@@ -13,6 +13,7 @@ import ru.javandy.carshop.mapper.OrderMapper;
 import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.OrderRepository;
+import ru.javandy.carshop.utils.ExcelOrderCustomer;
 
 import java.util.Date;
 import java.util.List;
@@ -24,6 +25,7 @@ public class OrderServiceImpl implements OrderService {
   private final OrderMapper orderMapper;
   private final CarMapper carMapper;
   private final DetailMapper detailMapper;
+  private final ExcelOrderCustomer excelOrderCustomer;
 
     public List<OrderDto> getAllOrders() {
         List<OrderDto> orderDtos = orderMapper.toDtoList(orderRepository.findAll());
@@ -85,6 +87,11 @@ public class OrderServiceImpl implements OrderService {
 
     public OrderDto findByDetail(DetailDto detailDto) {
         return orderMapper.toDto(orderRepository.findByDetails(detailMapper.toEntity(detailDto)));
+    }
+
+    public void printOrderId(int id) {
+        OrderDto orderDto = findByOrderId(id);
+        excelOrderCustomer.writeXLSXFile(orderDto);
     }
 
     private void accountTotalOrderAndPayOrderDto(OrderDto orderDto, double countSumDetails) {
