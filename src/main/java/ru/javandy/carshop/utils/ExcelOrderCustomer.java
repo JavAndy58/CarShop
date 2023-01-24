@@ -55,8 +55,8 @@ public class ExcelOrderCustomer {
             cellTelephone.setCellValue("Телефон");
             XSSFCell cellTelephoneData = rowTelephone.createCell(1);
             cellTelephoneData.setCellValue(orderDto.getCustomer().getPhoneNumber());
-            XSSFCell cellAdres = rowTelephone.createCell(2);
-            cellAdres.setCellValue("ул.Ново-Терновская, 3");
+            XSSFCell cellAddress = rowTelephone.createCell(2);
+            cellAddress.setCellValue("ул.Ново-Терновская, 3");
 
             XSSFRow rowAuto = sheet.createRow(5);
             XSSFCell cellAuto = rowAuto.createCell(0);
@@ -99,11 +99,18 @@ public class ExcelOrderCustomer {
             cellSumMoney.setCellStyle(style);
             cellSumMoney.setCellValue("Сумма");
 
+            for (int r = 9; r < 25; r++) {
+               XSSFRow row = sheet.createRow(r);
+                  for (int c = 0; c < 4; c++) {
+                     XSSFCell cell = row.createCell(c);
+                     cell.setCellStyle(style);
+                     cell.setCellValue("");
+                  }
+            }
+
             int rowNum = 8;
             int tempN = 0;
             for (DetailDto detailDto : detailDtoList) {
-
-
                 XSSFRow row = sheet.createRow(rowNum++);
                 XSSFCell cellNData = row.createCell(0);
                 cellNData.setCellStyle(style);
@@ -131,25 +138,11 @@ public class ExcelOrderCustomer {
             }
 
             XSSFCell cellTotal = sheet.createRow(23).createCell(4);
-            cellTotal.setCellType(CellType.NUMERIC);
             cellTotal.setCellStyle(style);
             cellTotal.setCellValue(orderDto.getPayOrder());
 
-
-//        for (int r = 0; r < 5; r++) {
-//            XSSFRow row = sheet.createRow(r);
-//
-//            for (int c = 0; c < 5; c++) {
-//                XSSFCell cell = row.createCell(c);
-//                cell.setCellValue("Cell" + r + " " + c);
-//            }
-//        }
-
             workbook.write(fileOutputStream);
             fileOutputStream.flush();
-//            Runtime rt = Runtime.getRuntime();
-//            Process process = rt.exec("C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE c:\\projects\\CarShop\\data\\Excel\\OrderCustomer.xlsx");
-
             Runtime.getRuntime().exec("C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE c:\\projects\\CarShop\\data\\Excel\\OrderCustomer.xlsx");
 
         } catch (IOException e) {

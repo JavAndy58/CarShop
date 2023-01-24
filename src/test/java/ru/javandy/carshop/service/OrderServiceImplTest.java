@@ -16,6 +16,7 @@ import ru.javandy.carshop.model.Customer;
 import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.OrderRepository;
+import ru.javandy.carshop.utils.ExcelOrderCustomer;
 
 import java.util.*;
 
@@ -40,6 +41,9 @@ class OrderServiceImplTest {
 
     @MockBean
     private DetailMapper detailMapper;
+
+    @MockBean
+    private ExcelOrderCustomer excelOrderCustomer;
 
     @Test
     void getAllOrders() {
