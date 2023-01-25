@@ -2,10 +2,6 @@ package ru.javandy.carshop.utils;
 
 
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -14,12 +10,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 import ru.javandy.carshop.dto.DetailDto;
 import ru.javandy.carshop.dto.OrderDto;
-import ru.javandy.carshop.model.Order;
-import ru.javandy.carshop.service.OrderService;
 
-import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -38,7 +30,7 @@ public class ExcelOrderCustomer {
             XSSFRow rowNumberOrder = sheet.createRow(1);
             XSSFCell cellNumberOrder = rowNumberOrder.createCell(2);
             cellNumberOrder.setCellValue("Заказ №");
-            XSSFCell cellNumberOrderData = rowNumberOrder.createCell(4);
+            XSSFCell cellNumberOrderData = rowNumberOrder.createCell(3);
             cellNumberOrderData.setCellValue(orderDto.getId());
 
 
@@ -99,18 +91,21 @@ public class ExcelOrderCustomer {
             cellSumMoney.setCellStyle(style);
             cellSumMoney.setCellValue("Сумма");
 
-            for (int r = 9; r < 25; r++) {
+            for (int r = 9; r < 22; r++) {
                XSSFRow row = sheet.createRow(r);
-                  for (int c = 0; c < 4; c++) {
+                  for (int c = 0; c < 5; c++) {
                      XSSFCell cell = row.createCell(c);
                      cell.setCellStyle(style);
                      cell.setCellValue("");
                   }
             }
 
-            int rowNum = 8;
-            int tempN = 0;
+            int rowNum = 9;
+            int tempN = 1;
+            int totalDetails = 0;
             for (DetailDto detailDto : detailDtoList) {
+                double sumDetails = detailDto.getRetailPrice() * detailDto.getAmount();
+                totalDetails += sumDetails;
                 XSSFRow row = sheet.createRow(rowNum++);
                 XSSFCell cellNData = row.createCell(0);
                 cellNData.setCellStyle(style);
@@ -133,13 +128,15 @@ public class ExcelOrderCustomer {
                 XSSFCell cellSumMoneyData = row.createCell(4);
                 cellSumMoneyData.setCellType(CellType.NUMERIC);
                 cellSumMoneyData.setCellStyle(style);
-                cellSumMoneyData.setCellValue(detailDto.getRetailPrice());
+                cellSumMoneyData.setCellValue(sumDetails);
 
             }
 
-            XSSFCell cellTotal = sheet.createRow(23).createCell(4);
+            XSSFRow rowTotal = sheet.createRow(23);
+            XSSFCell cellTotal = rowTotal.createCell(4);
+            cellTotal.setCellType(CellType.NUMERIC);
             cellTotal.setCellStyle(style);
-            cellTotal.setCellValue(orderDto.getPayOrder());
+            cellTotal.setCellValue(totalDetails);
 
             workbook.write(fileOutputStream);
             fileOutputStream.flush();

@@ -28,8 +28,8 @@ public class OrderServiceImpl implements OrderService {
   private final ExcelOrderCustomer excelOrderCustomer;
 
     public List<OrderDto> getAllOrders() {
-        List<OrderDto> orderDtos = orderMapper.toDtoList(orderRepository.findAll());
-        for (OrderDto orderDto: orderDtos) {
+        List<OrderDto> orderDtoS = orderMapper.toDtoList(orderRepository.findAll());
+        for (OrderDto orderDto: orderDtoS) {
             double countSumDetails = 0;
             for (DetailDto detailDto:orderDto.getDetails()) {
                 detailDto.setSumMoney(detailDto.getAmount() * detailDto.getRetailPrice());
@@ -37,8 +37,8 @@ public class OrderServiceImpl implements OrderService {
             }
             accountTotalOrderAndPayOrderDto(orderDto, countSumDetails);
         }
-        orderDtos.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
-        return orderDtos;
+        orderDtoS.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
+        return orderDtoS;
     }
 
     public OrderDto saveOrder(OrderDto orderDto) {
