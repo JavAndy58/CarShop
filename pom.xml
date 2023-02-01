@@ -11,6 +11,7 @@
 
     <groupId>ru.JavAndy</groupId>
     <artifactId>CarShop</artifactId>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>CarShop</name>
     <description>CarShop</description>
@@ -116,6 +117,25 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>spring-boot</classifier>
+                            <mainClass>
+                                ru.javandy.carshop.CarShopApplication
+                            </mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
