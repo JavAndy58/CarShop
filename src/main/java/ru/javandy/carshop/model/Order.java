@@ -1,14 +1,16 @@
 package ru.javandy.carshop.model;
 
-import lombok.Data;
+import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
 @Entity
+@Data
 @Table(name = "orders")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
 
     @Id
@@ -22,29 +24,23 @@ public class Order {
     private boolean cardPayment;
     private String note;
 
-    @OneToOne
+    @OneToOne()
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")
     private List<Detail> details = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    public Order() {
+    public void addDetail(Detail detail) {
+        details.add(detail);
     }
 
-    public Order(Date created, double prepayment, boolean delivered, boolean cardPayment, String note, Car car, List<Detail> details, Customer customer) {
-        this.created = created;
-        this.prepayment = prepayment;
-        this.delivered = delivered;
-        this.cardPayment = cardPayment;
-        this.note = note;
-        this.car = car;
-        this.details = details;
-        this.customer = customer;
+    public void removeDetail(Detail detail) {
+        details.remove(detail);
     }
 }

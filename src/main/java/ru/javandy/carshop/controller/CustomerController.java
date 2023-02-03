@@ -1,45 +1,40 @@
 package ru.javandy.carshop.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.javandy.carshop.exeption.CustomerNotFoundException;
-import ru.javandy.carshop.model.Customer;
+import ru.javandy.carshop.dto.CustomerDto;
 import ru.javandy.carshop.service.CustomerService;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
     @GetMapping("/customers")
-    public List<Customer> getAllCustomers() {
-        return customerService.findAll();
+    @ResponseStatus(HttpStatus.OK)
+    public List<CustomerDto> getAllCustomers() {
+        return customerService.getAllCustomers();
     }
 
     @PostMapping("/customer")
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.save(customer);
+    @ResponseStatus(HttpStatus.CREATED)
+    public CustomerDto createCustomer(@RequestBody CustomerDto customerDTO) {
+        return customerService.saveCustomer(customerDTO);
     }
 
     @GetMapping("/customer/{id}")
-    Customer getCustomerById(@PathVariable int id) {
-        return customerService.findById(id)
-                .orElseThrow(() -> new CustomerNotFoundException(id));
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerDto getCustomerId(@PathVariable int id) {
+        return customerService.findByCustomerId(id);
     }
 
     @PutMapping("/customer/{id}")
-    Customer updateCustomer(@RequestBody Customer newCustomer, @PathVariable int id) {
-        return customerService.findById(id)
-                .map(customer -> {
-                    customer.setName(newCustomer.getName());
-                    customer.setPhoneNumber(newCustomer.getPhoneNumber());
-                    return customerService.save(customer);
-                }).orElseThrow(() -> new CustomerNotFoundException(id));
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerDto updateCustomer(@RequestBody CustomerDto customerDTO, @PathVariable int id) {
+        return customerService.updateCustomerId(customerDTO, id);
     }
-
 }

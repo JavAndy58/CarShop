@@ -1,30 +1,28 @@
 package ru.javandy.carshop.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
-@Data
 @Entity
+@Data
 @Table(name = "cars")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String name;
+
+    @Column(name = "vin_code")
     private String vinCode;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
-
-    public Car() {
-    }
-
-    public Car(String name, String vinCode, Customer customer) {
+    public Car(String name, String vinCode) {
         this.name = name;
         this.vinCode = vinCode;
-        this.customer = customer;
     }
 }

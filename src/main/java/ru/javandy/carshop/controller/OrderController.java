@@ -1,59 +1,47 @@
 package ru.javandy.carshop.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.javandy.carshop.exeption.OrderNotFoundException;
-import ru.javandy.carshop.model.Order;
+import ru.javandy.carshop.dto.OrderDto;
 import ru.javandy.carshop.service.OrderService;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
 
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
-
     @GetMapping("/orders")
-    public List<Order> getAllOrders() {
-        return orderService.findAll();
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderDto> getAllOrders() {
+        return orderService.getAllOrders();
     }
 
     @PostMapping("/order")
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.save(order);
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderDto createOrder(@RequestBody OrderDto orderDTO) {
+        return orderService.saveOrder(orderDTO);
     }
 
     @GetMapping("/order/{id}")
-    Order getOrderById(@PathVariable int id) {
-        return orderService.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException(id));
+    @ResponseStatus(HttpStatus.OK)
+    public OrderDto getOrderId(@PathVariable int id) {
+        return orderService.findByOrderId(id);
+    }
+
+    @GetMapping("/order/{id}/print")
+    @ResponseStatus(HttpStatus.OK)
+    public void printOrderId(@PathVariable int id) {
+        orderService.printOrderId(id);
     }
 
     @PutMapping("/order/{id}")
-    Order updateOrder(@RequestBody Order newOrder, @PathVariable int id) {
-        return orderService.findById(id)
-                .map(order -> {
-                    order.setPrepayment(newOrder.getPrepayment());
-                    order.setDelivered(newOrder.isDelivered());
-                    order.setCardPayment(newOrder.isCardPayment());
-                    order.setNote(newOrder.getNote());
-                    order.setCar(newOrder.getCar());
-                    order.setDetails(newOrder.getDetails());
-                    order.setCustomer(newOrder.getCustomer());
-                    return orderService.save(order);
-                }).orElseThrow(() -> new OrderNotFoundException(id));
-    }
-
-    @DeleteMapping("/order/{id}")
-    String deleteOrder(@PathVariable int id) {
-        if (!orderService.existsById(id)) {
-            throw new OrderNotFoundException(id);
-        }
-        orderService.deleteById(id);
-        return "Order with id " + id + " has been deleted success.";
+    @ResponseStatus(HttpStatus.OK)
+    public OrderDto updateOrder(@RequestBody OrderDto orderDTO, @PathVariable int id) {
+        return orderService.updateOrderId(orderDTO, id);
     }
 }

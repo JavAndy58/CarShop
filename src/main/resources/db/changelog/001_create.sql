@@ -7,7 +7,7 @@ CREATE TABLE cars (
     id SERIAL PRIMARY KEY,
     name VARCHAR (100),
     vin_code VARCHAR (20),
-    customer_id INT NOT NULL REFERENCES customers(id)
+    customer_id INT REFERENCES customers(id)
 );
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
@@ -16,8 +16,8 @@ CREATE TABLE orders (
     delivered BOOLEAN DEFAULT FALSE,
     card_payment BOOLEAN DEFAULT FALSE,
     note VARCHAR (50),
-    car_id INT REFERENCES cars(id),
-    customer_id INT NOT NULL REFERENCES customers(id)
+    car_id INT REFERENCES cars(id) ON DELETE SET NULL,
+    customer_id INT REFERENCES customers(id)
 );
 CREATE TABLE details (
     id SERIAL PRIMARY KEY,

@@ -1,15 +1,11 @@
 package ru.javandy.carshop.service;
 
-import ru.javandy.carshop.model.Detail;
-
-import java.util.List;
-import java.util.Optional;
+import ru.javandy.carshop.dto.DetailDto;
 
 public interface DetailService {
-    List<Detail> findAll();
-    Detail save(Detail detail);
-    List<Detail> saveAll(List<Detail> details);
-    Optional<Detail> findById(int id);
-    boolean existsById(int id);
-    void deleteById(int id);
+    DetailDto saveDetail(DetailDto detailDTO);
+    DetailDto findByDetailId(int id);
+    DetailDto updateDetailId(DetailDto detailDTO, int id);
+    boolean existsByDetailId(int id);
+    void deleteByDetailId(int id);
 }

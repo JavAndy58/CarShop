@@ -1,14 +1,14 @@
 package ru.javandy.carshop.service;
 
-import ru.javandy.carshop.model.Customer;
+import ru.javandy.carshop.dto.CarDto;
+import ru.javandy.carshop.dto.CustomerDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CustomerService {
-    List<Customer> findAll();
-    Customer save(Customer customer);
-    List<Customer> saveAll(List<Customer> customers);
-    Optional<Customer> findById(int id);
-    boolean existsById(int id);
+    List<CustomerDto> getAllCustomers();
+    CustomerDto saveCustomer(CustomerDto customerDTO);
+    CustomerDto findByCustomerId(int id);
+    CustomerDto updateCustomerId(CustomerDto customerDTO, int id);
+    CustomerDto findByCar(CarDto carDTO);
 }

@@ -1,11 +1,13 @@
 package ru.javandy.carshop.model;
 
-import lombok.Data;
+import lombok.*;
 import javax.persistence.*;
 
-@Data
 @Entity
+@Data
 @Table(name = "details")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Detail {
 
     @Id
@@ -18,10 +20,8 @@ public class Detail {
     private String supplier;
     private boolean bringing;
 
-    public Detail() {
-    }
-
-    public Detail(String name, int amount, double purchasePrice, double retailPrice, String supplier, boolean bringing) {
+    public Detail(String name, int amount, double purchasePrice,
+                  double retailPrice, String supplier, boolean bringing) {
         this.name = name;
         this.amount = amount;
         this.purchasePrice = purchasePrice;

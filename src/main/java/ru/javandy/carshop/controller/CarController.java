@@ -1,54 +1,46 @@
 package ru.javandy.carshop.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.javandy.carshop.exeption.CarNotFoundException;
-import ru.javandy.carshop.exeption.CustomerNotFoundException;
-import ru.javandy.carshop.model.Car;
+import ru.javandy.carshop.dto.CarDto;
 import ru.javandy.carshop.service.CarService;
-import ru.javandy.carshop.service.CustomerService;
-
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class CarController {
 
     private final CarService carService;
-    private final CustomerService customerService;
-
-    public CarController(CarService carService, CustomerService customerService) {
-        this.carService = carService;
-        this.customerService = customerService;
-    }
 
     @GetMapping("/cars")
-    public List<Car> getAllCars() {
-        return carService.findAll();
-    }
-
-    @PostMapping("/car")
-    public Car createCar(@RequestBody Car car) {
-        return carService.save(car);
+    @ResponseStatus(HttpStatus.OK)
+    public List<CarDto> getAllCars() {
+        return carService.getAllCars();
     }
 
     @GetMapping("/car/{id}")
-    Car getCarById(@PathVariable int id) {
-        return carService.findById(id)
-                .orElseThrow(() -> new CarNotFoundException(id));
+    @ResponseStatus(HttpStatus.OK)
+    public CarDto getCarId(@PathVariable int id) {
+        return carService.findByCarId(id);
     }
-    @GetMapping("/car_customer/{id}")
-    public List<Car> getCarByCustomer(@PathVariable int id) {
-        return carService.findByCustomer(customerService.findById(id)
-                .orElseThrow(() -> new CustomerNotFoundException(id)));
+
+    @PostMapping("/car")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CarDto createCar(@RequestBody CarDto carDTO) {
+        return carService.saveCar(carDTO);
+    }
+
+    @PutMapping("/car/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    CarDto updateCar(@RequestBody CarDto carDTO, @PathVariable int id) {
+        return carService.updateCarId(carDTO, id);
     }
 
     @DeleteMapping("/car/{id}")
-    String deleteCar(@PathVariable int id) {
-        if (!carService.existsById(id)) {
-            throw new CarNotFoundException(id);
-        }
-        carService.deleteById(id);
-        return "Car with id " + id + " has been deleted success.";
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCar(@PathVariable int id) {
+        carService.deleteByCarId(id);
     }
-
 }

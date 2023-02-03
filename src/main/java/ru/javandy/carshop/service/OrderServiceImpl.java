@@ -1,49 +1,101 @@
 package ru.javandy.carshop.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.javandy.carshop.dto.CarDto;
+import ru.javandy.carshop.dto.DetailDto;
+import ru.javandy.carshop.dto.OrderDto;
+import ru.javandy.carshop.exeption.DetailNotFoundException;
+import ru.javandy.carshop.exeption.OrderNotFoundException;
+import ru.javandy.carshop.mapper.CarMapper;
+import ru.javandy.carshop.mapper.DetailMapper;
+import ru.javandy.carshop.mapper.OrderMapper;
+import ru.javandy.carshop.model.Detail;
 import ru.javandy.carshop.model.Order;
 import ru.javandy.carshop.repository.OrderRepository;
+import ru.javandy.carshop.utils.ExcelOrderCustomer;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-    private final OrderRepository orderRepository;
+  private final OrderRepository orderRepository;
+  private final OrderMapper orderMapper;
+  private final CarMapper carMapper;
+  private final DetailMapper detailMapper;
+  private final ExcelOrderCustomer excelOrderCustomer;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    public List<OrderDto> getAllOrders() {
+        List<OrderDto> orderDtoS = orderMapper.toDtoList(orderRepository.findAll());
+        for (OrderDto orderDto: orderDtoS) {
+            double countSumDetails = 0;
+            for (DetailDto detailDto:orderDto.getDetails()) {
+                detailDto.setSumMoney(detailDto.getAmount() * detailDto.getRetailPrice());
+                countSumDetails += detailDto.getSumMoney();
+            }
+            accountTotalOrderAndPayOrderDto(orderDto, countSumDetails);
+        }
+        orderDtoS.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
+        return orderDtoS;
     }
 
-    @Override
-    public List<Order> findAll() {
-        List<Order> rsl = new ArrayList<>();
-        orderRepository.findAll().forEach(rsl::add);
-        return rsl;
+    public OrderDto saveOrder(OrderDto orderDto) {
+        orderDto.setCreated(new Date());
+        return orderMapper.toDto(orderRepository.save(orderMapper.toEntity(orderDto)));
     }
 
-    @Override
-    public Optional<Order> findById(int id) {
-        return orderRepository.findById(id);
+    public List<OrderDto> saveOrders(List<OrderDto> ordersDto) {
+        return orderMapper.toDtoList(orderRepository.saveAll(orderMapper.toEntityList(ordersDto)));
     }
 
-    @Override
-    public Order save(Order order) {
-        return orderRepository.save(order);
+    public OrderDto findByOrderId(int id) {
+        return orderMapper.toDto(orderRepository.findById(id).orElseThrow(() -> new DetailNotFoundException(id)));
     }
 
-    public void delete(Order order) {
-        orderRepository.delete(order);
+    public OrderDto updateOrderId(OrderDto newOrderDto, int id) {
+        DetailDto detailDto = null;
+        if (!newOrderDto.getDetails().isEmpty()) {
+            detailDto = newOrderDto.getDetails().get(newOrderDto.getDetails().size() - 1);
+        }
+        DetailDto finalDetailDto = detailDto;
+        Detail finalDetail = detailMapper.toEntity(finalDetailDto);
+        Order newOrder = orderMapper.toEntity(newOrderDto);
+
+        return orderMapper.toDto(orderRepository.findById(id)
+                .map(order -> {
+                    order.setCreated(newOrder.getCreated());
+                    order.setPrepayment(newOrder.getPrepayment());
+                    order.setDelivered(newOrder.isDelivered());
+                    order.setCardPayment(newOrder.isCardPayment());
+                    order.setNote(newOrder.getNote());
+                    order.setCar(newOrder.getCar());
+
+                    if (order.getDetails().size() != orderMapper.toEntity(newOrderDto).getDetails().size()) {
+                        order.addDetail(finalDetail);
+                    }
+
+                    order.setCustomer(newOrder.getCustomer());
+                    return orderRepository.save(order);
+                }).orElseThrow(() -> new OrderNotFoundException(id)));
     }
 
-    @Override
-    public boolean existsById(int id) {
-        return orderRepository.existsById(id);
+    public List<OrderDto> getAllOrdersCar(CarDto carDto) {
+        return orderMapper.toDtoList(orderRepository.findByCar(carMapper.toEntity(carDto)));
     }
 
-    @Override
-    public void deleteById(int id) {
-        orderRepository.deleteById(id);
+    public OrderDto findByDetail(DetailDto detailDto) {
+        return orderMapper.toDto(orderRepository.findByDetails(detailMapper.toEntity(detailDto)));
+    }
+
+    public void printOrderId(int id) {
+        OrderDto orderDto = findByOrderId(id);
+        excelOrderCustomer.writeXLSXFile(orderDto);
+    }
+
+    private void accountTotalOrderAndPayOrderDto(OrderDto orderDto, double countSumDetails) {
+        orderDto.setTotalOrder(countSumDetails);
+        orderDto.setPayOrder(orderDto.getTotalOrder() - orderDto.getPrepayment());
     }
 }

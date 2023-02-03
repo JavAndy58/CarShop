@@ -1,45 +1,58 @@
 package ru.javandy.carshop.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.javandy.carshop.model.Customer;
+import ru.javandy.carshop.dto.CarDto;
+import ru.javandy.carshop.dto.CustomerDto;
+import ru.javandy.carshop.exeption.CustomerNotFoundException;
+import ru.javandy.carshop.mapper.CarMapper;
+import ru.javandy.carshop.mapper.CustomerMapper;
 import ru.javandy.carshop.repository.CustomerRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
+    private final CustomerMapper customerMapper;
+    private final CarMapper carMapper;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+
+    public List<CustomerDto> getAllCustomers() {
+        return customerRepository.findAll()
+                .stream()
+                .map(customerMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public List<Customer> findAll() {
-        List<Customer> rsl = new ArrayList<>();
-        customerRepository.findAll().forEach(rsl::add);
-        return rsl;
+    public CustomerDto saveCustomer(CustomerDto customerDto) {
+        return customerMapper.toDto(customerRepository.save(customerMapper.toEntity(customerDto)));
     }
 
-    @Override
-    public Optional<Customer> findById(int id) {
-        return customerRepository.findById(id);
+    public CustomerDto findByCustomerId(int id) {
+        return customerMapper.toDto(customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id)));
     }
 
-    @Override
-    public Customer save(Customer customer) {
-        return customerRepository.save(customer);
+    public CustomerDto updateCustomerId(CustomerDto newCustomerDto, int id) {
+        CarDto carDto = null;
+        if (!newCustomerDto.getCars().isEmpty()) {
+            carDto = newCustomerDto.getCars().get(newCustomerDto.getCars().size() - 1);
+        }
+        CarDto finalCarDto = carDto;
+        return customerRepository.findById(id)
+                .map(customer -> {
+                    customer.setName(newCustomerDto.getName());
+                    customer.setPhoneNumber(newCustomerDto.getPhoneNumber());
+                     if (customer.getCars().size() != newCustomerDto.getCars().size()) {
+                         customer.addCar(carMapper.toEntity(finalCarDto));
+                     }
+                    return customerMapper.toDto(customerRepository.save(customer));
+                }).orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
-    @Override
-    public List<Customer> saveAll(List<Customer> customers) {
-        return (List<Customer>) customerRepository.saveAll(customers);
-    }
-
-    @Override
-    public boolean existsById(int id) {
-        return customerRepository.existsById(id);
+    public CustomerDto findByCar(CarDto carDto) {
+        return customerMapper.toDto(customerRepository.findByCars(carMapper.toEntity(carDto)));
     }
 }

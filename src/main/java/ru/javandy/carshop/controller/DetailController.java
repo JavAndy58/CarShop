@@ -1,55 +1,40 @@
 package ru.javandy.carshop.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.javandy.carshop.exeption.DetailNotFoundException;
-import ru.javandy.carshop.model.Detail;
+import ru.javandy.carshop.dto.DetailDto;
 import ru.javandy.carshop.service.DetailService;
 
-import java.util.List;
-
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class DetailController {
 
     private final DetailService detailService;
 
-    public DetailController(DetailService detailService) {
-        this.detailService = detailService;
-    }
-
-    @GetMapping("/details")
-    public List<Detail> getAllDetails() {
-         return detailService.findAll();
-    }
-
     @PostMapping("/detail")
-    public Detail createDetail(@RequestBody Detail detail) {
-        return detailService.save(detail);
+    @ResponseStatus(HttpStatus.CREATED)
+    public DetailDto createDetail(@RequestBody DetailDto detailDTO) {
+        return detailService.saveDetail(detailDTO);
     }
 
     @GetMapping("/detail/{id}")
-    Detail getDetailById(@PathVariable int id) {
-        return detailService.findById(id)
-                .orElseThrow(() -> new DetailNotFoundException(id));
+    @ResponseStatus(HttpStatus.OK)
+    public DetailDto getDetailId(@PathVariable int id) {
+        return detailService.findByDetailId(id);
     }
 
     @PutMapping("/detail/{id}")
-    Detail updateDetail(@RequestBody Detail newDetail, @PathVariable int id) {
-        return detailService.findById(id)
-                .map(detail -> {
-                    detail.setName(newDetail.getName());
-                    detail.setPurchasePrice(newDetail.getPurchasePrice());
-                    detail.setRetailPrice(newDetail.getRetailPrice());
-                    return detailService.save(detail);
-                }).orElseThrow(() -> new DetailNotFoundException(id));
+    @ResponseStatus(HttpStatus.OK)
+    DetailDto updateDetail(@RequestBody DetailDto detailDTO, @PathVariable int id) {
+        return detailService.updateDetailId(detailDTO, id);
     }
 
     @DeleteMapping("/detail/{id}")
-    String deleteDetail(@PathVariable int id) {
-        if (!detailService.existsById(id)) {
-            throw new DetailNotFoundException(id);
-        }
-        detailService.deleteById(id);
-        return "Detail with id " + id + " has been deleted success.";
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteDetail(@PathVariable int id) {
+        detailService.deleteByDetailId(id);
     }
+
 }
