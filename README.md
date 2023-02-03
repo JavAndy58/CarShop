@@ -6,6 +6,14 @@
 - Создание печатной формы деталей заказа.
 - Выполнение расчета полученной прибыли.
 
+Использована БД Postgres. Настройки подключения указываем
+в файле application.properties
+
+Тесты (unit) создаём в директории src/test/java
+
+Используемые технологии:
+- Spring, PostgresSQL, Junit, Lombok, Mapstruct, Rest Api, Apache.poi.
+
 
 
 
