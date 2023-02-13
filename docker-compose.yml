@@ -1,0 +1,25 @@
+version: '3'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - "5432:5000"
+    entrypoint:
+      - POSTGRES_DB=carshop
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+  backend:
+    container_name: backend
+    build: .
+    ports:
+      - "8080:5001"
+    depends_on:
+      - postgres
+  frontend:
+    container_name: frontend
+    build: C:/projects/car-shop-app
+    ports:
+      - "3000:5002"
+    depends_on:
+      - backend
