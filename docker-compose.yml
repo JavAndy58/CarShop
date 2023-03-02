@@ -1,25 +1,41 @@
-version: '3'
+version: '3.5'
 services:
   postgres:
     container_name: postgres
-    image: postgres:latest
-    ports:
-      - "5432:5000"
-    entrypoint:
-      - POSTGRES_DB=carshop
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+    image: postgres
+    environment:
+      POSTGRES_DB: carshop
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    restart: always
+    networks:
+      - appnet
   backend:
     container_name: backend
     build: .
-    ports:
-      - "8080:5001"
     depends_on:
       - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/carshop
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - appnet
   frontend:
     container_name: frontend
     build: C:/projects/car-shop-app
     ports:
-      - "3000:5002"
+      - "3000:3000"
     depends_on:
       - backend
+    networks:
+      - internet
+      - appnet
+networks:
+  internet:
+    name: internet
+    driver: bridge
+  appnet:
+    name: appnet
+    driver: bridge
